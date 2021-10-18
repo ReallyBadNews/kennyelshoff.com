@@ -1,10 +1,6 @@
-import React from "react";
-import type * as Polymorphic from "@radix-ui/react-polymorphic";
-import { styled, CSS, StitchesVariants } from "../stitches.config";
+import { styled } from "../stitches.config";
 
-const DEFAULT_TAG = "div";
-
-const StyledContainer = styled(DEFAULT_TAG, {
+export const Container = styled("div", {
   // Reset
   boxSizing: "border-box",
   flexShrink: 0,
@@ -35,15 +31,4 @@ const StyledContainer = styled(DEFAULT_TAG, {
   },
 });
 
-type ContainerCSSProp = { css?: CSS };
-type ContainerVariants = StitchesVariants<typeof StyledContainer>;
-type ContainerOwnProps = ContainerCSSProp & ContainerVariants;
-
-type ContainerComponent = Polymorphic.ForwardRefComponent<
-  typeof DEFAULT_TAG,
-  ContainerOwnProps
->;
-
-export const Container = React.forwardRef((props, forwardedRef) => {
-  return <StyledContainer {...props} ref={forwardedRef} />;
-}) as ContainerComponent;
+Container.displayName = "Container";

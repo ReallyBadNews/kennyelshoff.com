@@ -1,4 +1,5 @@
-import { createCss, StitchesCss } from "@stitches/react";
+import { createStitches } from "@stitches/react";
+import type * as Stitches from "@stitches/react";
 import {
   gray,
   mauve,
@@ -116,7 +117,7 @@ import {
   goldDarkA,
 } from "@radix-ui/colors";
 
-export type { StitchesVariants } from "@stitches/react";
+export type { VariantProps } from "@stitches/react";
 
 const headingFont = [
   "'Inter'",
@@ -127,7 +128,18 @@ const headingFont = [
   "sans-serif",
 ].join(", ");
 
-const stitches = createCss({
+export const childWithGap = "> * + *";
+
+export const {
+  styled,
+  css,
+  theme,
+  createTheme,
+  getCssText,
+  globalCss,
+  keyframes,
+  config,
+} = createStitches({
   theme: {
     colors: {
       ...gray,
@@ -206,15 +218,21 @@ const stitches = createCss({
       mono: "Plex Mono",
     },
     space: {
-      1: "5px",
-      2: "10px",
-      3: "15px",
-      4: "20px",
-      5: "25px",
-      6: "35px",
-      7: "45px",
-      8: "65px",
-      9: "80px",
+      0: "0",
+      1: "0.25rem",
+      2: "0.5rem",
+      3: "1rem",
+      4: "1.5rem",
+      5: "2rem",
+      6: "2.5rem",
+      7: "3rem",
+      8: "4rem",
+      9: "6rem",
+      10: "8rem",
+      11: "16rem",
+      12: "32rem",
+      px: "1px",
+      auto: "auto",
     },
     sizes: {
       0: "0",
@@ -343,251 +361,214 @@ const stitches = createCss({
     light: "(prefers-color-scheme: light)",
   },
   utils: {
-    stackGap: (config) => {
-      return (
-        value: `$${keyof typeof config["theme"]["space"]}` | (string & {})
-      ) => {
-        return {
-          $$gap: `$space${value}`,
-        };
+    stackGap: (value: Stitches.ScaleValue<"space">) => {
+      return {
+        [childWithGap]: { $$gap: `$space${value}` },
       };
     },
-    bg: (config) => {
-      return (
-        value: `$${keyof typeof config["theme"]["colors"]}` | (string & {})
-      ) => {
-        return {
-          backgroundColor: value,
-        };
+    bg: (value: Stitches.ScaleValue<"colors">) => {
+      return {
+        backgroundColor: value,
       };
     },
-    p: (config) => {
-      return (
-        value: `$${keyof typeof config["theme"]["space"]}` | (string & {})
-      ) => {
-        return {
-          paddingTop: value,
-          paddingBottom: value,
-          paddingLeft: value,
-          paddingRight: value,
-        };
+    p: (
+      value: Stitches.ScaleValue<"space"> | Stitches.PropertyValue<"padding">
+    ) => {
+      return {
+        padding: value,
       };
     },
-    pt: (config) => {
-      return (
-        value: `$${keyof typeof config["theme"]["space"]}` | (string & {})
-      ) => {
-        return {
-          paddingTop: value,
-        };
+    pt: (
+      value: Stitches.ScaleValue<"space"> | Stitches.PropertyValue<"paddingTop">
+    ) => {
+      return {
+        paddingTop: value,
       };
     },
-    pr: (config) => {
-      return (
-        value: `$${keyof typeof config["theme"]["space"]}` | (string & {})
-      ) => {
-        return {
-          paddingRight: value,
-        };
+    pr: (
+      value:
+        | Stitches.ScaleValue<"space">
+        | Stitches.PropertyValue<"paddingRight">
+    ) => {
+      return {
+        paddingRight: value,
       };
     },
-    pb: (config) => {
-      return (
-        value: `$${keyof typeof config["theme"]["space"]}` | (string & {})
-      ) => {
-        return {
-          paddingBottom: value,
-        };
+    pb: (
+      value:
+        | Stitches.ScaleValue<"space">
+        | Stitches.PropertyValue<"paddingBottom">
+    ) => {
+      return {
+        paddingBottom: value,
       };
     },
-    pl: (config) => {
-      return (
-        value: `$${keyof typeof config["theme"]["space"]}` | (string & {})
-      ) => {
-        return {
-          paddingLeft: value,
-        };
+    pl: (
+      value:
+        | Stitches.ScaleValue<"space">
+        | Stitches.PropertyValue<"paddingLeft">
+    ) => {
+      return {
+        paddingLeft: value,
       };
     },
-    px: (config) => {
-      return (
-        value: `$${keyof typeof config["theme"]["space"]}` | (string & {})
-      ) => {
-        return {
-          paddingLeft: value,
-          paddingRight: value,
-        };
+    px: (
+      value:
+        | Stitches.ScaleValue<"space">
+        | Stitches.PropertyValue<"paddingLeft">
+    ) => {
+      return {
+        paddingLeft: value,
+        paddingRight: value,
       };
     },
-    py: (config) => {
-      return (
-        value: `$${keyof typeof config["theme"]["space"]}` | (string & {})
-      ) => {
-        return {
-          paddingTop: value,
-          paddingBottom: value,
-        };
+    py: (
+      value: Stitches.ScaleValue<"space"> | Stitches.PropertyValue<"paddingTop">
+    ) => {
+      return {
+        paddingTop: value,
+        paddingBottom: value,
       };
     },
-    m: (config) => {
-      return (
-        value: `$${keyof typeof config["theme"]["space"]}` | (string & {})
-      ) => {
-        return {
-          marginTop: value,
-          marginBottom: value,
-          marginLeft: value,
-          marginRight: value,
-        };
+    m: (
+      value: Stitches.ScaleValue<"space"> | Stitches.PropertyValue<"margin">
+    ) => {
+      return {
+        margin: value,
       };
     },
-    mt: (config) => {
-      return (
-        value: `$${keyof typeof config["theme"]["space"]}` | (string & {})
-      ) => {
-        return {
-          marginTop: value,
-        };
+    mt: (
+      value: Stitches.ScaleValue<"space"> | Stitches.PropertyValue<"marginTop">
+    ) => {
+      return {
+        marginTop: value,
       };
     },
-    mr: (config) => {
-      return (
-        value: `$${keyof typeof config["theme"]["space"]}` | (string & {})
-      ) => {
-        return {
-          marginRight: value,
-        };
+    mr: (
+      value:
+        | Stitches.ScaleValue<"space">
+        | Stitches.PropertyValue<"marginRight">
+    ) => {
+      return {
+        marginRight: value,
       };
     },
-    mb: (config) => {
-      return (
-        value: `$${keyof typeof config["theme"]["space"]}` | (string & {})
-      ) => {
-        return {
-          marginBottom: value,
-        };
+    mb: (
+      value:
+        | Stitches.ScaleValue<"space">
+        | Stitches.PropertyValue<"marginBottom">
+    ) => {
+      return {
+        marginBottom: value,
       };
     },
-    ml: (config) => {
-      return (
-        value: `$${keyof typeof config["theme"]["space"]}` | (string & {})
-      ) => {
-        return {
-          marginLeft: value,
-        };
+    ml: (
+      value: Stitches.ScaleValue<"space"> | Stitches.PropertyValue<"marginLeft">
+    ) => {
+      return {
+        marginLeft: value,
       };
     },
-    mx: (config) => {
-      return (
-        value: `$${keyof typeof config["theme"]["space"]}` | (string & {})
-      ) => {
-        return {
-          marginLeft: value,
-          marginRight: value,
-        };
+    mx: (
+      value: Stitches.ScaleValue<"space"> | Stitches.PropertyValue<"marginLeft">
+    ) => {
+      return {
+        marginLeft: value,
+        marginRight: value,
       };
     },
-    my: (config) => {
-      return (
-        value: `$${keyof typeof config["theme"]["space"]}` | (string & {})
-      ) => {
-        return {
-          marginTop: value,
-          marginBottom: value,
-        };
+    my: (
+      value: Stitches.ScaleValue<"space"> | Stitches.PropertyValue<"marginTop">
+    ) => {
+      return {
+        marginTop: value,
+        marginBottom: value,
       };
     },
-    br: (config) => {
-      return (
-        value: `$${keyof typeof config["theme"]["radii"]}` | (string & {})
-      ) => {
-        return {
-          borderRadius: value,
-        };
+    br: (
+      value:
+        | Stitches.ScaleValue<"radii">
+        | Stitches.PropertyValue<"borderRadius">
+    ) => {
+      return {
+        borderRadius: value,
       };
     },
-    btrr: (config) => {
-      return (
-        value: `$${keyof typeof config["theme"]["radii"]}` | (string & {})
-      ) => {
-        return {
-          borderTopRightRadius: value,
-        };
+    btrr: (
+      value:
+        | Stitches.ScaleValue<"radii">
+        | Stitches.PropertyValue<"borderTopRightRadius">
+    ) => {
+      return {
+        borderTopRightRadius: value,
       };
     },
-    bbrr: (config) => {
-      return (
-        value: `$${keyof typeof config["theme"]["radii"]}` | (string & {})
-      ) => {
-        return {
-          borderBottomRightRadius: value,
-        };
+    bbrr: (
+      value:
+        | Stitches.ScaleValue<"radii">
+        | Stitches.PropertyValue<"borderBottomRightRadius">
+    ) => {
+      return {
+        borderBottomRightRadius: value,
       };
     },
-    bblr: (config) => {
-      return (
-        value: `$${keyof typeof config["theme"]["radii"]}` | (string & {})
-      ) => {
-        return {
-          borderBottomLeftRadius: value,
-        };
+    bblr: (
+      value:
+        | Stitches.ScaleValue<"radii">
+        | Stitches.PropertyValue<"borderBottomLeftRadius">
+    ) => {
+      return {
+        borderBottomLeftRadius: value,
       };
     },
-    btlr: (config) => {
-      return (
-        value: `$${keyof typeof config["theme"]["radii"]}` | (string & {})
-      ) => {
-        return {
-          borderTopLeftRadius: value,
-        };
+    btlr: (
+      value:
+        | Stitches.ScaleValue<"radii">
+        | Stitches.PropertyValue<"borderTopLeftRadius">
+    ) => {
+      return {
+        borderTopLeftRadius: value,
       };
     },
-    bs: () => {
-      return (value: any) => {
-        return { boxShadow: value };
+    bs: (value: Stitches.PropertyValue<"boxShadow">) => {
+      return { boxShadow: value };
+    },
+    lh: (
+      value:
+        | Stitches.ScaleValue<"lineHeights">
+        | Stitches.PropertyValue<"lineHeight">
+    ) => {
+      return {
+        lineHeight: value,
       };
     },
-    lh: () => {
-      return (value: any) => {
-        return { lineHeight: value };
+    size: (
+      value: Stitches.ScaleValue<"sizes"> | Stitches.PropertyValue<"width">
+    ) => {
+      return {
+        width: value,
+        height: value,
       };
     },
-    size: (config) => {
-      return (
-        value: `$${keyof typeof config["theme"]["space"]}` | (string & {})
-      ) => {
-        return {
-          width: value,
-          height: value,
-        };
+    minColumnWidth: (
+      value: Stitches.ScaleValue<"sizes"> | Stitches.PropertyValue<"width">
+    ) => {
+      return {
+        gridTemplateColumns: `repeat(auto-fit, minmax(${value}, 1fr))`,
       };
     },
-    linearGradient: () => {
-      return (value: any) => {
-        return {
-          backgroundImage: `linear-gradient(${value})`,
-        };
-      };
-    },
-    appearance: () => {
-      return (value) => {
-        return {
-          WebkitAppearance: value,
-          appearance: value,
-        };
+    appearance: (value: Stitches.PropertyValue<"appearance">) => {
+      return {
+        WebkitAppearance: value,
+        appearance: value,
       };
     },
   },
 });
 
-export type CSS = StitchesCss<typeof stitches>;
+export type CSS = Stitches.CSS<typeof config>;
 
-export const { styled, css, theme, getCssString, global, keyframes, config } =
-  stitches;
-
-export const { utils } = config;
-
-export const darkTheme = theme("dark-theme", {
+export const darkTheme = createTheme("dark-theme", {
   colors: {
     ...grayDark,
     ...mauveDark,

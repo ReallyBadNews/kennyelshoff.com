@@ -4,3 +4,5 @@ export const Box = styled("div", {
   // Reset
   boxSizing: "border-box",
 });
+
+Box.displayName = "Box";

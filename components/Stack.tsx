@@ -1,6 +1,4 @@
-import { styled } from "../stitches.config";
-
-const childWithGap = "> * + *";
+import { styled, childWithGap } from "../stitches.config";
 
 export const Stack = styled("div", {
   display: "flex",

@@ -1,26 +1,23 @@
 import React from "react";
 import merge from "lodash.merge";
-import * as Polymorphic from "@radix-ui/react-polymorphic";
-import { StyledText } from "./Text";
-import { StitchesVariants, CSS } from "../stitches.config";
+import { Text } from "./Text";
+import { VariantProps, CSS } from "../stitches.config";
 
 const DEFAULT_TAG = "h1";
 
-type TextSizeVariants = Pick<StitchesVariants<typeof StyledText>, "size">;
-
-type HeadingCSSProp = { css?: CSS };
+type TextSizeVariants = Pick<VariantProps<typeof Text>, "size">;
 type HeadingSizeVariants = "1" | "2" | "3" | "4";
 type HeadingVariants = { size?: HeadingSizeVariants } & Omit<
-  StitchesVariants<typeof StyledText>,
+  VariantProps<typeof Text>,
   "size"
 >;
-type HeadingOwnProps = HeadingCSSProp & HeadingVariants;
-type HeadingComponent = Polymorphic.ForwardRefComponent<
-  typeof DEFAULT_TAG,
-  HeadingOwnProps
->;
+type HeadingProps = React.ComponentProps<typeof DEFAULT_TAG> &
+  HeadingVariants & { css?: CSS; as?: React.ElementType };
 
-export const Heading = React.forwardRef((props, forwardedRef) => {
+export const Heading = React.forwardRef<
+  React.ElementRef<typeof DEFAULT_TAG>,
+  HeadingProps
+>((props, forwardedRef) => {
   // '2' here is the default heading size variant
   const { size = "1", ...textProps } = props;
   // This is the mapping of Heading Variants to Text variants
@@ -40,16 +37,17 @@ export const Heading = React.forwardRef((props, forwardedRef) => {
   };
 
   return (
-    <StyledText
+    <Text
       as={DEFAULT_TAG}
       {...textProps}
       ref={forwardedRef}
       css={{
-        fontFamily: "$inter",
         fontVariantNumeric: "proportional-nums",
-        ...(merge(textCss[size], props.css) as any),
+        ...merge(textCss[size], props.css),
       }}
       size={textSize[size]}
     />
   );
-}) as HeadingComponent;
+});
+
+Heading.displayName = "Heading";

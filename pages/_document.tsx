@@ -1,9 +1,9 @@
 import React from "react";
 import NextDocument, { Html, Head, Main, NextScript } from "next/document";
-import { getCssString } from "../stitches.config";
+import { getCssText } from "../stitches.config";
 
 export default class Document extends NextDocument {
-  render() {
+  render(): JSX.Element {
     return (
       <Html lang="en">
         <Head>
@@ -29,7 +29,7 @@ export default class Document extends NextDocument {
             type="font/woff2"
           />
           <style
-            dangerouslySetInnerHTML={{ __html: getCssString() }}
+            dangerouslySetInnerHTML={{ __html: getCssText() }}
             id="stitches"
           />
           <style

@@ -1,10 +1,6 @@
-import React from "react";
-import type * as Polymorphic from "@radix-ui/react-polymorphic";
-import { styled, CSS, StitchesVariants } from "../stitches.config";
+import { styled } from "../stitches.config";
 
-const DEFAULT_TAG = "button";
-
-const StyledButton = styled(DEFAULT_TAG, {
+export const Button = styled("button", {
   // Reset
   all: "unset",
   alignItems: "center",
@@ -43,24 +39,29 @@ const StyledButton = styled(DEFAULT_TAG, {
     size: {
       "1": {
         borderRadius: "$rg",
-        height: "$5",
+        height: "$6",
         px: "$2",
         fontSize: "$0",
-        lineHeight: "$sizes$5",
       },
       "2": {
-        borderRadius: "$md",
-        height: "$6",
-        px: "$3",
-        fontSize: "$3",
-        lineHeight: "$sizes$6",
+        borderRadius: "$rg",
+        height: "$8",
+        px: "$2",
+        fontSize: "$0",
       },
       "3": {
         borderRadius: "$md",
-        height: "$7",
+        height: "$10",
+        px: "$3",
+        fontSize: "$2",
+        fontWeight: "bold",
+      },
+      "4": {
+        borderRadius: "$md",
+        height: "$12",
         px: "$4",
         fontSize: "$4",
-        lineHeight: "$sizes$7",
+        fontWeight: "bold",
       },
     },
     variant: {
@@ -80,7 +81,7 @@ const StyledButton = styled(DEFAULT_TAG, {
         "&:focus": {
           boxShadow: "inset 0 0 0 1px $colors$slate8, 0 0 0 1px $colors$slate8",
         },
-        "&[data-radix-popover-trigger][data-state='open'], &[data-radix-dropdown-menu-trigger][data-state='open']":
+        '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
           {
             backgroundColor: "$slate4",
             boxShadow: "inset 0 0 0 1px $colors$slate8",
@@ -102,7 +103,7 @@ const StyledButton = styled(DEFAULT_TAG, {
         "&:focus": {
           boxShadow: "inset 0 0 0 1px $colors$blue8, 0 0 0 1px $colors$blue8",
         },
-        "&[data-radix-popover-trigger][data-state='open'], &[data-radix-dropdown-menu-trigger][data-state='open']":
+        '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
           {
             backgroundColor: "$blue4",
             boxShadow: "inset 0 0 0 1px $colors$blue8",
@@ -124,7 +125,7 @@ const StyledButton = styled(DEFAULT_TAG, {
         "&:focus": {
           boxShadow: "inset 0 0 0 1px $colors$green8, 0 0 0 1px $colors$green8",
         },
-        "&[data-radix-popover-trigger][data-state='open'], &[data-radix-dropdown-menu-trigger][data-state='open']":
+        '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
           {
             backgroundColor: "$green4",
             boxShadow: "inset 0 0 0 1px $colors$green8",
@@ -146,7 +147,7 @@ const StyledButton = styled(DEFAULT_TAG, {
         "&:focus": {
           boxShadow: "inset 0 0 0 1px $colors$red8, 0 0 0 1px $colors$red8",
         },
-        "&[data-radix-popover-trigger][data-state='open'], &[data-radix-dropdown-menu-trigger][data-state='open']":
+        '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
           {
             backgroundColor: "$red4",
             boxShadow: "inset 0 0 0 1px $colors$red8",
@@ -249,7 +250,7 @@ const StyledButton = styled(DEFAULT_TAG, {
           boxShadow:
             "inset 0 0 0 1px $colors$slateA8, 0 0 0 1px $colors$slateA8",
         },
-        "&[data-radix-popover-trigger][data-state='open'], &[data-radix-dropdown-menu-trigger][data-state='open']":
+        '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
           {
             backgroundColor: "$slateA4",
             boxShadow: "none",
@@ -273,7 +274,7 @@ const StyledButton = styled(DEFAULT_TAG, {
         "&:focus": {
           boxShadow: "inset 0 0 0 1px $colors$blueA8, 0 0 0 1px $colors$blueA8",
         },
-        "&[data-radix-popover-trigger][data-state='open'], &[data-radix-dropdown-menu-trigger][data-state='open']":
+        '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
           {
             backgroundColor: "$blueA4",
             boxShadow: "none",
@@ -298,7 +299,7 @@ const StyledButton = styled(DEFAULT_TAG, {
           boxShadow:
             "inset 0 0 0 1px $colors$greenA8, 0 0 0 1px $colors$greenA8",
         },
-        "&[data-radix-popover-trigger][data-state='open'], &[data-radix-dropdown-menu-trigger][data-state='open']":
+        '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
           {
             backgroundColor: "$greenA4",
             boxShadow: "none",
@@ -322,7 +323,7 @@ const StyledButton = styled(DEFAULT_TAG, {
         "&:focus": {
           boxShadow: "inset 0 0 0 1px $colors$redA8, 0 0 0 1px $colors$redA8",
         },
-        "&[data-radix-popover-trigger][data-state='open'], &[data-radix-dropdown-menu-trigger][data-state='open']":
+        '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
           {
             backgroundColor: "$redA4",
             boxShadow: "none",
@@ -336,20 +337,4 @@ const StyledButton = styled(DEFAULT_TAG, {
   },
 });
 
-type ButtonCSSProp = { css?: CSS };
-// TODO: Remove omit fix when this is merged https://github.com/modulz/stitches/issues/421
-type ButtonVariants = StitchesVariants<typeof StyledButton>;
-type ButtonOwnProps = ButtonCSSProp & ButtonVariants;
-
-type ButtonComponent = Polymorphic.ForwardRefComponent<
-  typeof DEFAULT_TAG,
-  ButtonOwnProps
->;
-
-export const Button = React.forwardRef((props, forwardedRef) => {
-  return <StyledButton {...props} ref={forwardedRef} />;
-}) as ButtonComponent;
-
-Button.toString = () => {
-  return `.${StyledButton.className}`;
-};
+Button.displayName = "Button";

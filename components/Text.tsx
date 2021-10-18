@@ -1,15 +1,10 @@
-import React from "react";
-import type * as Polymorphic from "@radix-ui/react-polymorphic";
-import { styled, CSS, StitchesVariants } from "../stitches.config";
+import { styled } from "../stitches.config";
 
-const DEFAULT_TAG = "span";
-
-export const StyledText = styled(DEFAULT_TAG, {
+export const Text = styled("span", {
   // Reset
   lineHeight: "1",
   margin: "0",
   fontWeight: 400,
-  fontFamily: "$mono",
   fontVariantNumeric: "tabular-nums",
   display: "block",
 
@@ -26,6 +21,14 @@ export const StyledText = styled(DEFAULT_TAG, {
       },
       9: {
         fontWeight: "$9",
+      },
+    },
+    fontFamily: {
+      sans: {
+        fontFamily: "$inter",
+      },
+      mono: {
+        fontFamily: "$mono",
       },
     },
     size: {
@@ -61,7 +64,7 @@ export const StyledText = styled(DEFAULT_TAG, {
       },
       "9": {
         fontSize: "$9",
-        letterSpacing: "$wide",
+        letterSpacing: "-.055em",
         textIndent: "-.025em",
       },
     },
@@ -120,6 +123,7 @@ export const StyledText = styled(DEFAULT_TAG, {
     },
     gradient: {
       true: {
+        WebkitBackgroundClip: "text",
         WebkitTextFillColor: "transparent",
       },
     },
@@ -130,7 +134,6 @@ export const StyledText = styled(DEFAULT_TAG, {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $red11, $crimson11)",
-        WebkitBackgroundClip: "text",
       },
     },
     {
@@ -138,7 +141,6 @@ export const StyledText = styled(DEFAULT_TAG, {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $crimson11, $pink11)",
-        WebkitBackgroundClip: "text",
       },
     },
     {
@@ -146,7 +148,6 @@ export const StyledText = styled(DEFAULT_TAG, {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $pink11, $purple11)",
-        WebkitBackgroundClip: "text",
       },
     },
     {
@@ -154,7 +155,6 @@ export const StyledText = styled(DEFAULT_TAG, {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $purple11, $violet11)",
-        WebkitBackgroundClip: "text",
       },
     },
     {
@@ -162,7 +162,6 @@ export const StyledText = styled(DEFAULT_TAG, {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $violet11, $indigo11)",
-        WebkitBackgroundClip: "text",
       },
     },
     {
@@ -170,7 +169,6 @@ export const StyledText = styled(DEFAULT_TAG, {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $indigo11, $blue11)",
-        WebkitBackgroundClip: "text",
       },
     },
     {
@@ -178,7 +176,6 @@ export const StyledText = styled(DEFAULT_TAG, {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $blue11, $cyan11)",
-        WebkitBackgroundClip: "text",
       },
     },
     {
@@ -186,7 +183,6 @@ export const StyledText = styled(DEFAULT_TAG, {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $cyan11, $teal11)",
-        WebkitBackgroundClip: "text",
       },
     },
     {
@@ -194,7 +190,6 @@ export const StyledText = styled(DEFAULT_TAG, {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $teal11, $green11)",
-        WebkitBackgroundClip: "text",
       },
     },
     {
@@ -202,7 +197,6 @@ export const StyledText = styled(DEFAULT_TAG, {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $green11, $lime11)",
-        WebkitBackgroundClip: "text",
       },
     },
     {
@@ -210,7 +204,6 @@ export const StyledText = styled(DEFAULT_TAG, {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $lime11, $yellow11)",
-        WebkitBackgroundClip: "text",
       },
     },
     {
@@ -218,7 +211,6 @@ export const StyledText = styled(DEFAULT_TAG, {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $yellow11, $orange11)",
-        WebkitBackgroundClip: "text",
       },
     },
     {
@@ -226,7 +218,6 @@ export const StyledText = styled(DEFAULT_TAG, {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $orange11, $red11)",
-        WebkitBackgroundClip: "text",
       },
     },
     {
@@ -234,7 +225,6 @@ export const StyledText = styled(DEFAULT_TAG, {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $gold11, $gold9)",
-        WebkitBackgroundClip: "text",
       },
     },
     {
@@ -242,7 +232,6 @@ export const StyledText = styled(DEFAULT_TAG, {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $bronze11, $bronze9)",
-        WebkitBackgroundClip: "text",
       },
     },
     {
@@ -250,7 +239,6 @@ export const StyledText = styled(DEFAULT_TAG, {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $gray11, $gray12)",
-        WebkitBackgroundClip: "text",
       },
     },
     {
@@ -258,7 +246,6 @@ export const StyledText = styled(DEFAULT_TAG, {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $hiContrast, $gray12)",
-        WebkitBackgroundClip: "text",
       },
     },
   ],
@@ -267,22 +254,3 @@ export const StyledText = styled(DEFAULT_TAG, {
     variant: "contrast",
   },
 });
-
-type TextCSSProp = { css?: CSS };
-type TextVariants = StitchesVariants<typeof StyledText>;
-type TextOwnProps = TextCSSProp & TextVariants;
-
-type TextComponent = Polymorphic.ForwardRefComponent<
-  typeof DEFAULT_TAG,
-  TextOwnProps
->;
-
-export const Text = React.forwardRef((props, forwardedRef) => {
-  return <StyledText {...props} ref={forwardedRef} />;
-}) as TextComponent;
-
-Text.toString = () => {
-  return `.${StyledText.className}`;
-};
-
-Text.displayName = "Text";

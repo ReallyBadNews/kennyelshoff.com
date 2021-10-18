@@ -1,19 +1,10 @@
-import React from "react";
-import type * as Polymorphic from "@radix-ui/react-polymorphic";
-import { styled, CSS, StitchesVariants } from "../stitches.config";
+import { styled } from "../stitches.config";
 import { Text } from "./Text";
 
-const DEFAULT_TAG = "a";
-
-type LinkCSSProp = { css?: CSS };
-type LinkVariants = StitchesVariants<typeof StyledLink>;
-type LinkOwnProps = LinkCSSProp & LinkVariants;
-
-const StyledLink = styled(DEFAULT_TAG, {
+export const Link = styled("a", {
   alignItems: "center",
   gap: "$1",
   flexShrink: 0,
-  fontWeight: "$6",
   outline: "none",
   textDecorationLine: "none",
   textUnderlineOffset: "3px",
@@ -69,14 +60,3 @@ const StyledLink = styled(DEFAULT_TAG, {
     variant: "contrast",
   },
 });
-
-type LinkComponent = Polymorphic.ForwardRefComponent<
-  typeof DEFAULT_TAG,
-  LinkOwnProps
->;
-
-export const Link = React.forwardRef((props, forwardedRef) => {
-  return <StyledLink {...props} ref={forwardedRef} />;
-}) as LinkComponent;
-
-Link.displayName = "Link";

@@ -1,8 +1,8 @@
 import type { AppProps } from "next/app";
 import { ThemeProvider } from "next-themes";
-import { global, darkTheme } from "stitches.config";
+import { globalCss, darkTheme } from "stitches.config";
 
-const globalStyles = global({
+const globalStyles = globalCss({
   "*, *::before, *::after": {
     boxSizing: "border-box",
   },
@@ -30,7 +30,7 @@ const globalStyles = global({
   },
 });
 
-function BabaBooey({ Component, pageProps }: AppProps) {
+function BabaBooey({ Component, pageProps }: AppProps): JSX.Element {
   globalStyles();
 
   return (
