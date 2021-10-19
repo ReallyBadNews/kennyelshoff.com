@@ -17,14 +17,7 @@ export default class Document extends NextDocument {
           <link
             as="font"
             crossOrigin="anonymous"
-            href="/fonts/IBMPlexMono-Bold.woff2"
-            rel="preload"
-            type="font/woff2"
-          />
-          <link
-            as="font"
-            crossOrigin="anonymous"
-            href="/fonts/IBMPlexMono-Regular.woff2"
+            href="/fonts/iAWriterQuattroV.woff2"
             rel="preload"
             type="font/woff2"
           />
@@ -36,22 +29,17 @@ export default class Document extends NextDocument {
             dangerouslySetInnerHTML={{
               __html: `
                 @font-face {
-                  font-family: 'Inter';
+                  font-family: 'iAWriter Quattro';
                   font-weight: 200 900;
                   font-display: optional;
-                  src: url(/fonts/Inter-var.woff2) format('woff2');
+                  src: url(/fonts/iAWriterQuattroV.woff2) format('woff2');
                 }
                 @font-face {
-                  font-family: 'Plex Mono';
-                  font-weight: 400;
+                  font-family: 'IBM Plex Sans';
+                  font-style: normal;
+                  font-weight: 100 900;
                   font-display: optional;
-                  src: url(/fonts/IBMPlexMono-Regular.woff2) format('woff2');
-                }
-                @font-face {
-                  font-family: 'Plex Mono';
-                  font-weight: 700;
-                  font-display: optional;
-                  src: url(/fonts/IBMPlexMono-Bold.woff2) format('woff2');
+                  src: url(/fonts/ibm-plex-sans-var.woff2) format('woff2');
                 }
               `,
             }}

@@ -119,14 +119,26 @@ import {
 
 export type { VariantProps } from "@stitches/react";
 
-const headingFont = [
-  "'Inter'",
-  "-apple-system",
-  "'Seegoee UI'",
-  "'Helvetica Neue'",
-  "Arial",
-  "sans-serif",
-].join(", ");
+const fontStack = {
+  heading: [
+    "'Inter'",
+    "-apple-system",
+    "'Seegoee UI'",
+    "'Helvetica Neue'",
+    "Arial",
+    "sans-serif",
+  ].join(", "),
+  mono: [
+    "ui-monospace",
+    "SFMono-Regular",
+    "Menlo",
+    "Monaco",
+    "Consolas",
+    "Liberation Mono",
+    "Courier New",
+    "monospace",
+  ].join(", "),
+};
 
 export const childWithGap = "> * + *";
 
@@ -214,8 +226,8 @@ export const {
       shadowDark: "hsl(206 22% 7% / 20%)",
     },
     fonts: {
-      inter: headingFont,
-      mono: "Plex Mono",
+      inter: fontStack.heading,
+      mono: fontStack.mono,
     },
     space: {
       0: "0",
