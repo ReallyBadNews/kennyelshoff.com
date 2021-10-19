@@ -9,10 +9,15 @@ const globalStyles = globalCss({
 
   body: {
     margin: 0,
-    backgroundColor: "$slateA1",
+    backgroundColor: "$loContrast",
     fontFamily: "$inter",
     WebkitFontSmoothing: "antialiased",
     MozOsxFontSmoothing: "grayscale",
+    WebkitTextSizeAdjust: "100%",
+
+    ".dark-theme &": {
+      backgroundColor: "$mauve1",
+    },
   },
 
   svg: {
@@ -37,8 +42,10 @@ function BabaBooey({ Component, pageProps }: AppProps): JSX.Element {
     <ThemeProvider
       attribute="class"
       defaultTheme="system"
-      value={{ light: "light-theme", dark: darkTheme.toString() }}
+      value={{ light: "light-theme", dark: darkTheme.className }}
       disableTransitionOnChange
+      enableColorScheme
+      enableSystem
     >
       <Component {...pageProps} />
     </ThemeProvider>
