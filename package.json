@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint && yarn lint:ts",
-    "lint:ts": "npx tsc --noEmit"
+    "lint:ts": "npx tsc --noEmit",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@radix-ui/colors": "^0.1.7",
@@ -36,7 +37,12 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^7.0.2",
+    "lint-staged": "^11.2.3",
     "prettier": "^2.4.1",
     "typescript": "4.4.3"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "eslint --cache --fix"
   }
 }
