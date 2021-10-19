@@ -193,6 +193,7 @@ export default function Home(): JSX.Element {
           <Grid css={{ minColumnWidth: "$32" }} gap="3">
             {Array.from({ length: 14 }).map((_, i) => {
               return (
+                // eslint-disable-next-line react/no-array-index-key
                 <Box key={`array_${i}`} css={{ bg: "$skyA3", height: "$12" }} />
               );
             })}

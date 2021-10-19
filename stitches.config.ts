@@ -356,6 +356,7 @@ export const {
     bp3: "(min-width: 1200px)",
     bp4: "(min-width: 1800px)",
     motion: "(prefers-reduced-motion)",
+    motionSafe: "(prefers-reduced-motion: no-preference)",
     hover: "(any-hover: hover)",
     dark: "(prefers-color-scheme: dark)",
     light: "(prefers-color-scheme: light)",
