@@ -32,6 +32,9 @@ export const Text = styled("span", {
       },
     },
     size: {
+      "0": {
+        fontSize: "$0",
+      },
       "1": {
         fontSize: "$1",
       },
@@ -123,17 +126,19 @@ export const Text = styled("span", {
     },
     gradient: {
       true: {
-        WebkitBackgroundClip: "text",
-        WebkitTextFillColor: "transparent",
+        "-webkit-text-fill-color": "transparent",
+        "-moz-text-fill-color": "transparent",
       },
     },
   },
   compoundVariants: [
     {
       variant: "red",
-      gradient: "true",
+      gradient: true,
       css: {
         background: "linear-gradient(to right, $red11, $crimson11)",
+        WebkitBackgroundClip: "text",
+        "--moz-background-clip": "text",
       },
     },
     {
@@ -141,6 +146,8 @@ export const Text = styled("span", {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $crimson11, $pink11)",
+        WebkitBackgroundClip: "text",
+        "--moz-background-clip": "text",
       },
     },
     {
@@ -148,6 +155,8 @@ export const Text = styled("span", {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $pink11, $purple11)",
+        WebkitBackgroundClip: "text",
+        "--moz-background-clip": "text",
       },
     },
     {
@@ -155,6 +164,8 @@ export const Text = styled("span", {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $purple11, $violet11)",
+        WebkitBackgroundClip: "text",
+        "--moz-background-clip": "text",
       },
     },
     {
@@ -162,6 +173,8 @@ export const Text = styled("span", {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $violet11, $indigo11)",
+        WebkitBackgroundClip: "text",
+        "--moz-background-clip": "text",
       },
     },
     {
@@ -169,6 +182,8 @@ export const Text = styled("span", {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $indigo11, $blue11)",
+        WebkitBackgroundClip: "text",
+        "--moz-background-clip": "text",
       },
     },
     {
@@ -176,6 +191,8 @@ export const Text = styled("span", {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $blue11, $cyan11)",
+        WebkitBackgroundClip: "text",
+        "--moz-background-clip": "text",
       },
     },
     {
@@ -183,6 +200,8 @@ export const Text = styled("span", {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $cyan11, $teal11)",
+        WebkitBackgroundClip: "text",
+        "--moz-background-clip": "text",
       },
     },
     {
@@ -190,6 +209,8 @@ export const Text = styled("span", {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $teal11, $green11)",
+        WebkitBackgroundClip: "text",
+        "--moz-background-clip": "text",
       },
     },
     {
@@ -197,6 +218,8 @@ export const Text = styled("span", {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $green11, $lime11)",
+        WebkitBackgroundClip: "text",
+        "--moz-background-clip": "text",
       },
     },
     {
@@ -204,6 +227,8 @@ export const Text = styled("span", {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $lime11, $yellow11)",
+        WebkitBackgroundClip: "text",
+        "--moz-background-clip": "text",
       },
     },
     {
@@ -211,6 +236,8 @@ export const Text = styled("span", {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $yellow11, $orange11)",
+        WebkitBackgroundClip: "text",
+        "--moz-background-clip": "text",
       },
     },
     {
@@ -218,6 +245,8 @@ export const Text = styled("span", {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $orange11, $red11)",
+        WebkitBackgroundClip: "text",
+        "--moz-background-clip": "text",
       },
     },
     {
@@ -225,6 +254,8 @@ export const Text = styled("span", {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $gold11, $gold9)",
+        WebkitBackgroundClip: "text",
+        "--moz-background-clip": "text",
       },
     },
     {
@@ -232,6 +263,8 @@ export const Text = styled("span", {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $bronze11, $bronze9)",
+        WebkitBackgroundClip: "text",
+        "--moz-background-clip": "text",
       },
     },
     {
@@ -239,6 +272,8 @@ export const Text = styled("span", {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $gray11, $gray12)",
+        WebkitBackgroundClip: "text",
+        "--moz-background-clip": "text",
       },
     },
     {
@@ -246,6 +281,8 @@ export const Text = styled("span", {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $hiContrast, $gray12)",
+        WebkitBackgroundClip: "text",
+        "--moz-background-clip": "text",
       },
     },
   ],

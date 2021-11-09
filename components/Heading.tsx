@@ -51,3 +51,9 @@ export const Heading = React.forwardRef<
 });
 
 Heading.displayName = "Heading";
+
+Heading.defaultProps = {
+  as: DEFAULT_TAG,
+  css: undefined,
+  size: "1",
+};

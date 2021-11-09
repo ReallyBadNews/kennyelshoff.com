@@ -5,6 +5,7 @@ export const Link = styled("a", {
   alignItems: "center",
   gap: "$1",
   flexShrink: 0,
+  fontWeight: "$6",
   outline: "none",
   textDecorationLine: "none",
   textUnderlineOffset: "3px",

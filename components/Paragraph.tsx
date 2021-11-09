@@ -54,3 +54,9 @@ export const Paragraph = React.forwardRef<
 });
 
 Paragraph.displayName = "Paragraph";
+
+Paragraph.defaultProps = {
+  as: DEFAULT_TAG,
+  css: undefined,
+  size: "1",
+};

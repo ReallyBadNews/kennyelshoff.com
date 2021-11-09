@@ -216,9 +216,9 @@ export const {
       ...blackA,
 
       // Semantic colors
-      hiContrast: "$slateA12",
-      loContrast: "$slateA1",
-      // loContrast: "white",
+      hiContrast: "$slate12",
+      // loContrast: '$slate1',
+      loContrast: "white",
       canvas: "hsl(0 0% 93%)",
       panel: "white",
       transparentPanel: "hsl(0 0% 0% / 97%)",
@@ -357,7 +357,7 @@ export const {
       tight: "1.25",
       snug: "1.375",
       normal: "1.5",
-      relaxed: "1.625",
+      relaxed: "1.8",
       loose: "2",
     },
     shadows: {},
@@ -642,8 +642,8 @@ export const darkTheme = createTheme("dark-theme", {
     ...goldDarkA,
 
     // Semantic colors
-    hiContrast: "$slateA12",
-    loContrast: "$slateA1",
+    hiContrast: "$slate12",
+    loContrast: "$slate1",
     canvas: "hsl(0 0% 15%)",
     panel: "$slate3",
     transparentPanel: "hsl(0 100% 100% / 97%)",

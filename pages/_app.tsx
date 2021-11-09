@@ -1,6 +1,9 @@
 import type { AppProps } from "next/app";
 import { ThemeProvider } from "next-themes";
 import { globalCss, darkTheme } from "stitches.config";
+import { IdProvider } from "@radix-ui/react-id";
+import { Container } from "@components/Container";
+import { Header } from "@components/Header";
 
 const globalStyles = globalCss({
   "*, *::before, *::after": {
@@ -47,8 +50,22 @@ function BabaBooey({ Component, pageProps }: AppProps): JSX.Element {
       enableColorScheme
       enableSystem
     >
-      <Component {...pageProps} />
+      <IdProvider>
+        <Container
+          css={{
+            display: "flex",
+            flexDirection: "column",
+            minHeight: "100vh",
+            py: "$6",
+          }}
+          size="2"
+        >
+          <Header />
+          <Component {...pageProps} />
+        </Container>
+      </IdProvider>
     </ThemeProvider>
   );
 }
+
 export default BabaBooey;

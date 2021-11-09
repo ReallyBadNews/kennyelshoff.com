@@ -1,0 +1,8 @@
+{
+  "ignore": {
+    "unsplash-js": {
+      "versions": "7",
+      "reason": "removed users.statistics api"
+    }
+  }
+}
