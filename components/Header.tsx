@@ -2,7 +2,6 @@ import { Box } from "@components/Box";
 import { Image } from "@components/Image";
 import { Link } from "@components/Link";
 import { ThemeToggle } from "@components/ThemeToggle";
-// import { styled } from "stitches.config";
 import NextLink from "next/link";
 import { Stack } from "./Stack";
 
@@ -12,22 +11,6 @@ const navItems = [
   { title: "personal", path: "/me" },
   { title: "stash", path: "/stash" },
 ];
-
-// export const BoxLink = styled("a", {
-//   display: "block",
-//   color: "$hiContrast",
-//   textDecoration: "none",
-//   outline: 0,
-//   p: "$1",
-//   m: "-$1",
-//   br: "$1",
-//   "&:focus": {
-//     boxShadow: "0 0 0 2px $colors$blue8",
-//   },
-//   "&:focus:not(:focus-visible)": {
-//     boxShadow: "none",
-//   },
-// });
 
 export const Header = () => {
   return (
