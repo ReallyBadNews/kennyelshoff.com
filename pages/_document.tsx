@@ -35,11 +35,11 @@ export default class Document extends NextDocument {
                   src: url(/fonts/iAWriterQuattroV.woff2) format('woff2');
                 }
                 @font-face {
-                  font-family: 'IBM Plex Sans';
+                  font-family: 'Inter';
                   font-style: normal;
                   font-weight: 100 900;
                   font-display: optional;
-                  src: url(/fonts/ibm-plex-sans-var.woff2) format('woff2');
+                  src: url(/fonts/Inter-var.woff2) format('woff2');
                 }
               `,
             }}

@@ -41,7 +41,7 @@ const Page: React.FC<PageProps> = ({
       >
         Skip to content
       </a> */}
-      <Box css={{ my: "$8" }} id="main">
+      <Box css={{ my: "$6", "@bp1": { my: "$9" } }} id="main">
         <Component>
           {/* <Header
             date={date}

@@ -6,9 +6,8 @@ import NextLink from "next/link";
 import { Stack } from "./Stack";
 
 const navItems = [
-  { title: "home", path: "/" },
   { title: "work", path: "/work" },
-  { title: "personal", path: "/me" },
+  { title: "about", path: "/me" },
   { title: "stash", path: "/stash" },
 ];
 
@@ -20,7 +19,8 @@ export const Header = () => {
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-        alignItems: "center",
+        alignItems: "flex-start",
+        "@bp1": { alignItems: "center" },
       }}
     >
       <Stack
@@ -42,9 +42,11 @@ export const Header = () => {
             }}
           >
             <Image
-              alt="Picture of Kenny Elshoff"
+              alt="Kenny Elshoff doing a method on a snowboard"
+              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAP0lEQVQImQE0AMv/APT//93o+7m/0tzi+QCOmakAAA2Vm67i6/8AfYqfFxwmvMjg0Nz2AMna+ZytyIqbsa6/2nBcIQrExCjkAAAAAElFTkSuQmCC"
               height={48}
               layout="fixed"
+              placeholder="blur"
               src="/images/kenny.png"
               width={48}
               priority

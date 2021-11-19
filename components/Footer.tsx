@@ -13,7 +13,7 @@ export default function Footer() {
       as="footer"
       css={{
         stackGap: "$4",
-        py: "$4",
+        pt: "$4",
         mt: "auto",
         borderTop: "1px solid $grayA4",
       }}

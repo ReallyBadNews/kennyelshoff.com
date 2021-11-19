@@ -8,14 +8,14 @@ import { VariantProps } from "stitches.config";
 export const ThemeToggle: React.FC<VariantProps<typeof IconButton>> = (
   props
 ) => {
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
 
   return (
     <Tooltip align="end" content="Toggle theme" side="bottom">
       <IconButton
         variant="ghost"
         onClick={() => {
-          const newTheme = theme === "dark" ? "light" : "dark";
+          const newTheme = resolvedTheme === "dark" ? "light" : "dark";
           setTheme(newTheme);
         }}
         {...props}

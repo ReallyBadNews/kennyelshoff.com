@@ -22,10 +22,10 @@ export const Heading = React.forwardRef<
   const { size = "1", ...textProps } = props;
   // This is the mapping of Heading Variants to Text variants
   const textSize: Record<HeadingSizeVariants, TextSizeVariants["size"]> = {
-    1: { "@initial": "4", "@bp2": "5" },
-    2: { "@initial": "6", "@bp2": "7" },
-    3: { "@initial": "7", "@bp2": "8" },
-    4: { "@initial": "8", "@bp2": "9" },
+    1: { "@initial": "1", "@bp1": "3" },
+    2: { "@initial": "3", "@bp1": "5" },
+    3: { "@initial": "5", "@bp1": "7" },
+    4: { "@initial": "7", "@bp1": "9" },
   };
 
   // This is the mapping of Heading Variants to Text css

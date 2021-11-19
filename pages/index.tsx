@@ -42,7 +42,7 @@ export default function Home() {
                 photography
               </Link>
             </Paragraph>
-            <Paragraph css={{ lineHeight: "$relaxed" }} size="1" variant="gray">
+            <Paragraph size="1" variant="gray">
               {`Currently working with `}
               <Link
                 href="https://grahammedia.com/"

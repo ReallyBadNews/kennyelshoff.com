@@ -129,7 +129,7 @@ const fontStack = {
     "sans-serif",
   ].join(", "),
   mono: [
-    "ui-monospace",
+    "iAWriter Quattro",
     "SFMono-Regular",
     "Menlo",
     "Monaco",
@@ -363,8 +363,8 @@ export const {
     shadows: {},
   },
   media: {
-    bp1: "(min-width: 520px)",
-    bp2: "(min-width: 900px)",
+    bp1: "(min-width: 640px)",
+    bp2: "(min-width: 800px)",
     bp3: "(min-width: 1200px)",
     bp4: "(min-width: 1800px)",
     motion: "(prefers-reduced-motion)",
