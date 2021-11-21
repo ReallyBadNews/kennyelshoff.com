@@ -354,12 +354,20 @@ export const {
     },
     lineHeights: {
       none: "1",
-      tight: "1.25",
-      snug: "1.375",
-      normal: "1.5",
+      tight: "1.375",
+      snug: "1.5",
+      normal: "1.75",
       relaxed: "1.8",
       loose: "2",
     },
+    // lineHeights: {
+    //   none: "1",
+    //   tight: "1.25",
+    //   snug: "1.375",
+    //   normal: "1.5",
+    //   relaxed: "1.8",
+    //   loose: "2",
+    // },
     shadows: {},
   },
   media: {
