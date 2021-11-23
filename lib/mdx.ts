@@ -49,11 +49,12 @@ export const getMdxBySlug = async (
     );
   }
 
-  const source = fs.readFileSync(
+  const mdxSource = fs.readFileSync(
     path.join(DATA_PATH, basePath, `${slug}.mdx`),
     "utf8"
   );
-  const { frontmatter, code } = await bundleMDX(source, {
+  const { frontmatter, code } = await bundleMDX({
+    source: mdxSource,
     cwd: path.join(DATA_PATH, basePath),
     xdmOptions(options) {
       options.remarkPlugins = [

@@ -1,6 +1,19 @@
+/* eslint-disable react/no-danger */
+
 import React from "react";
 import NextDocument, { Html, Head, Main, NextScript } from "next/document";
-import { getCssText } from "../stitches.config";
+import { getCssText, reset } from "../stitches.config";
+
+/**
+ * Get the css and reset the internal css representation.
+ * This is very *IMPORTANT* to do as the server might handle multiple requests
+ * and we don't want to have the css accumulated from previous requests
+ */
+const getCssAndReset = () => {
+  const css = getCssText();
+  reset();
+  return css;
+};
 
 export default class Document extends NextDocument {
   render(): JSX.Element {
@@ -22,7 +35,7 @@ export default class Document extends NextDocument {
             type="font/woff2"
           />
           <style
-            dangerouslySetInnerHTML={{ __html: getCssText() }}
+            dangerouslySetInnerHTML={{ __html: getCssAndReset() }}
             id="stitches"
           />
           <style

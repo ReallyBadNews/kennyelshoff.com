@@ -1,5 +1,8 @@
-import { styled } from "../stitches.config";
+import { styled, VariantProps } from "../stitches.config";
 import { Text } from "./Text";
+
+export type LinkProps = React.ComponentProps<typeof Link> &
+  VariantProps<typeof Link>;
 
 export const Link = styled("a", {
   alignItems: "center",
@@ -22,6 +25,7 @@ export const Link = styled("a", {
     outlineStyle: "solid",
     outlineOffset: "2px",
     textDecorationLine: "none",
+    borderRadius: "$sm",
   },
   [`& ${Text}`]: {
     color: "inherit",

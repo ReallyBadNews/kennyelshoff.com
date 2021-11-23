@@ -20,7 +20,7 @@ export const Helmet: React.FC<HelmetProps> = ({
   const { pathname: routerPathName } = useRouter();
 
   const metaTitle = `${title ? `${title} - ` : ""}Kenny Elshoff`;
-  const imageUrl = `${url}/social/${image || "default.png"}`;
+  const imageUrl = `${url}/images/social/${image || "og-image.jpg"}`;
   const path = pathname || routerPathName;
 
   return (

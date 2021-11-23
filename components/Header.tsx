@@ -1,14 +1,13 @@
 import { Box } from "@components/Box";
 import { Image } from "@components/Image";
-import { Link } from "@components/Link";
 import { ThemeToggle } from "@components/ThemeToggle";
-import NextLink from "next/link";
+import NextLink from "@components/NextLink";
 import { Stack } from "./Stack";
 
 const navItems = [
   { title: "work", path: "/work" },
-  { title: "about", path: "/me" },
-  { title: "stash", path: "/stash" },
+  { title: "writing", path: "/me" },
+  { title: "/stash", path: "/stash" },
 ];
 
 export const Header = () => {
@@ -30,28 +29,26 @@ export const Header = () => {
         }}
         direction={{ "@initial": "column", "@bp1": "row" }}
       >
-        <NextLink href="/" passHref>
-          <Box
-            as="a"
-            css={{
-              bg: "$blueA2",
-              width: "$12",
-              height: "$12",
-              borderRadius: "$rg",
-              overflow: "hidden",
-            }}
-          >
-            <Image
-              alt="Kenny Elshoff doing a method on a snowboard"
-              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAP0lEQVQImQE0AMv/APT//93o+7m/0tzi+QCOmakAAA2Vm67i6/8AfYqfFxwmvMjg0Nz2AMna+ZytyIqbsa6/2nBcIQrExCjkAAAAAElFTkSuQmCC"
-              height={48}
-              layout="fixed"
-              placeholder="blur"
-              src="/images/kenny.png"
-              width={48}
-              priority
-            />
-          </Box>
+        <NextLink
+          css={{
+            bg: "$blueA2",
+            width: "$12",
+            height: "$12",
+            borderRadius: "$rg",
+            overflow: "hidden",
+          }}
+          href="/"
+        >
+          <Image
+            alt="Kenny Elshoff doing a method on a snowboard"
+            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAP0lEQVQImQE0AMv/APT//93o+7m/0tzi+QCOmakAAA2Vm67i6/8AfYqfFxwmvMjg0Nz2AMna+ZytyIqbsa6/2nBcIQrExCjkAAAAAElFTkSuQmCC"
+            height={48}
+            layout="fixed"
+            placeholder="blur"
+            src="/images/kenny.png"
+            width={48}
+            priority
+          />
         </NextLink>
         <Box as="nav">
           <Stack
@@ -68,8 +65,8 @@ export const Header = () => {
             {navItems.map((item) => {
               return (
                 <li key={item.title}>
-                  <NextLink href={item.path} passHref>
-                    <Link variant="subtle">{item.title}</Link>
+                  <NextLink href={item.path} variant="subtle">
+                    {item.title}
                   </NextLink>
                 </li>
               );

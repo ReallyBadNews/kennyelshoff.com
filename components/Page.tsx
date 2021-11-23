@@ -1,37 +1,28 @@
-import React from "react";
-// import Banner from "@/components/Banner";
-// import Header from "@/components/Header";
-import { Helmet } from "@components/Helmet";
 import Footer from "@components/Footer";
+import { Helmet } from "@components/Helmet";
+import React from "react";
 import { Box } from "./Box";
+import PageHeader from "./PageHeader";
+import { Stack } from "./Stack";
 
-interface PageProps {
+export interface PageProps {
   type?: "basic" | "post" | "work";
   title?: string;
   description?: string;
-  // date?: string;
-  // link?: string;
-  // thumbnail?: {
-  //   src: string;
-  //   width: string;
-  //   height: string;
-  //   alt: string;
-  // };
-  // slug?: string;
 }
 
 const Page: React.FC<PageProps> = ({
   title,
   // TODO: Update description
-  description = "Detail oriented user interface engineer currently interested in CSS architecture, React, TypeScript, design systems, and state machines.",
+  description,
   // date,
   // link,
   // slug,
   // thumbnail,
-  type,
+  type = "basic",
   children,
 }) => {
-  const Component = type === "basic" ? "div" : "article";
+  const Component = type === "basic" ? "section" : "article";
   return (
     <>
       <Helmet description={description} title={title} />
@@ -42,32 +33,31 @@ const Page: React.FC<PageProps> = ({
         Skip to content
       </a> */}
       <Box css={{ my: "$6", "@bp1": { my: "$9" } }} id="main">
-        <Component>
-          {/* <Header
-            date={date}
+        <Component className="content">
+          <PageHeader
+            // date={date}
             description={description}
-            link={link}
-            slug={slug}
-            thumbnail={thumbnail}
+            // link={link}
+            // slug={slug}
+            // thumbnail={thumbnail}
             title={title}
             type={type}
-          /> */}
-          {children}
+          />
+          <Stack
+            as="section"
+            css={{
+              stackGap: "$3",
+              display: "block",
+              my: !(title && description) ? "$0" : "$9",
+            }}
+          >
+            {children}
+          </Stack>
         </Component>
       </Box>
       <Footer />
     </>
   );
-};
-
-Page.defaultProps = {
-  type: "basic",
-  title: undefined,
-  description: undefined,
-  // date: undefined,
-  // link: undefined,
-  // thumbnail: undefined,
-  // slug: undefined,
 };
 
 export default Page;
