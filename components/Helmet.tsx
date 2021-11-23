@@ -39,7 +39,7 @@ export const Helmet: React.FC<HelmetProps> = ({
       <meta content="summary_large_image" name="twitter:card" />
       <meta content="Kenny Elshoff" name="author" />
 
-      <meta content="#000000" name="theme-color" />
+      <meta content="var(--hiContrast)" name="theme-color" />
       <link href="/meta-image.png" rel="apple-touch-icon" sizes="180x180" />
       <link href="/favicon.ico" rel="icon" type="image/svg+xml" />
     </Head>
