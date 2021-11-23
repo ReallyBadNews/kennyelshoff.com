@@ -2,13 +2,12 @@ import { styled } from "../stitches.config";
 
 export const Container = styled("div", {
   // Reset
-  boxSizing: "border-box",
   flexShrink: 0,
 
   // Custom
   ml: "auto",
   mr: "auto",
-  px: "$5",
+  px: "$7",
 
   variants: {
     size: {

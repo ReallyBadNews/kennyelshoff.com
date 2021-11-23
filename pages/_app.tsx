@@ -17,10 +17,6 @@ const globalStyles = globalCss({
     WebkitFontSmoothing: "antialiased",
     MozOsxFontSmoothing: "grayscale",
     WebkitTextSizeAdjust: "100%",
-
-    ".dark-theme &": {
-      backgroundColor: "$mauve1",
-    },
   },
 
   svg: {

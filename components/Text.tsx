@@ -16,8 +16,14 @@ export const Text = styled("span", {
       "4": {
         fontWeight: "$4",
       },
+      "5": {
+        fontWeight: "$5",
+      },
       "6": {
         fontWeight: "$6",
+      },
+      "7": {
+        fontWeight: "$7",
       },
       9: {
         fontWeight: "$9",
@@ -92,6 +98,9 @@ export const Text = styled("span", {
       },
       blue: {
         color: "$blue11",
+      },
+      sky: {
+        color: "$sky11",
       },
       cyan: {
         color: "$cyan11",
@@ -191,6 +200,15 @@ export const Text = styled("span", {
       gradient: "true",
       css: {
         background: "linear-gradient(to right, $blue11, $cyan11)",
+        WebkitBackgroundClip: "text",
+        "--moz-background-clip": "text",
+      },
+    },
+    {
+      variant: "sky",
+      gradient: "true",
+      css: {
+        background: "linear-gradient(to right, $sky11, $mint11)",
         WebkitBackgroundClip: "text",
         "--moz-background-clip": "text",
       },

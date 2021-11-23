@@ -13,12 +13,11 @@ module.exports = {
     node: true,
   },
   extends: [
-    // "next",
-    // "next/core-web-vitals",
+    "next",
+    "next/core-web-vitals",
     "airbnb",
     "airbnb-typescript",
     "plugin:react/recommended",
-    // "plugin:import/recommended",
     "plugin:import/typescript",
     "plugin:@next/next/recommended",
     "plugin:@typescript-eslint/recommended",
@@ -29,13 +28,11 @@ module.exports = {
     "prettier/prettier": "error",
     "react/prop-types": "off",
     "react/jsx-one-expression-per-line": ["error", { allow: "single-child" }],
+    // "react/default-props-match-prop-types": "off",
     "arrow-body-style": ["error", "always"],
     "react/react-in-jsx-scope": "off",
     "no-console": ["error", { allow: ["warn", "error"] }],
-    "import/no-extraneous-dependencies": ["error", { devDependencies: true }],
     "import/prefer-default-export": "off",
-    "react/no-danger": "off",
-    "react/jsx-props-no-spreading": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "react/jsx-sort-props": [
       "error",
@@ -53,7 +50,9 @@ module.exports = {
     {
       // enable the rule specifically for TypeScript files
       files: ["**/*.ts", "**/*.tsx"],
-      rules: {},
+      rules: {
+        "react/jsx-props-no-spreading": "off",
+      },
     },
     {
       // enable the rule specifically for TypeScript files

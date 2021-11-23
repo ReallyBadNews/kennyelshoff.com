@@ -21,7 +21,7 @@ export const Paragraph = React.forwardRef<
   React.ElementRef<typeof DEFAULT_TAG>,
   ParagraphProps
 >((props, forwardedRef) => {
-  // '2' here is the default Paragraph size variant
+  // '1' here is the default Paragraph size variant
   const { size = "1", ...textProps } = props;
 
   // This is the mapping of Paragraph Variants to Text variants

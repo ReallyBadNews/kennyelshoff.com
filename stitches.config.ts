@@ -151,6 +151,7 @@ export const {
   globalCss,
   keyframes,
   config,
+  reset,
 } = createStitches({
   theme: {
     colors: {
@@ -216,9 +217,9 @@ export const {
       ...blackA,
 
       // Semantic colors
-      hiContrast: "$slate12",
-      // loContrast: '$slate1',
-      loContrast: "white",
+      hiContrast: "$slate11",
+      loContrast: "$slate1",
+      // loContrast: "white",
       canvas: "hsl(0 0% 93%)",
       panel: "white",
       transparentPanel: "hsl(0 0% 0% / 97%)",
@@ -228,6 +229,7 @@ export const {
     fonts: {
       inter: fontStack.heading,
       mono: fontStack.mono,
+      newsreader: "Newsreader",
     },
     space: {
       0: "0",
@@ -319,7 +321,9 @@ export const {
     fontWeights: {
       1: "100",
       4: "400",
+      5: "500",
       6: "600",
+      7: "700",
       9: "900",
     },
     radii: {
