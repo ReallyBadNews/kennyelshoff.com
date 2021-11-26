@@ -1,11 +1,30 @@
-import NextLink from "next/link";
-import { ArrowRightIcon } from "@radix-ui/react-icons";
-import { styled } from "stitches.config";
-import { Link } from "./Link";
+import NextLink from "./NextLink";
 import { Text } from "./Text";
 import { Stack } from "./Stack";
+import { RightArrowIcon } from "./RightArrowIcon";
 
-const Icon = styled(ArrowRightIcon);
+const footerLinks = [
+  {
+    title: "Github",
+    url: "https://github.com/reallybadnews",
+    external: true,
+  },
+  {
+    title: "Twitter",
+    url: "https://twitter.com/kennyelshoff",
+    external: true,
+  },
+  {
+    title: "LinkedIn",
+    url: "https://linkedin.com/kennyelshoff",
+    external: true,
+  },
+  {
+    title: "Email",
+    url: "mailto:hello@kennyelshoff.com",
+    external: true,
+  },
+];
 
 export default function Footer() {
   return (
@@ -19,24 +38,26 @@ export default function Footer() {
       }}
       direction="row"
     >
-      <NextLink href="/" passHref>
-        <Link css={{ display: "flex" }} variant="subtle">
-          <Icon css={{ width: "12px", height: "12px" }} />
-          <Text size="0">Github</Text>
-        </Link>
-      </NextLink>
-      <NextLink href="/" passHref>
-        <Link css={{ display: "flex" }} variant="subtle">
-          <Icon css={{ width: "12px", height: "12px" }} />
-          <Text size="0">Twitter</Text>
-        </Link>
-      </NextLink>
-      <NextLink href="/" passHref>
-        <Link css={{ display: "flex" }} variant="subtle">
-          <Icon css={{ width: "12px", height: "12px" }} />
-          <Text size="0">LinkedIn</Text>
-        </Link>
-      </NextLink>
+      {footerLinks.map(({ title, url, external }) => {
+        return (
+          <NextLink
+            key={title}
+            css={{ display: "flex", gap: "$2" }}
+            href={url}
+            target={external ? "_blank" : undefined}
+            title={title}
+            variant="subtle"
+            passHref
+          >
+            {external ? (
+              <RightArrowIcon
+                css={{ width: "12px", height: "12px", color: "$slateA8" }}
+              />
+            ) : null}
+            <Text size="0">{title}</Text>
+          </NextLink>
+        );
+      })}
     </Stack>
   );
 }

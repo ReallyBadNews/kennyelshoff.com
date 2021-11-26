@@ -339,7 +339,7 @@ export const {
       md: "0.375rem",
       lg: "0.5rem",
       xl: "1rem",
-      full: "9999px",
+      pill: "9999px",
     },
     zIndices: {
       1: "100",
@@ -359,19 +359,11 @@ export const {
     lineHeights: {
       none: "1",
       tight: "1.375",
-      snug: "1.5",
+      snug: "1.512",
       normal: "1.75",
       relaxed: "1.8",
       loose: "2",
     },
-    // lineHeights: {
-    //   none: "1",
-    //   tight: "1.25",
-    //   snug: "1.375",
-    //   normal: "1.5",
-    //   relaxed: "1.8",
-    //   loose: "2",
-    // },
     shadows: {},
   },
   media: {
@@ -658,6 +650,7 @@ export const darkTheme = createTheme("dark-theme", {
     loContrast: "$slate1",
     canvas: "hsl(0 0% 15%)",
     panel: "$slate3",
+    // panel: "linear-gradient(90deg, $slateA1 0%, $slateA2 100%)",
     transparentPanel: "hsl(0 100% 100% / 97%)",
     shadowLight: "hsl(206 22% 7% / 35%)",
     shadowDark: "hsl(206 22% 7% / 20%)",

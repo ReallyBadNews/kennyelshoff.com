@@ -10,52 +10,54 @@ import remarkUnwrapImages from "remark-unwrap-images";
 import { Frontmatter } from "types";
 
 const ROOT_PATH = process.cwd();
-export const DATA_PATH = path.join(ROOT_PATH, "data");
+export const DATA_PATH = path.join(ROOT_PATH, "content");
 
-// the front matter and content of all mdx files based on `DATA_PATH`
-export const getAllFrontmatter = (fromPath: string): Frontmatter[] => {
-  const PATH = path.join(DATA_PATH, fromPath);
+export const postsPath = path.join(ROOT_PATH, "content/posts");
+export const stashPath = path.join(ROOT_PATH, "content/stash");
+
+const content = {
+  posts: postsPath,
+  stash: stashPath,
+};
+
+/**
+ * Get frontmatter of all mdx files from a directory in `./content`
+ */
+export const getAllFrontmatter = async (type: keyof typeof content) => {
+  const PATH = path.join(DATA_PATH, type);
   const paths = glob.sync(`${PATH}/*.mdx`);
 
-  return paths.map((filePath) => {
-    const source = fs.readFileSync(path.join(filePath), "utf8");
-    const { data } = matter(source);
+  const frontmatter = await Promise.all(
+    paths.map(async (filePath) => {
+      const source = fs.readFileSync(path.join(filePath), "utf8");
+      const { data } = matter(source);
 
-    return {
-      ...(data as Frontmatter),
-      slug: filePath.replace(`${DATA_PATH}/`, "").replace(".mdx", ""),
-    } as Frontmatter;
+      return {
+        ...(data as Frontmatter),
+        slug: filePath.replace(`${DATA_PATH}/`, "").replace(".mdx", ""),
+      } as Frontmatter;
+    })
+    // sort the posts by date in reverse chronological order
+  ).then((data) => {
+    return data.sort((a, b) => {
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    });
   });
+
+  return frontmatter;
 };
 
 export const getMdxBySlug = async (
-  basePath: string,
-  slug?: string | string[]
+  directory: keyof typeof content,
+  fileName: string
 ) => {
-  if (process.platform === "win32") {
-    process.env.ESBUILD_BINARY_PATH = path.join(
-      process.cwd(),
-      "node_modules",
-      "esbuild",
-      "esbuild.exe"
-    );
-  } else {
-    process.env.ESBUILD_BINARY_PATH = path.join(
-      process.cwd(),
-      "node_modules",
-      "esbuild",
-      "bin",
-      "esbuild"
-    );
-  }
-
   const mdxSource = fs.readFileSync(
-    path.join(DATA_PATH, basePath, `${slug}.mdx`),
+    path.join(DATA_PATH, directory, `${fileName}.mdx`),
     "utf8"
   );
   const { frontmatter, code } = await bundleMDX({
     source: mdxSource,
-    cwd: path.join(DATA_PATH, basePath),
+    cwd: path.join(DATA_PATH, directory),
     xdmOptions(options) {
       options.remarkPlugins = [
         ...(options.remarkPlugins ?? []),
@@ -78,8 +80,18 @@ export const getMdxBySlug = async (
   return {
     frontmatter: {
       ...(frontmatter as Frontmatter),
-      slug,
+      slug: fileName,
     } as Frontmatter,
     code,
   };
+};
+
+// get all mdx files from a directory in `./content`'
+export const getAllMdx = async (type: keyof typeof content) => {
+  const items = await Promise.all(
+    fs.readdirSync(content[type]).map(async (item) => {
+      return getMdxBySlug(type, item.replace(".mdx", ""));
+    })
+  );
+  return items;
 };

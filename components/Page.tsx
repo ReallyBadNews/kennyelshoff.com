@@ -1,6 +1,7 @@
-import Footer from "@components/Footer";
 import { Helmet } from "@components/Helmet";
+import { motion, useReducedMotion } from "framer-motion";
 import React from "react";
+import { CSS } from "stitches.config";
 import { Box } from "./Box";
 import PageHeader from "./PageHeader";
 import { Stack } from "./Stack";
@@ -9,6 +10,7 @@ export interface PageProps {
   type?: "basic" | "post" | "work";
   title?: string;
   description?: string;
+  stackGap?: CSS["stackGap"];
 }
 
 const Page: React.FC<PageProps> = ({
@@ -20,9 +22,12 @@ const Page: React.FC<PageProps> = ({
   // slug,
   // thumbnail,
   type = "basic",
+  stackGap = "$3",
   children,
 }) => {
-  const Component = type === "basic" ? "section" : "article";
+  const shouldReduceMotion = useReducedMotion();
+  const hasMeta = !!(title || description);
+
   return (
     <>
       <Helmet description={description} title={title} />
@@ -32,30 +37,36 @@ const Page: React.FC<PageProps> = ({
       >
         Skip to content
       </a> */}
-      <Box css={{ my: "$6", "@bp1": { my: "$9" } }} id="main">
-        <Component className="content">
-          <PageHeader
-            // date={date}
-            description={description}
-            // link={link}
-            // slug={slug}
-            // thumbnail={thumbnail}
-            title={title}
-            type={type}
-          />
-          <Stack
-            as="section"
-            css={{
-              stackGap: "$3",
-              display: "block",
-              my: !(title && description) ? "$0" : "$9",
-            }}
-          >
-            {children}
-          </Stack>
-        </Component>
+      <Box
+        as={type === "basic" ? "section" : "article"}
+        css={{ my: "$6", "@bp1": { my: "$9" } }}
+      >
+        <PageHeader
+          // date={date}
+          description={description}
+          // link={link}
+          // slug={slug}
+          // thumbnail={thumbnail}
+          title={title}
+          type={type}
+        />
+        <Stack
+          // as="section"
+          animate={{ y: 0, opacity: 1 }}
+          as={motion.section}
+          css={{
+            stackGap,
+            display: "block",
+            // my: hasMeta ? "$0" : "$9",
+            ...(hasMeta ? { my: "$6", "@bp1": { my: "$9" } } : { my: "$0" }),
+          }}
+          initial={
+            shouldReduceMotion ? { y: 0, opacity: 1 } : { y: -10, opacity: 0 }
+          }
+        >
+          {children}
+        </Stack>
       </Box>
-      <Footer />
     </>
   );
 };

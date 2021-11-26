@@ -1,13 +1,8 @@
 export type Frontmatter = {
-  title: string;
-  slug?: string;
+  date: string;
   description?: string;
-  poster?: string;
-  downloads?: {
-    name: string;
-    url: string;
-    external?: boolean;
-  }[];
+  slug?: string;
+  title: string;
 };
 
 export type MDXImages = {

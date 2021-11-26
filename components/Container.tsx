@@ -7,7 +7,11 @@ export const Container = styled("div", {
   // Custom
   ml: "auto",
   mr: "auto",
-  px: "$7",
+  px: "$3",
+
+  "@bp1": {
+    px: "$7",
+  },
 
   variants: {
     size: {

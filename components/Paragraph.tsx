@@ -34,15 +34,10 @@ export const Paragraph = React.forwardRef<
 
   // This is the mapping of Paragraph Variants to Text css
   const textCss: Record<ParagraphSizeVariants, CSS> = {
-    // TODO: Typography
     0: { lh: "$normal" },
     1: { lh: "$relaxed" },
-    2: { lineHeight: "25px", "@bp2": { lineHeight: "27px" } },
-    3: {
-      color: "$slate11",
-      lineHeight: "27px",
-      "@bp2": { lineHeight: "30px" },
-    },
+    2: { lineHeight: "$normal", "@bp1": { lineHeight: "$relaxed" } },
+    3: { lineHeight: "$snug", "@bp1": { lineHeight: "$snug" } },
   };
   return (
     <Text

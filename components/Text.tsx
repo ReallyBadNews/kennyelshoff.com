@@ -309,3 +309,5 @@ export const Text = styled("span", {
     variant: "contrast",
   },
 });
+
+Text.displayName = "Text";

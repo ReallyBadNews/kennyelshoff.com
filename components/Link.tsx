@@ -15,10 +15,8 @@ export const Link = styled("a", {
   textDecorationColor: "$slate4",
   WebkitTapHighlightColor: "rgba(0,0,0,0)",
   lineHeight: "inherit",
-  "@hover": {
-    "&:hover": {
-      textDecorationLine: "underline",
-    },
+  "&:hover": {
+    textDecorationLine: "underline",
   },
   "&:focus": {
     outlineWidth: "2px",
@@ -30,7 +28,60 @@ export const Link = styled("a", {
   [`& ${Text}`]: {
     color: "inherit",
   },
+
   variants: {
+    outline: {
+      always: {
+        "&:after": {
+          content: "",
+          position: "absolute",
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+          border: "1px solid $slateA3",
+          borderRadius: "$rg",
+        },
+        "&:hover": {
+          textDecorationColor: "$slate7",
+          "&:after": {
+            border: "2px solid $slateA5",
+          },
+        },
+        "&:focus": {
+          outline: "none",
+          "&:after": {
+            border: "2px solid $slateA7",
+            borderRadius: "$rg",
+          },
+        },
+      },
+      hover: {
+        "&:after": {
+          content: "",
+          position: "absolute",
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+          border: "1px solid $transparent",
+          borderRadius: "$rg",
+        },
+        "&:hover": {
+          textDecorationColor: "$slate7",
+          "&:after": {
+            border: "2px solid $slateA5",
+          },
+        },
+        "&:focus": {
+          outline: "none",
+          "&:after": {
+            border: "2px solid $slateA7",
+            borderRadius: "$rg",
+          },
+        },
+      },
+    },
     variant: {
       blue: {
         color: "$blue11",
@@ -50,18 +101,27 @@ export const Link = styled("a", {
         color: "$hiContrast",
         textDecoration: "underline",
         textDecorationColor: "$slate4",
-        "@hover": {
-          "&:hover": {
-            textDecorationColor: "$slate7",
-          },
+        "&:hover": {
+          textDecorationColor: "$slate7",
         },
         "&:focus": {
           outlineColor: "$slate8",
         },
       },
+      transparent: {
+        color: "inherit",
+      },
     },
   },
+  // compoundVariants: [
+  //   {
+  //     outline: "none",
+  //     variant: "transparent",
+  //     css: {},
+  //   },
+  // ],
   defaultVariants: {
     variant: "contrast",
+    outline: undefined,
   },
 });

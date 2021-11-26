@@ -49,3 +49,5 @@ export const Separator = styled(SeparatorPrimitive.Root, {
     size: "1",
   },
 });
+
+Separator.displayName = "Separator";

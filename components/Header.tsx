@@ -1,12 +1,12 @@
 import { Box } from "@components/Box";
 import { Image } from "@components/Image";
-import { ThemeToggle } from "@components/ThemeToggle";
 import NextLink from "@components/NextLink";
+import { ThemeToggle } from "@components/ThemeToggle";
 import { Stack } from "./Stack";
 
 const navItems = [
   { title: "work", path: "/work" },
-  { title: "writing", path: "/me" },
+  { title: "writing", path: "/posts" },
   { title: "/stash", path: "/stash" },
 ];
 
@@ -65,9 +65,7 @@ export const Header = () => {
             {navItems.map((item) => {
               return (
                 <li key={item.title}>
-                  <NextLink href={item.path} variant="subtle">
-                    {item.title}
-                  </NextLink>
+                  <NextLink href={item.path}>{item.title}</NextLink>
                 </li>
               );
             })}
