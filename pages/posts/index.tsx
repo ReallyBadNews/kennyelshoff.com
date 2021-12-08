@@ -49,9 +49,6 @@ const Writing: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                     <time dateTime={post.date}>{post.date}</time>
                   </Badge>
                 </div>
-                {/* <Text fontFamily="mono" size="1" variant="gray">
-                  {post.date}
-                </Text> */}
               </Stack>
               {index !== frontmatter.length - 1 && <Separator size="2" />}
             </Fragment>

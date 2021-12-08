@@ -51,13 +51,11 @@ const Page: React.FC<PageProps> = ({
           type={type}
         />
         <Stack
-          // as="section"
           animate={{ y: 0, opacity: 1 }}
           as={motion.section}
           css={{
             stackGap,
             display: "block",
-            // my: hasMeta ? "$0" : "$9",
             ...(hasMeta ? { my: "$6", "@bp1": { my: "$9" } } : { my: "$0" }),
           }}
           initial={

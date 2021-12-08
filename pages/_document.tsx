@@ -34,6 +34,13 @@ export default class Document extends NextDocument {
             rel="preload"
             type="font/woff2"
           />
+          <link
+            as="font"
+            crossOrigin="anonymous"
+            href="/fonts/JetBrainsMono-Regular.woff2"
+            rel="preload"
+            type="font/woff2"
+          />
           <style
             dangerouslySetInnerHTML={{ __html: getCssAndReset() }}
             id="stitches"
@@ -53,6 +60,13 @@ export default class Document extends NextDocument {
                   font-weight: 100 900;
                   font-display: optional;
                   src: url(/fonts/Inter-var.woff2) format('woff2');
+                }
+                @font-face {
+                  font-family: 'JetBrains Mono';
+                  font-style: normal;
+                  font-weight: 400;
+                  font-display: optional;
+                  src: url(/fonts/JetBrainsMono-Regular.woff2) format('woff2');
                 }
               `,
             }}

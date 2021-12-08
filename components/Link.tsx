@@ -1,4 +1,4 @@
-import { styled, VariantProps } from "../stitches.config";
+import { styled, VariantProps } from "stitches.config";
 import { Text } from "./Text";
 
 export type LinkProps = React.ComponentProps<typeof Link> &
@@ -32,52 +32,53 @@ export const Link = styled("a", {
   variants: {
     outline: {
       always: {
-        "&:after": {
+        "&:before": {
           content: "",
           position: "absolute",
           top: 0,
           right: 0,
           bottom: 0,
           left: 0,
-          border: "1px solid $slateA3",
+          outlineWidth: "1px",
+          outlineStyle: "solid",
+          outlineOffset: "0",
+          outlineColor: "$slate4",
           borderRadius: "$rg",
         },
         "&:hover": {
-          textDecorationColor: "$slate7",
-          "&:after": {
-            border: "2px solid $slateA5",
+          "&:before": {
+            outlineColor: "$slate7",
           },
         },
         "&:focus": {
           outline: "none",
-          "&:after": {
-            border: "2px solid $slateA7",
-            borderRadius: "$rg",
+          "&:before": {
+            outlineColor: "$slate7",
           },
         },
       },
       hover: {
-        "&:after": {
+        "&:before": {
           content: "",
           position: "absolute",
           top: 0,
           right: 0,
           bottom: 0,
           left: 0,
-          border: "1px solid $transparent",
-          borderRadius: "$rg",
+          outlineWidth: "1px",
+          outlineStyle: "solid",
+          outlineOffset: "$space$2",
+          outlineColor: "transparent",
+          borderRadius: "$sm",
         },
         "&:hover": {
-          textDecorationColor: "$slate7",
-          "&:after": {
-            border: "2px solid $slateA5",
+          "&:before": {
+            outlineColor: "$slate7",
           },
         },
         "&:focus": {
-          outline: "none",
-          "&:after": {
-            border: "2px solid $slateA7",
-            borderRadius: "$rg",
+          "&:before": {
+            outlineColor: "$slate7",
           },
         },
       },
@@ -110,16 +111,15 @@ export const Link = styled("a", {
       },
       transparent: {
         color: "inherit",
+        "&:hover": {
+          textDecorationLine: "none",
+        },
+        "&:focus": {
+          outline: "none",
+        },
       },
     },
   },
-  // compoundVariants: [
-  //   {
-  //     outline: "none",
-  //     variant: "transparent",
-  //     css: {},
-  //   },
-  // ],
   defaultVariants: {
     variant: "contrast",
     outline: undefined,
