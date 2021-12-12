@@ -62,18 +62,20 @@ export default function Work() {
                 key={title}
                 css={{
                   position: "relative",
-                  overflow: "hidden",
                   stackGap: "$3",
                   p: "$4 $3",
                   background:
                     "linear-gradient(90deg, $slateA1 0%, $slateA2 100%)",
-                  borderRadius: "$rg",
                   ...(index === 0 && { gridColumn: "-1 / 1" }),
                 }}
               >
                 <Stack css={{ stackGap: "$3" }}>
                   {url ? (
-                    <NextLink href={url} outline="always" variant="transparent">
+                    <NextLink
+                      href={url || ""}
+                      outline="always"
+                      variant="transparent"
+                    >
                       <Heading as="h3" weight="9">
                         {company}
                       </Heading>

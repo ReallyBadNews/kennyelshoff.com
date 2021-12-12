@@ -1,13 +1,12 @@
 /* eslint-disable no-param-reassign */
 import fs from "fs";
-import glob from "glob";
-import matter from "gray-matter";
 import { bundleMDX } from "mdx-bundler";
 import path from "path";
-// import remarkGfm from "remark-gfm";
 import remarkSlug from "remark-slug";
 import remarkUnwrapImages from "remark-unwrap-images";
 import { Frontmatter } from "types";
+import rehypeHighlightCode from "./rehype-highlight-code";
+import rehypeMetaAttribute from "./rehype-meta-attribute";
 
 const ROOT_PATH = process.cwd();
 export const DATA_PATH = path.join(ROOT_PATH, "content");
@@ -18,33 +17,6 @@ export const stashPath = path.join(ROOT_PATH, "content/stash");
 const content = {
   posts: postsPath,
   stash: stashPath,
-};
-
-/**
- * Get frontmatter of all mdx files from a directory in `./content`
- */
-export const getAllFrontmatter = async (type: keyof typeof content) => {
-  const PATH = path.join(DATA_PATH, type);
-  const paths = glob.sync(`${PATH}/*.mdx`);
-
-  const frontmatter = await Promise.all(
-    paths.map(async (filePath) => {
-      const source = fs.readFileSync(path.join(filePath), "utf8");
-      const { data } = matter(source);
-
-      return {
-        ...(data as Frontmatter),
-        slug: filePath.replace(`${DATA_PATH}/`, "").replace(".mdx", ""),
-      } as Frontmatter;
-    })
-    // sort the posts by date in reverse chronological order
-  ).then((data) => {
-    return data.sort((a, b) => {
-      return new Date(b.date).getTime() - new Date(a.date).getTime();
-    });
-  });
-
-  return frontmatter;
 };
 
 export const getMdxBySlug = async (
@@ -64,6 +36,11 @@ export const getMdxBySlug = async (
         remarkSlug,
         remarkUnwrapImages,
       ];
+      options.rehypePlugins = [
+        ...(options.rehypePlugins ?? []),
+        rehypeMetaAttribute,
+        rehypeHighlightCode,
+      ];
 
       return options;
     },
@@ -80,13 +57,31 @@ export const getMdxBySlug = async (
   return {
     frontmatter: {
       ...(frontmatter as Frontmatter),
-      slug: fileName,
+      slug: `${directory}/${fileName}`,
     } as Frontmatter,
     code,
   };
 };
 
-// get all mdx files from a directory in `./content`'
+/**
+ * Get frontmatter of all mdx files from a directory in `./content`
+ */
+export const getAllFrontmatter = async (type: keyof typeof content) => {
+  const items = await Promise.all(
+    fs.readdirSync(content[type]).map(async (item) => {
+      const { frontmatter } = await getMdxBySlug(
+        type,
+        item.replace(".mdx", "")
+      );
+      return frontmatter;
+    })
+  );
+  return items;
+};
+
+/**
+ * Get all mdx files from a directory in `./content`'
+ */
 export const getAllMdx = async (type: keyof typeof content) => {
   const items = await Promise.all(
     fs.readdirSync(content[type]).map(async (item) => {

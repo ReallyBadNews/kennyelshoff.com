@@ -47,7 +47,7 @@ const GMGWork: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
         </Heading>
         <Separator css={{ my: "$3", "@bp1": { my: "$5" } }} size="2" />
         <Paragraph size="1" variant="gray">
-          heello world
+          Header & Account Menu
         </Paragraph>
         <figure>
           <Image
@@ -57,6 +57,9 @@ const GMGWork: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
             placeholder="blur"
           />
         </figure>
+        <Paragraph size="1" variant="gray">
+          Header & Account Menu
+        </Paragraph>
         <figure>
           <Image
             {...images[1]}

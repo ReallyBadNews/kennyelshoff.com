@@ -1,5 +1,6 @@
 import { Badge } from "@components/Badge";
 import { MDXComponents } from "@components/MDXComponents";
+import NextLink from "@components/NextLink";
 import Page from "@components/Page";
 import { Paragraph } from "@components/Paragraph";
 import { Separator } from "@components/Separator";
@@ -18,10 +19,6 @@ export const getStaticProps = async () => {
 const Stash: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   mdx,
 }) => {
-  // const Component = useMemo(() => {
-  //   return getMDXComponent(code);
-  // }, [code]);
-
   return (
     <Page
       description="Bookmarks, save for later, and other miscellaneous tidbits I feel the need to save for later"
@@ -34,17 +31,17 @@ const Stash: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
             <Fragment key={frontmatter.slug}>
               <Stack
                 as="article"
-                css={{ position: "relative", stackGap: "$1" }}
+                css={{ position: "relative", stackGap: "$3" }}
               >
                 <Component components={MDXComponents} />
                 <Paragraph fontFamily="mono" size="1" variant="gray">
                   {frontmatter.description}
                 </Paragraph>
-                <div>
+                <NextLink href={`${frontmatter.slug}`} variant="transparent">
                   <Badge size="1" variant="gray">
                     <time dateTime={frontmatter.date}>{frontmatter.date}</time>
                   </Badge>
-                </div>
+                </NextLink>
               </Stack>
               {index !== mdx.length - 1 && <Separator size="2" />}
             </Fragment>

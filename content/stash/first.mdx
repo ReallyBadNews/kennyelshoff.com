@@ -3,16 +3,139 @@ date: "2021-11-30T14:43:49Z"
 tags: "typescript"
 ---
 
-Disallow strings as children in React.
+### Highlight specific lines
 
-```ts
-import { ReactElement } from "react";
+Drive attention to specific parts in the code:
 
-interface ReactNodeArray extends Array<ReactNodeNoStrings> {}
-export type ReactNodeNoStrings =
-  | ReactElement
-  | ReactNodeArray
-  | boolean
-  | null
-  | undefined;
+```jsx line=1,4
+import React from "react";
+
+export function Counter({ initialCount = 0 }) {
+  const [count, setCount] = React.useState(initialCount);
+  return (
+    <button
+      type="button"
+      onClick={() => setCount((prevCount) => prevCount + 1)}
+    >
+      {count}
+    </button>
+  );
+}
+```
+
+### Highlight specific words
+
+Drive attention to specific words in the code:
+
+```jsx
+import React from "react";
+
+export function Counter({ __initialCount__ = 0 }) {
+  const [count, setCount] = React.useState(__initialCount__);
+  return (
+    <button
+      type="button"
+      onClick={() => setCount((prevCount) => prevCount + 1)}
+    >
+      {count}
+    </button>
+  );
+}
+```
+
+### Interact with the content
+
+Create connections between the content and the code block.
+
+Try it yourself, <H id="demo1" index="1,2">hover me</H> and watch the code
+block:
+
+```jsx id=demo1
+import React from "react";
+
+export function Counter({ initialCount = 0 }) {
+  const [count, __setCount__] = React.useState(initialCount);
+  return (
+    <button
+      type="button"
+      onClick={() => __setCount__((prevCount) => prevCount + 1)}
+    >
+      {count}
+    </button>
+  );
+}
+```
+
+### Make specific words link to other pages
+
+Click a highlighted word to navigate to a different page:
+
+<RegisterLink id="demo2" index="1" href="https://reactjs.org/" />
+
+```jsx id=demo2
+import React from "__react__";
+
+export function Counter({ initialCount = 0 }) {
+  const [count, setCount] = React.useState(initialCount);
+  return (
+    <button
+      type="button"
+      onClick={() => setCount((prevCount) => prevCount + 1)}
+    >
+      {count}
+    </button>
+  );
+}
+```
+
+### Show line numbers
+
+Choose whether to display line numbers or not:
+
+```jsx showLineNumbers
+import React from "react";
+
+export function Counter({ initialCount = 0 }) {
+  const [count, setCount] = React.useState(initialCount);
+  return (
+    <button
+      type="button"
+      onClick={() => setCount((prevCount) => prevCount + 1)}
+    >
+      {count}
+    </button>
+  );
+}
+```
+
+### Render a preview
+
+Render an interactive preview of what your code block is showing. Click the
+button!
+
+{
+
+<Preview>
+  <h1>Hello world!</h1>
+</Preview>
+}
+
+```jsx
+<h1>Hello world!</h1>
+```
+
+### Make it collapsible/expandable
+
+Option to have the code block collapsed:
+
+{
+
+<Preview>
+  <h1>Hello world!</h1>
+</Preview>
+
+}
+
+```jsx collapsible
+<h1>Hello world!</h1>
 ```

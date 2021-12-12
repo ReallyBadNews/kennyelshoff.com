@@ -138,6 +138,7 @@ const fontStack = {
     "Courier New",
     "monospace",
   ].join(", "),
+  jet: "JetBrains Mono",
 };
 
 export const childWithGap = "> * + *";
@@ -229,7 +230,7 @@ export const {
     fonts: {
       inter: fontStack.heading,
       mono: fontStack.mono,
-      newsreader: "Newsreader",
+      jet: fontStack.jet,
     },
     space: {
       0: "0",
