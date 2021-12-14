@@ -5,7 +5,6 @@
  * */
 
 const { withPlaiceholder } = require("@plaiceholder/next");
-const withTM = require("next-transpile-modules")(["rehype-parse"]); // pass the modules you would like to see transpiled
 
 const nextConfig = {
   reactStrictMode: true,
@@ -14,4 +13,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withTM(withPlaiceholder({ nextConfig }));
+module.exports = withPlaiceholder({ nextConfig });

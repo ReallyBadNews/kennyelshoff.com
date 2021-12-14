@@ -32,7 +32,7 @@ const GMGWork: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 }) => {
   return (
     <Page
-      description="Front-end engineeer and designer helping build and maintain sites for the seven television stations in our group and WPLG!"
+      description="Design Engineer building tools for storytellers, and creating a community through local news"
       title="Graham Media Group"
     >
       <Stack css={{ stackGap: "$3", display: "block" }}>

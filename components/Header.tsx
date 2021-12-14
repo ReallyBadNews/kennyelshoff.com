@@ -65,7 +65,9 @@ export const Header = () => {
             {navItems.map((item) => {
               return (
                 <li key={item.title}>
-                  <NextLink href={item.path}>{item.title}</NextLink>
+                  <NextLink href={item.path} title={item.title}>
+                    {item.title}
+                  </NextLink>
                 </li>
               );
             })}

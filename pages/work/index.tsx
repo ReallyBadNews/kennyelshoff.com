@@ -64,6 +64,7 @@ export default function Work() {
                   position: "relative",
                   stackGap: "$3",
                   p: "$4 $3",
+                  borderRadius: "$rg",
                   background:
                     "linear-gradient(90deg, $slateA1 0%, $slateA2 100%)",
                   ...(index === 0 && { gridColumn: "-1 / 1" }),

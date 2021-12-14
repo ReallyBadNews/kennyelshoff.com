@@ -42,7 +42,6 @@ export function Tooltip({
       onOpenChange={onOpenChange}
     >
       <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
-
       <Content
         align="center"
         side="top"

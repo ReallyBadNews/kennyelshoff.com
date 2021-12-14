@@ -8,6 +8,7 @@ import { Heading } from "./Heading";
 import { Paragraph } from "./Paragraph";
 import { Pre } from "./Pre";
 import { Preview } from "./Preview";
+import { Kbd } from "./Kbd";
 
 export const MDXComponents: ComponentMap = {
   h1: ({ children }) => {
@@ -167,4 +168,7 @@ export const MDXComponents: ComponentMap = {
     return <code ref={triggerRef} {...props} />;
   },
   Preview,
+  Kbd: ({ children }) => {
+    return <Kbd>{children}</Kbd>;
+  },
 };

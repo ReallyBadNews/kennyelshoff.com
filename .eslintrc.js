@@ -21,14 +21,12 @@ module.exports = {
     "plugin:import/typescript",
     "plugin:@next/next/recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:mdx/recommended",
-    "prettier",
+    "plugin:prettier/recommended",
   ],
   rules: {
     "prettier/prettier": "error",
     "react/prop-types": "off",
     "react/jsx-one-expression-per-line": ["error", { allow: "single-child" }],
-    // "react/default-props-match-prop-types": "off",
     "arrow-body-style": ["error", "always"],
     "react/react-in-jsx-scope": "off",
     "no-console": ["error", { allow: ["warn", "error"] }],
@@ -63,10 +61,6 @@ module.exports = {
     },
   ],
   settings: {
-    "mdx/code-blocks": true,
-    // optional, if you want to disable language mapper, set it to `false`
-    // if you want to override the default language mapper inside, you can provide your own
-    "mdx/language-mapper": {},
     react: {
       version: "detect",
     },
