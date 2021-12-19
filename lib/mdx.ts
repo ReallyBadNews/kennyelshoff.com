@@ -19,15 +19,22 @@ const content = {
   stash: stashPath,
 };
 
-export const getMdxBySlug = async (
-  directory: keyof typeof content,
-  fileName: string
-) => {
+interface GetMdxBySlug {
+  (type: keyof typeof content, slug: string): Promise<{
+    frontmatter: Frontmatter;
+    code: string;
+  }>;
+}
+
+export const getMdxBySlug: GetMdxBySlug = async (
+  directory,
+  fileName
+): Promise<{ frontmatter: Frontmatter; code: string }> => {
   const mdxSource = fs.readFileSync(
     path.join(DATA_PATH, directory, `${fileName}.mdx`),
     "utf8"
   );
-  const { frontmatter, code } = await bundleMDX({
+  const { frontmatter, code } = await bundleMDX<Frontmatter>({
     source: mdxSource,
     cwd: path.join(DATA_PATH, directory),
     xdmOptions(options) {
@@ -56,9 +63,9 @@ export const getMdxBySlug = async (
 
   return {
     frontmatter: {
-      ...(frontmatter as Frontmatter),
+      ...frontmatter,
       slug: `${directory}/${fileName}`,
-    } as Frontmatter,
+    },
     code,
   };
 };

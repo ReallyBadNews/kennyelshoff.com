@@ -95,7 +95,7 @@ export const MDXComponents: ComponentMap = {
   // @ts-expect-error - mdx-bundler expects to return a component, not void
   RegisterLink: ({
     id,
-    index,
+    index = 0,
     href,
   }: {
     id: string;

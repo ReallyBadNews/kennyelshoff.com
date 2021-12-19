@@ -7,7 +7,7 @@ module.exports = {
     ecmaVersion: 6,
     project: "./tsconfig.eslint.json",
   },
-  plugins: ["@typescript-eslint", "eslint-plugin-prettier"],
+  plugins: ["@typescript-eslint", "prettier"],
   env: {
     browser: true,
     node: true,
@@ -26,6 +26,7 @@ module.exports = {
   rules: {
     "prettier/prettier": "error",
     "react/prop-types": "off",
+    "react/function-component-definition": "off",
     "react/jsx-one-expression-per-line": ["error", { allow: "single-child" }],
     "arrow-body-style": ["error", "always"],
     "react/react-in-jsx-scope": "off",
