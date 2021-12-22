@@ -4,7 +4,7 @@ import { Paragraph } from "@components/Paragraph";
 import { Stack } from "@components/Stack";
 import React from "react";
 
-type PageHeaderProps = Pick<PageProps, "title" | "type" | "description">;
+type PageHeaderProps = Omit<PageProps, "stackGap">;
 
 const PageHeader: React.FC<PageHeaderProps> = ({
   title,

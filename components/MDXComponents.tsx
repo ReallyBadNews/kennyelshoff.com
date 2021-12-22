@@ -59,7 +59,12 @@ export const MDXComponents: ComponentMap = {
           borderLeft: "$space$1 solid $slate6",
           pl: "$3",
           my: "$6",
-          "& p": { color: "inherit", fontSize: "$4", lineHeight: "$snug" },
+          "& p": {
+            color: "inherit",
+            fontSize: "$4",
+            lineHeight: "$snug",
+            fontWeight: "$5",
+          },
         }}
       >
         {children}

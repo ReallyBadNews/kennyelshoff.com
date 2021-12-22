@@ -1,3 +1,4 @@
+import { Grid } from "@components/Grid";
 import { Heading } from "@components/Heading";
 import { Image } from "@components/Image";
 import Page from "@components/Page";
@@ -32,7 +33,7 @@ const GMGWork: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 }) => {
   return (
     <Page
-      description="Design Engineer building tools for storytellers, and creating a community through local news"
+      description="Design Engineer building tools for storytellers and developers. Creating a community through local news"
       title="Graham Media Group"
     >
       <Stack css={{ stackGap: "$3", display: "block" }}>
@@ -43,31 +44,43 @@ const GMGWork: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
           variant="contrast"
           weight="7"
         >
-          Projects
+          Select Projects
         </Heading>
         <Separator css={{ my: "$3", "@bp1": { my: "$5" } }} size="2" />
-        <Paragraph size="1" variant="gray">
-          Header & Account Menu
-        </Paragraph>
-        <figure>
-          <Image
-            {...images[0]}
-            css={{ borderRadius: "$rg" }}
-            layout="responsive"
-            placeholder="blur"
-          />
-        </figure>
-        <Paragraph size="1" variant="gray">
-          Header & Account Menu
-        </Paragraph>
-        <figure>
-          <Image
-            {...images[1]}
-            css={{ borderRadius: "$rg" }}
-            layout="responsive"
-            placeholder="blur"
-          />
-        </figure>
+        <Grid columns={1} gap="5">
+          <figure>
+            <Image
+              {...images[0]}
+              css={{ borderRadius: "$rg" }}
+              layout="responsive"
+              placeholder="blur"
+            />
+            <Paragraph
+              as="figcaption"
+              css={{ mt: "$1" }}
+              size="0"
+              variant="gray"
+            >
+              Header & Account Menu
+            </Paragraph>
+          </figure>
+          <figure>
+            <Image
+              {...images[1]}
+              css={{ borderRadius: "$rg" }}
+              layout="responsive"
+              placeholder="blur"
+            />
+            <Paragraph
+              as="figcaption"
+              css={{ mt: "$1" }}
+              size="0"
+              variant="gray"
+            >
+              Article Page
+            </Paragraph>
+          </figure>
+        </Grid>
       </Stack>
     </Page>
   );

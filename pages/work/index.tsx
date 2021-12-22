@@ -63,10 +63,10 @@ export default function Work() {
                 css={{
                   position: "relative",
                   stackGap: "$3",
-                  p: "$4 $3",
+                  p: "$5 $3",
                   borderRadius: "$rg",
                   background:
-                    "linear-gradient(90deg, $slateA1 0%, $slateA2 100%)",
+                    "linear-gradient(135deg, $slateA1 50%, $slateA2 100%)",
                   ...(index === 0 && { gridColumn: "-1 / 1" }),
                 }}
               >
