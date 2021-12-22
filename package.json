@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint && yarn lint:ts",
+    "lint": "next lint && npm run lint:ts",
     "lint:ts": "npx tsc --noEmit",
     "lint:fix": "next lint --fix",
     "lint:staged": "lint-staged",
