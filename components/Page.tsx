@@ -1,6 +1,6 @@
 import { Helmet } from "@components/Helmet";
 import { motion, useReducedMotion } from "framer-motion";
-import React from "react";
+import { FC } from "react";
 import { CSS } from "stitches.config";
 import { Box } from "./Box";
 import PageHeader from "./PageHeader";
@@ -13,7 +13,7 @@ export interface PageProps {
   stackGap?: CSS["stackGap"];
 }
 
-const Page: React.FC<PageProps> = ({
+const Page: FC<PageProps> = ({
   title,
   // TODO: Update description
   description,

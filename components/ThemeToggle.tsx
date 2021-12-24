@@ -1,13 +1,11 @@
-import React from "react";
+import { FC } from "react";
 import { useTheme } from "next-themes";
 import { SunIcon } from "@radix-ui/react-icons";
 import { IconButton } from "@components/IconButton";
 import { Tooltip } from "@components/Tooltip";
 import { VariantProps } from "stitches.config";
 
-export const ThemeToggle: React.FC<VariantProps<typeof IconButton>> = (
-  props
-) => {
+export const ThemeToggle: FC<VariantProps<typeof IconButton>> = (props) => {
   const { resolvedTheme, setTheme } = useTheme();
 
   return (

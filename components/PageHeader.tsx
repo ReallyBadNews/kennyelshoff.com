@@ -2,11 +2,11 @@ import { Heading } from "@components/Heading";
 import type { PageProps } from "@components/Page";
 import { Paragraph } from "@components/Paragraph";
 import { Stack } from "@components/Stack";
-import React from "react";
+import { FC } from "react";
 
 type PageHeaderProps = Omit<PageProps, "stackGap">;
 
-const PageHeader: React.FC<PageHeaderProps> = ({
+const PageHeader: FC<PageHeaderProps> = ({
   title,
   // type,
   description,

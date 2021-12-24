@@ -1,5 +1,5 @@
 import NextImage from "next/image";
-import { styled } from "../stitches.config";
+import { styled } from "stitches.config";
 
 export const Image = styled(NextImage, {
   // Reset

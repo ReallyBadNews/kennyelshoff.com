@@ -1,6 +1,6 @@
 import * as Collapsible from "@radix-ui/react-collapsible";
-import React from "react";
 import { styled } from "stitches.config";
+import { useState } from "react";
 import { Button } from "./Button";
 
 export interface CodeProps {
@@ -41,7 +41,7 @@ export const Code: React.FC<CodeProps> = ({
   ...rest
 }) => {
   const isCollapsible = typeof collapsible !== "undefined";
-  const [isOpen, setIsOpen] = React.useState(!isCollapsible);
+  const [isOpen, setIsOpen] = useState(!isCollapsible);
   const isInline = typeof children === "string";
 
   const content = isInline ? (

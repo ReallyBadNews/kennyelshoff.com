@@ -1,6 +1,6 @@
+import { useEffect, useRef } from "react";
 import { ComponentMap } from "mdx-bundler/client";
 import rangeParser from "parse-numeric-range";
-import React from "react";
 import { CSS, VariantProps } from "stitches.config";
 import { Box } from "./Box";
 import { Code, CodeProps } from "./Code";
@@ -109,7 +109,7 @@ export const MDXComponents: ComponentMap = {
   }) => {
     const isExternal = href.startsWith("http");
 
-    React.useEffect(() => {
+    useEffect(() => {
       const codeBlock = document.getElementById(id);
       if (!codeBlock) return undefined;
 
@@ -130,9 +130,9 @@ export const MDXComponents: ComponentMap = {
     return null;
   },
   H: ({ id, index, ...props }) => {
-    const triggerRef = React.useRef<HTMLElement>(null);
+    const triggerRef = useRef<HTMLElement>(null);
 
-    React.useEffect(() => {
+    useEffect(() => {
       const { current: trigger } = triggerRef;
 
       if (trigger) {

@@ -1,3 +1,4 @@
+import { Gallery } from "@components/Gallery";
 import { Grid } from "@components/Grid";
 import { Heading } from "@components/Heading";
 import { Image } from "@components/Image";
@@ -47,7 +48,7 @@ const GMGWork: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
           Select Projects
         </Heading>
         <Separator css={{ my: "$3", "@bp1": { my: "$5" } }} size="2" />
-        <Grid columns={1} gap="5">
+        <Grid columns={2} gap="5">
           <figure>
             <Image
               {...images[0]}
@@ -81,6 +82,28 @@ const GMGWork: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
             </Paragraph>
           </figure>
         </Grid>
+        <Gallery>
+          <Image
+            // {...images[0]}
+            css={{ borderRadius: "$rg" }}
+            height={9}
+            layout="responsive"
+            // placeholder="blur"
+            objectFit="cover"
+            src="/images/work/gmg/clickondetroit.png"
+            width={16}
+          />
+          <Image
+            // {...images[1]}
+            css={{ borderRadius: "$rg" }}
+            height={9}
+            layout="responsive"
+            objectFit="cover"
+            // placeholder="blur"
+            src="/images/work/gmg/cod-article.png"
+            width={16}
+          />
+        </Gallery>
       </Stack>
     </Page>
   );

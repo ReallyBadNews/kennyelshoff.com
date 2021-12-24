@@ -3,7 +3,6 @@ import Footer from "@components/Footer";
 import { Header } from "@components/Header";
 import { ThemeProvider } from "next-themes";
 import type { AppProps } from "next/app";
-import React from "react";
 import { darkTheme, globalCss } from "stitches.config";
 
 const globalStyles = globalCss({

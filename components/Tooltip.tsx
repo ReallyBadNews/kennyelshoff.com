@@ -1,13 +1,13 @@
-import React from "react";
+import { ComponentProps, ReactElement, ReactNode } from "react";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import { styled } from "../stitches.config";
 import { Box } from "./Box";
 import { Text } from "./Text";
 
-type TooltipProps = React.ComponentProps<typeof TooltipPrimitive.Root> &
-  React.ComponentProps<typeof TooltipPrimitive.Content> & {
-    children: React.ReactElement;
-    content: React.ReactNode;
+type TooltipProps = ComponentProps<typeof TooltipPrimitive.Root> &
+  ComponentProps<typeof TooltipPrimitive.Content> & {
+    children: ReactElement;
+    content: ReactNode;
     multiline?: boolean;
   };
 
