@@ -1,6 +1,6 @@
+import { useEffect, useRef } from "react";
 import { ComponentMap } from "mdx-bundler/client";
 import rangeParser from "parse-numeric-range";
-import React from "react";
 import { CSS, VariantProps } from "stitches.config";
 import { Box } from "./Box";
 import { Code, CodeProps } from "./Code";
@@ -8,6 +8,7 @@ import { Heading } from "./Heading";
 import { Paragraph } from "./Paragraph";
 import { Pre } from "./Pre";
 import { Preview } from "./Preview";
+import { Kbd } from "./Kbd";
 
 export const MDXComponents: ComponentMap = {
   h1: ({ children }) => {
@@ -58,7 +59,12 @@ export const MDXComponents: ComponentMap = {
           borderLeft: "$space$1 solid $slate6",
           pl: "$3",
           my: "$6",
-          "& p": { color: "inherit", fontSize: "$4", lineHeight: "$snug" },
+          "& p": {
+            color: "inherit",
+            fontSize: "$4",
+            lineHeight: "$snug",
+            fontWeight: "$5",
+          },
         }}
       >
         {children}
@@ -94,7 +100,7 @@ export const MDXComponents: ComponentMap = {
   // @ts-expect-error - mdx-bundler expects to return a component, not void
   RegisterLink: ({
     id,
-    index,
+    index = 0,
     href,
   }: {
     id: string;
@@ -103,7 +109,7 @@ export const MDXComponents: ComponentMap = {
   }) => {
     const isExternal = href.startsWith("http");
 
-    React.useEffect(() => {
+    useEffect(() => {
       const codeBlock = document.getElementById(id);
       if (!codeBlock) return undefined;
 
@@ -124,9 +130,9 @@ export const MDXComponents: ComponentMap = {
     return null;
   },
   H: ({ id, index, ...props }) => {
-    const triggerRef = React.useRef<HTMLElement>(null);
+    const triggerRef = useRef<HTMLElement>(null);
 
-    React.useEffect(() => {
+    useEffect(() => {
       const { current: trigger } = triggerRef;
 
       if (trigger) {
@@ -167,4 +173,7 @@ export const MDXComponents: ComponentMap = {
     return <code ref={triggerRef} {...props} />;
   },
   Preview,
+  Kbd: ({ children }) => {
+    return <Kbd>{children}</Kbd>;
+  },
 };

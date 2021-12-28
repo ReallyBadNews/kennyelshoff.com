@@ -1,5 +1,6 @@
 import * as Collapsible from "@radix-ui/react-collapsible";
-import React from "react";
+import { styled } from "stitches.config";
+import { useState } from "react";
 import { Button } from "./Button";
 
 export interface CodeProps {
@@ -9,6 +10,29 @@ export interface CodeProps {
   showLineNumbers?: string;
 }
 
+export const InlineCode = styled("code", {
+  fontFamily: "$jet",
+  fontSize: "$2",
+  whiteSpace: "nowrap",
+  padding: "0 $1 2px $1",
+
+  variants: {
+    variant: {
+      gray: {
+        backgroundColor: "$slate3",
+        color: "$slate11",
+      },
+      violet: {
+        backgroundColor: "$violet3",
+        color: "$violet11",
+      },
+    },
+  },
+  defaultVariants: {
+    variant: "gray",
+  },
+});
+
 export const Code: React.FC<CodeProps> = ({
   children,
   id,
@@ -17,12 +41,19 @@ export const Code: React.FC<CodeProps> = ({
   ...rest
 }) => {
   const isCollapsible = typeof collapsible !== "undefined";
-  const [isOpen, setIsOpen] = React.useState(!isCollapsible);
-  const content = (
+  const [isOpen, setIsOpen] = useState(!isCollapsible);
+  const isInline = typeof children === "string";
+
+  const content = isInline ? (
+    <InlineCode id={id} {...rest}>
+      {children}
+    </InlineCode>
+  ) : (
     <code id={id} {...rest}>
       {children}
     </code>
   );
+
   return isCollapsible ? (
     <Collapsible.Root
       defaultOpen={isOpen}

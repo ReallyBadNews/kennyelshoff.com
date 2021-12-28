@@ -1,11 +1,11 @@
-import React from "react";
+import { ComponentProps, ReactNode, ElementRef, forwardRef } from "react";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 import { styled, CSS } from "../stitches.config";
 import { Box } from "./Box";
 import { panelStyles } from "./Panel";
 
-type PopoverProps = React.ComponentProps<typeof PopoverPrimitive.Root> & {
-  children: React.ReactNode;
+type PopoverProps = ComponentProps<typeof PopoverPrimitive.Root> & {
+  children: ReactNode;
 };
 
 export function Popover({ children, ...props }: PopoverProps) {
@@ -21,7 +21,7 @@ const StyledContent = styled(PopoverPrimitive.Content, panelStyles, {
   },
 });
 
-type PopoverContentPrimitiveProps = React.ComponentProps<
+type PopoverContentPrimitiveProps = ComponentProps<
   typeof PopoverPrimitive.Content
 >;
 
@@ -30,8 +30,8 @@ type PopoverContentProps = PopoverContentPrimitiveProps & {
   hideArrow?: boolean;
 };
 
-export const PopoverContent = React.forwardRef<
-  React.ElementRef<typeof StyledContent>,
+export const PopoverContent = forwardRef<
+  ElementRef<typeof StyledContent>,
   PopoverContentProps
 >(({ children, hideArrow = true, ...props }, fowardedRef) => {
   return (

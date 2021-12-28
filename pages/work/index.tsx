@@ -63,9 +63,10 @@ export default function Work() {
                 css={{
                   position: "relative",
                   stackGap: "$3",
-                  p: "$4 $3",
+                  p: "$5 $3",
+                  borderRadius: "$rg",
                   background:
-                    "linear-gradient(90deg, $slateA1 0%, $slateA2 100%)",
+                    "linear-gradient(135deg, $slateA1 50%, $slateA2 100%)",
                   ...(index === 0 && { gridColumn: "-1 / 1" }),
                 }}
               >
@@ -113,7 +114,7 @@ export default function Work() {
           variant="contrast"
           weight="7"
         >
-          Interests
+          Passions
         </Heading>
         <Separator css={{ my: "$3", "@bp1": { my: "$5" } }} size="2" />
         <Grid
@@ -123,14 +124,15 @@ export default function Work() {
           gap="3"
         >
           {[
+            "Design Thinking",
+            "Developer Tooling",
+            "Accessibility",
+            "Keyboard Shortcuts",
+            "Stressing the Details",
+            "Design Systems",
             "CSS",
             "React",
-            "Next.js",
             "TypeScript",
-            "Design Systems",
-            "Performance",
-            "State Machines",
-            "Accessibility",
           ].map((item) => {
             return (
               <Stack

@@ -6,6 +6,7 @@ import { Paragraph } from "@components/Paragraph";
 import { Separator } from "@components/Separator";
 import { Stack } from "@components/Stack";
 import { getAllMdx } from "@lib/mdx";
+import { formatDate } from "@lib/utils";
 import { getMDXComponent } from "mdx-bundler/client";
 import { InferGetStaticPropsType } from "next";
 import { Fragment } from "react";
@@ -39,7 +40,9 @@ const Stash: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                 </Paragraph>
                 <NextLink href={`${frontmatter.slug}`} variant="transparent">
                   <Badge size="1" variant="gray">
-                    <time dateTime={frontmatter.date}>{frontmatter.date}</time>
+                    <time dateTime={frontmatter.date}>
+                      {formatDate(frontmatter.date, "short")}
+                    </time>
                   </Badge>
                 </NextLink>
               </Stack>

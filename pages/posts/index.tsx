@@ -6,6 +6,7 @@ import { Paragraph } from "@components/Paragraph";
 import { Separator } from "@components/Separator";
 import { Stack } from "@components/Stack";
 import { getAllFrontmatter } from "@lib/mdx";
+import { formatDate } from "@lib/utils";
 import { InferGetStaticPropsType } from "next";
 import { Fragment } from "react";
 
@@ -46,7 +47,9 @@ const Writing: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                 </Paragraph>
                 <div>
                   <Badge size="1" variant="gray">
-                    <time dateTime={post.date}>{post.date}</time>
+                    <time dateTime={post.date}>
+                      {formatDate(post.date, "medium")}
+                    </time>
                   </Badge>
                 </div>
               </Stack>

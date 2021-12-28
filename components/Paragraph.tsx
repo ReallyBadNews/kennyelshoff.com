@@ -1,7 +1,7 @@
-import React from "react";
 import merge from "lodash.merge";
+import { ComponentProps, ElementRef, forwardRef } from "react";
+import { CSS, VariantProps } from "../stitches.config";
 import { Text } from "./Text";
-import { VariantProps, CSS } from "../stitches.config";
 
 const DEFAULT_TAG = "p";
 
@@ -11,14 +11,14 @@ type ParagraphVariants = { size?: ParagraphSizeVariants } & Omit<
   VariantProps<typeof Text>,
   "size"
 >;
-type ParagraphProps = React.ComponentProps<typeof DEFAULT_TAG> &
+type ParagraphProps = ComponentProps<typeof DEFAULT_TAG> &
   ParagraphVariants & {
     css?: CSS;
     as?: React.ElementType;
   };
 
-export const Paragraph = React.forwardRef<
-  React.ElementRef<typeof DEFAULT_TAG>,
+export const Paragraph = forwardRef<
+  ElementRef<typeof DEFAULT_TAG>,
   ParagraphProps
 >((props, forwardedRef) => {
   // '1' here is the default Paragraph size variant

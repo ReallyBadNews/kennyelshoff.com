@@ -5,13 +5,13 @@
  * */
 
 const { withPlaiceholder } = require("@plaiceholder/next");
-const withTM = require("next-transpile-modules")(["rehype-parse"]); // pass the modules you would like to see transpiled
 
 const nextConfig = {
   reactStrictMode: true,
-  experimental: {
-    concurrentFeatures: true,
+  images: {
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
 };
 
-module.exports = withTM(withPlaiceholder({ nextConfig }));
+module.exports = withPlaiceholder({ nextConfig });

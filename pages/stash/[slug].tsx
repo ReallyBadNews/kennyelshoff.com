@@ -20,12 +20,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps = async ({
-  params: { slug } = {},
-}: {
-  params?: { slug?: string };
-}) => {
-  const { frontmatter, code } = await getMdxBySlug("stash", slug as string);
+export const getStaticProps = async ({ params: { slug = "" } = {} }) => {
+  const { frontmatter, code } = await getMdxBySlug("stash", slug);
 
   return { props: { frontmatter, code } };
 };

@@ -2,6 +2,8 @@ import { Box } from "@components/Box";
 import { Image } from "@components/Image";
 import NextLink from "@components/NextLink";
 import { ThemeToggle } from "@components/ThemeToggle";
+import { motion } from "framer-motion";
+import { useState } from "react";
 import { Stack } from "./Stack";
 
 const navItems = [
@@ -11,6 +13,8 @@ const navItems = [
 ];
 
 export const Header = () => {
+  const [activeItem, setActiveItem] = useState<number | null>(null);
+
   return (
     <Box
       as="header"
@@ -50,9 +54,9 @@ export const Header = () => {
             priority
           />
         </NextLink>
-        <Box as="nav">
+        <nav>
           <Stack
-            as="ul"
+            as={motion.ul}
             css={{
               stackGap: "$3",
               p: "0",
@@ -61,16 +65,58 @@ export const Header = () => {
               "@bp1": { stackGap: "$5" },
             }}
             direction="row"
+            onHoverEnd={() => {
+              return setActiveItem(null);
+            }}
+            onHoverStart={() => {}}
           >
-            {navItems.map((item) => {
+            {navItems.map((item, index) => {
+              const activeIndex = activeItem === index;
+
               return (
-                <li key={item.title}>
-                  <NextLink href={item.path}>{item.title}</NextLink>
-                </li>
+                <motion.li
+                  key={item.title}
+                  onHoverStart={() => {
+                    return setActiveItem(index);
+                  }}
+                >
+                  <NextLink
+                    css={{ position: "relative", px: "$2", py: "$2" }}
+                    href={item.path}
+                    title={item.title}
+                    variant="transparent"
+                    onBlur={() => {
+                      return setActiveItem(null);
+                    }}
+                    onFocus={() => {
+                      return setActiveItem(index);
+                    }}
+                  >
+                    {activeIndex && (
+                      <Box
+                        animate={{ opacity: 1 }}
+                        as={motion.span}
+                        className="shadow"
+                        css={{
+                          position: "absolute",
+                          inset: "0",
+                          zIndex: -1,
+                          bg: "$slateA4",
+                          borderRadius: "$md",
+                        }}
+                        exit={{ opacity: 0 }}
+                        initial={{ opacity: 0 }}
+                        layoutId="shadow"
+                        transition={{ duration: 0.2 }}
+                      />
+                    )}
+                    {item.title}
+                  </NextLink>
+                </motion.li>
               );
             })}
           </Stack>
-        </Box>
+        </nav>
       </Stack>
       <ThemeToggle />
     </Box>
