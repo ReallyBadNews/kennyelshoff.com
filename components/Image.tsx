@@ -6,3 +6,5 @@ export const Image = styled(NextImage, {
   verticalAlign: "middle",
   maxWidth: "100%",
 });
+
+Image.displayName = "StyledImage";

@@ -114,7 +114,7 @@ export default function Work() {
           variant="contrast"
           weight="7"
         >
-          Interests
+          Passions
         </Heading>
         <Separator css={{ my: "$3", "@bp1": { my: "$5" } }} size="2" />
         <Grid
@@ -124,14 +124,15 @@ export default function Work() {
           gap="3"
         >
           {[
+            "Design Thinking",
+            "Developer Tooling",
+            "Accessibility",
+            "Keyboard Shortcuts",
+            "Stressing the Details",
+            "Design Systems",
             "CSS",
             "React",
-            "Next.js",
             "TypeScript",
-            "Design Systems",
-            "Performance",
-            "State Machines",
-            "Accessibility",
           ].map((item) => {
             return (
               <Stack

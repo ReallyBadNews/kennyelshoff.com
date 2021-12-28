@@ -37,7 +37,7 @@ const GMGWork: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
       description="Design Engineer building tools for storytellers and developers. Creating a community through local news"
       title="Graham Media Group"
     >
-      <Stack css={{ stackGap: "$3", display: "block" }}>
+      <Stack css={{ stackGap: "$5", display: "block" }}>
         <Heading
           as="h2"
           fontFamily="mono"
@@ -82,26 +82,24 @@ const GMGWork: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
             </Paragraph>
           </figure>
         </Grid>
-        <Gallery>
+        <Gallery aspectRatio="1">
           <Image
-            // {...images[0]}
+            {...images[0]}
             css={{ borderRadius: "$rg" }}
-            height={9}
             layout="responsive"
-            // placeholder="blur"
-            objectFit="cover"
-            src="/images/work/gmg/clickondetroit.png"
-            width={16}
+            placeholder="blur"
           />
           <Image
-            // {...images[1]}
+            {...images[1]}
             css={{ borderRadius: "$rg" }}
-            height={9}
             layout="responsive"
-            objectFit="cover"
-            // placeholder="blur"
-            src="/images/work/gmg/cod-article.png"
-            width={16}
+            placeholder="blur"
+          />
+          <Image
+            {...images[2]}
+            css={{ borderRadius: "$rg" }}
+            layout="responsive"
+            placeholder="blur"
           />
         </Gallery>
       </Stack>

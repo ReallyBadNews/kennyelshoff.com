@@ -1,7 +1,7 @@
 export const formatDate = (
   date: string | number | Date,
   format: "xshort" | "short" | "medium" | "long" | "full" = "short"
-) => {
+): string => {
   const dateFormats: Record<typeof format, Intl.DateTimeFormatOptions> = {
     xshort: {
       month: "numeric",
@@ -37,7 +37,7 @@ export const formatDate = (
   return new Date(date).toLocaleDateString("en-us", options);
 };
 
-export const wrap = (min: number, max: number, v: number) => {
+export const wrap = (min: number, max: number, absolute: number): number => {
   const rangeSize = max - min;
-  return ((((v - min) % rangeSize) + rangeSize) % rangeSize) + min;
+  return ((((absolute - min) % rangeSize) + rangeSize) % rangeSize) + min;
 };
