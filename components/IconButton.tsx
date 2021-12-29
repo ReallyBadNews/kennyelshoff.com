@@ -139,3 +139,5 @@ export const IconButton = styled("button", {
     variant: "ghost",
   },
 });
+
+IconButton.displayName = "IconButton";
