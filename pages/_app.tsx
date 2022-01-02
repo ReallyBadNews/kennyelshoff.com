@@ -1,6 +1,7 @@
 import { Container } from "@components/Container";
 import Footer from "@components/Footer";
 import { Header } from "@components/Header";
+import { TooltipProvider } from "@components/Tooltip";
 import { ThemeProvider } from "next-themes";
 import type { AppProps } from "next/app";
 import { darkTheme, globalCss } from "stitches.config";
@@ -75,19 +76,21 @@ function BabaBooey({ Component, pageProps }: AppProps): JSX.Element {
       enableColorScheme
       enableSystem
     >
-      <Container
-        css={{
-          display: "flex",
-          flexDirection: "column",
-          minHeight: "100vh",
-          py: "$6",
-        }}
-        size="2"
-      >
-        <Header />
-        <Component {...pageProps} />
-        <Footer />
-      </Container>
+      <TooltipProvider>
+        <Container
+          css={{
+            display: "flex",
+            flexDirection: "column",
+            minHeight: "100vh",
+            py: "$6",
+          }}
+          size="2"
+        >
+          <Header />
+          <Component {...pageProps} />
+          <Footer />
+        </Container>
+      </TooltipProvider>
     </ThemeProvider>
   );
 }

@@ -23,6 +23,7 @@ import { CSS } from "stitches.config";
 import { Box } from "./Box";
 import { IconButton } from "./IconButton";
 import { Text } from "./Text";
+import { Tooltip } from "./Tooltip";
 
 /**
  * Experimenting with distilling swipe offset and velocity into a single variable, so the
@@ -103,7 +104,9 @@ export const Gallery = ({ aspectRatio, children, css }: GalleryProps) => {
           overflow: "hidden",
           borderRadius: "$md",
           bg: "$slate2",
+          border: "1px solid $slate6",
           "& .imageWrap": {
+            position: "relative",
             gridArea: "1 / 1",
             display: "grid",
             alignItems: "center",
@@ -141,44 +144,48 @@ export const Gallery = ({ aspectRatio, children, css }: GalleryProps) => {
             {images?.[imageIndex]}
           </motion.div>
         </AnimatePresence>
-        <IconButton
-          className="next"
-          css={{
-            position: "absolute",
-            top: "50%",
-            right: "$3",
-            transform: "translateY(-50%)",
-            zIndex: 1,
-            cursor: "pointer",
-            "@bp1": { right: "$5" },
-          }}
-          size={{ "@initial": "2", "@bp1": "3" }}
-          variant="raised"
-          onClick={() => {
-            return paginate(1);
-          }}
-        >
-          <TriangleRightIcon />
-        </IconButton>
-        <IconButton
-          className="prev"
-          css={{
-            position: "absolute",
-            top: "50%",
-            left: "$3",
-            transform: "translateY(-50%)",
-            zIndex: 1,
-            cursor: "pointer",
-            "@bp1": { left: "$5" },
-          }}
-          size={{ "@initial": "2", "@bp1": "3" }}
-          variant="raised"
-          onClick={() => {
-            return paginate(-1);
-          }}
-        >
-          <TriangleLeftIcon />
-        </IconButton>
+        <Tooltip align="center" content="Next Photo" side="bottom">
+          <IconButton
+            className="next"
+            css={{
+              position: "absolute",
+              top: "50%",
+              right: "$3",
+              transform: "translateY(-50%)",
+              zIndex: 1,
+              cursor: "pointer",
+              "@bp1": { right: "$5" },
+            }}
+            size={{ "@initial": "2", "@bp1": "3" }}
+            variant="raised"
+            onClick={() => {
+              return paginate(1);
+            }}
+          >
+            <TriangleRightIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip align="center" content="Previous Photo" side="bottom">
+          <IconButton
+            className="prev"
+            css={{
+              position: "absolute",
+              top: "50%",
+              left: "$3",
+              transform: "translateY(-50%)",
+              zIndex: 1,
+              cursor: "pointer",
+              "@bp1": { left: "$5" },
+            }}
+            size={{ "@initial": "2", "@bp1": "3" }}
+            variant="raised"
+            onClick={() => {
+              return paginate(-1);
+            }}
+          >
+            <TriangleLeftIcon />
+          </IconButton>
+        </Tooltip>
       </Box>
       <Box
         as="figcaption"

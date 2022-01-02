@@ -1,4 +1,4 @@
-import { ComponentProps, ReactElement, ReactNode } from "react";
+import { ComponentProps, FC, ReactElement, ReactNode } from "react";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import { styled } from "../stitches.config";
 import { Box } from "./Box";
@@ -12,19 +12,25 @@ type TooltipProps = ComponentProps<typeof TooltipPrimitive.Root> &
   };
 
 const Content = styled(TooltipPrimitive.Content, {
+  fontSize: "$0",
+  color: "$hiContrast",
   backgroundColor: "$transparentPanel",
-  borderRadius: "$sm",
+  borderRadius: "$rg",
   padding: "$1 $2",
 
   variants: {
     multiline: {
       true: {
         maxWidth: 250,
-        pb: 7,
+        pb: "$5",
       },
     },
   },
 });
+
+export const TooltipProvider: FC = ({ children }) => {
+  return <TooltipPrimitive.Provider>{children}</TooltipPrimitive.Provider>;
+};
 
 export function Tooltip({
   children,
@@ -32,7 +38,7 @@ export function Tooltip({
   open,
   defaultOpen,
   onOpenChange,
-  multiline,
+  multiline = false,
   ...props
 }: TooltipProps) {
   return (
