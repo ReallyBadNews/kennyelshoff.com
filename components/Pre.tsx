@@ -1,9 +1,9 @@
 import { styled, theme } from "stitches.config";
 
 export const Pre = styled("pre", {
-  $$background: "$loContrast",
+  $$background: "$colors$slate2",
   $$text: "$colors$hiContrast",
-  $$outline: "inset 0 0 0 1px $colors$slate3",
+  $$outline: "inset 0 0 0 1px $colors$slate6",
   $$syntax1: "$colors$blue11",
   $$syntax2: "$colors$cyan11",
   $$syntax3: "$colors$red11",
@@ -12,7 +12,7 @@ export const Pre = styled("pre", {
   $$removed: "$colors$red11",
   $$added: "$colors$green11",
   $$lineNumbers: "$colors$slate10",
-  $$fadedLines: "$colors$slate7",
+  $$fadedLines: "$colors$slate8",
   $$highlightedLineBg: "$colors$violet3",
   $$highlightedWord1Bg: "$colors$violet4",
   $$highlightedWord1BgActive: "$colors$violet6",
@@ -25,21 +25,30 @@ export const Pre = styled("pre", {
   $$highlightedWord3Text: "$colors$green11",
 
   boxSizing: "border-box",
-  borderRadius: "$lg",
-  padding: "$4 $5",
-  overflow: "auto",
   fontFamily: "$jet",
   fontSize: "$1",
   lineHeight: "21px",
   whiteSpace: "pre",
   position: "relative",
-  backgroundColor: "$$background",
-  color: "$$text",
-  boxShadow: "$$outline",
 
   "& > code": {
-    display: "block",
+    display: "flex",
+    flexDirection: "column",
     fontFamily: "inherit",
+    overflow: "auto",
+    backgroundColor: "$$background",
+    color: "$$text",
+    width: "calc($sizes$full + $16)",
+    mx: "-$5",
+    boxShadow: "$$outline",
+    borderRadius: "$lg",
+    px: "$5",
+    py: "$3",
+  },
+
+  // Dim lines that aren't part of the diff
+  ".language-diff": {
+    color: "$$comment",
   },
 
   ".token.parameter": {
@@ -197,7 +206,7 @@ export const Pre = styled("pre", {
   },
 
   variants: {
-    variant: {
+    theme: {
       violet: {
         $$background: "$colors$violet2",
         $$text: "$colors$violet11",
@@ -316,6 +325,10 @@ export const Pre = styled("pre", {
         },
       },
     },
+  },
+  defaultVariants: {
+    showLineNumbers: false,
+    theme: "default",
   },
 });
 

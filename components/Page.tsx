@@ -22,7 +22,7 @@ const Page: FC<PageProps> = ({
   // slug,
   // thumbnail,
   type = "basic",
-  stackGap = "$3",
+  stackGap = "$5",
   children,
 }) => {
   const shouldReduceMotion = useReducedMotion();

@@ -1,6 +1,6 @@
 import { ComponentProps, FC, ReactElement, ReactNode } from "react";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
-import { styled } from "../stitches.config";
+import { styled, keyframes } from "stitches.config";
 import { Box } from "./Box";
 import { Text } from "./Text";
 
@@ -11,12 +11,31 @@ type TooltipProps = ComponentProps<typeof TooltipPrimitive.Root> &
     multiline?: boolean;
   };
 
+const scaleIn = keyframes({
+  "0%": { opacity: 0, transform: "scale(0.5)" },
+  "100%": { opacity: 1, transform: "scale(1)" },
+});
+
+// export const tooltipContent = css({
+//   fontSize: "$2",
+//   fontWeight: 600,
+//   lineHeight: 1,
+//   py: "$2",
+//   px: "$3",
+//   borderRadius: "$3",
+//   backgroundColor: "$crimson4",
+//   transformOrigin: "var(--radix-tooltip-content-transform-origin)",
+//   animation: `${scaleIn} 320ms cubic-bezier(0.16, 1, 0.3, 1)`,
+// });
+
 const Content = styled(TooltipPrimitive.Content, {
   fontSize: "$0",
   color: "$hiContrast",
   backgroundColor: "$transparentPanel",
   borderRadius: "$rg",
   padding: "$1 $2",
+  transformOrigin: "var(--radix-tooltip-content-transform-origin)",
+  animation: `${scaleIn} 320ms cubic-bezier(0.16, 1, 0.3, 1)`,
 
   variants: {
     multiline: {
@@ -28,8 +47,19 @@ const Content = styled(TooltipPrimitive.Content, {
   },
 });
 
-export const TooltipProvider: FC = ({ children }) => {
-  return <TooltipPrimitive.Provider>{children}</TooltipPrimitive.Provider>;
+export const TooltipProvider: FC<TooltipPrimitive.TooltipProviderProps> = ({
+  children,
+  delayDuration = 500,
+  skipDelayDuration = 300,
+}) => {
+  return (
+    <TooltipPrimitive.Provider
+      delayDuration={delayDuration}
+      skipDelayDuration={skipDelayDuration}
+    >
+      {children}
+    </TooltipPrimitive.Provider>
+  );
 };
 
 export function Tooltip({
@@ -39,11 +69,13 @@ export function Tooltip({
   defaultOpen,
   onOpenChange,
   multiline = false,
+  delayDuration,
   ...props
 }: TooltipProps) {
   return (
     <TooltipPrimitive.Root
       defaultOpen={defaultOpen}
+      delayDuration={delayDuration}
       open={open}
       onOpenChange={onOpenChange}
     >
@@ -51,7 +83,7 @@ export function Tooltip({
       <Content
         align="center"
         side="top"
-        sideOffset={5}
+        sideOffset={4}
         {...props}
         multiline={multiline}
       >

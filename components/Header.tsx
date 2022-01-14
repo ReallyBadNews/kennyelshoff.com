@@ -42,6 +42,7 @@ export const Header = () => {
             overflow: "hidden",
           }}
           href="/"
+          title="Home"
         >
           <Image
             alt="Kenny Elshoff doing a method on a snowboard"
@@ -61,6 +62,7 @@ export const Header = () => {
               stackGap: "$3",
               p: "0",
               m: "0",
+              color: "$hiContrast",
               li: { listStyle: "none" },
               "@bp1": { stackGap: "$5" },
             }}

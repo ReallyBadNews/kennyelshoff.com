@@ -1,13 +1,18 @@
 import * as Collapsible from "@radix-ui/react-collapsible";
+import { FC, ReactNode, useState } from "react";
 import { styled } from "stitches.config";
-import { useState } from "react";
+import { Box } from "./Box";
 import { Button } from "./Button";
+import { Text } from "./Text";
 
 export interface CodeProps {
-  children?: React.ReactNode;
+  children?: ReactNode;
+  className?: string;
   id?: string;
   collapsible?: string;
+  ignoreWordHighlight?: string;
   showLineNumbers?: string;
+  filename?: string;
 }
 
 export const InlineCode = styled("code", {
@@ -15,6 +20,7 @@ export const InlineCode = styled("code", {
   fontSize: "$2",
   whiteSpace: "nowrap",
   padding: "0 $1 2px $1",
+  borderRadius: "$md",
 
   variants: {
     variant: {
@@ -33,25 +39,42 @@ export const InlineCode = styled("code", {
   },
 });
 
-export const Code: React.FC<CodeProps> = ({
+export const Code: FC<CodeProps> = ({
   children,
+  className,
   id,
   collapsible,
+  // destructure the following vars so they don't get passed to the dom node
+  ignoreWordHighlight,
   showLineNumbers,
+  filename,
   ...rest
 }) => {
   const isCollapsible = typeof collapsible !== "undefined";
   const [isOpen, setIsOpen] = useState(!isCollapsible);
   const isInline = typeof children === "string";
+  const language = className?.split(`language-`).pop();
 
   const content = isInline ? (
-    <InlineCode id={id} {...rest}>
+    <InlineCode className={className} id={id} {...rest}>
       {children}
     </InlineCode>
   ) : (
-    <code id={id} {...rest}>
-      {children}
-    </code>
+    <>
+      {language ? (
+        <Text css={{ display: "inline" }} size="0">
+          {language}
+        </Text>
+      ) : null}
+      {filename ? (
+        <Text css={{ display: "inline" }} size="0" variant="blue">
+          {`: ${filename}`}
+        </Text>
+      ) : null}
+      <Box as="code" className={className} id={id} {...rest}>
+        {children}
+      </Box>
+    </>
   );
 
   return isCollapsible ? (

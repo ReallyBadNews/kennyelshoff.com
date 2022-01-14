@@ -1,6 +1,6 @@
 import merge from "lodash.merge";
 import { ComponentProps, ElementRef, forwardRef } from "react";
-import { CSS, VariantProps } from "../stitches.config";
+import { CSS, VariantProps } from "stitches.config";
 import { Text } from "./Text";
 
 const DEFAULT_TAG = "p";

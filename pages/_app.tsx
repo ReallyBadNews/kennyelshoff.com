@@ -7,8 +7,18 @@ import type { AppProps } from "next/app";
 import { darkTheme, globalCss } from "stitches.config";
 
 const globalStyles = globalCss({
+  /**
+   */
   "*, *::before, *::after": {
     boxSizing: "border-box",
+  },
+
+  "*": {
+    margin: 0,
+  },
+
+  "html, body": {
+    height: "100%",
   },
 
   body: {
@@ -18,14 +28,6 @@ const globalStyles = globalCss({
     WebkitFontSmoothing: "antialiased",
     MozOsxFontSmoothing: "grayscale",
     WebkitTextSizeAdjust: "100%",
-  },
-
-  "*": {
-    margin: 0,
-  },
-
-  "html, body": {
-    height: "100%",
   },
 
   "img, picture, video, canvas, svg": {

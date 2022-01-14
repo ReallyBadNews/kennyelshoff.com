@@ -6,7 +6,7 @@ export const Preview = ({ css, ...props }: { css: CSS }) => {
     <Box
       {...props}
       css={{
-        backgroundColor: "$slate2",
+        backgroundColor: "$slate3",
         position: "relative",
         display: "flex",
         alignItems: "flex-start",

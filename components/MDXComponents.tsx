@@ -1,14 +1,16 @@
-import { useEffect, useRef } from "react";
 import { ComponentMap } from "mdx-bundler/client";
 import rangeParser from "parse-numeric-range";
+import { useEffect, useRef } from "react";
 import { CSS, VariantProps } from "stitches.config";
 import { Box } from "./Box";
 import { Code, CodeProps } from "./Code";
 import { Heading } from "./Heading";
+import { Kbd } from "./Kbd";
+import NextLink from "./NextLink";
 import { Paragraph } from "./Paragraph";
 import { Pre } from "./Pre";
 import { Preview } from "./Preview";
-import { Kbd } from "./Kbd";
+import { Separator } from "./Separator";
 
 export const MDXComponents: ComponentMap = {
   h1: ({ children }) => {
@@ -78,9 +80,99 @@ export const MDXComponents: ComponentMap = {
       </Paragraph>
     );
   },
+  strong: ({ children }) => {
+    return (
+      <Box as="strong" css={{ fontWeight: "$9" }}>
+        {children}
+      </Box>
+    );
+  },
+  a: ({ href, children }) => {
+    return (
+      <NextLink href={href as string} variant="blue">
+        {children}
+      </NextLink>
+    );
+  },
+  hr: () => {
+    return (
+      <Separator
+        css={{
+          my: "$8",
+          width: "calc($sizes$full + $space$5) !important",
+          mx: "-$3",
+        }}
+        size="full"
+        asChild
+      >
+        <hr />
+      </Separator>
+    );
+  },
+  ul: ({ children }) => {
+    return (
+      <Box
+        as="ul"
+        css={{
+          my: "$6",
+          pl: "$0",
+          color: "$hiContrast",
+          fontFamily: "$mono",
+          listStyle: "none",
+          "& li": {
+            display: "flex",
+            "&:before": {
+              // content with right arrow glyph
+              content: '"\\2192"',
+              pr: "$2",
+              color: "$blue10",
+            },
+          },
+          "& li:not(:first-child)": { mt: "$3" },
+        }}
+      >
+        {children}
+      </Box>
+    );
+  },
+  ol: ({ children }) => {
+    return (
+      <Box
+        as="ol"
+        css={{
+          my: "$6",
+          pl: "$6",
+          color: "$hiContrast",
+          fontFamily: "$mono",
+          listStyle: "none",
+          "--counterName": "counts",
+          counterReset: "var(--counterName)",
+          "& li": {
+            display: "flex",
+            counterIncrement: "var(--counterName)",
+            "&:before": {
+              pr: "$2",
+              color: "$blue10",
+              content: 'counters(var(--counterName),".") ". "',
+            },
+            "&:not(:first-child)": { mt: "$3" },
+          },
+        }}
+      >
+        {children}
+      </Box>
+    );
+  },
+  li: ({ children }) => {
+    return (
+      <Paragraph as="li" css={{ display: "list-item" }} size="1">
+        {children}
+      </Paragraph>
+    );
+  },
   pre: ({
     children,
-    variant,
+    theme,
     showLineNumbers,
     css,
   }: VariantProps<typeof Pre> & { children?: React.ReactNode; css?: CSS }) => {
@@ -88,7 +180,7 @@ export const MDXComponents: ComponentMap = {
       <Pre
         css={{ mb: "$6", ...css }}
         showLineNumbers={typeof showLineNumbers === "string"}
-        variant={variant}
+        theme={theme}
       >
         {children}
       </Pre>
