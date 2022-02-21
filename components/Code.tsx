@@ -3,7 +3,6 @@ import { FC, ReactNode, useState } from "react";
 import { styled } from "stitches.config";
 import { Box } from "./Box";
 import { Button } from "./Button";
-import { Text } from "./Text";
 
 export interface CodeProps {
   children?: ReactNode;
@@ -17,10 +16,14 @@ export interface CodeProps {
 
 export const InlineCode = styled("code", {
   fontFamily: "$jet",
-  fontSize: "$2",
+  fontSize: "$1",
   whiteSpace: "nowrap",
   padding: "0 $1 2px $1",
   borderRadius: "$md",
+
+  "@bp1": {
+    fontSize: "$2",
+  },
 
   variants: {
     variant: {
@@ -53,28 +56,15 @@ export const Code: FC<CodeProps> = ({
   const isCollapsible = typeof collapsible !== "undefined";
   const [isOpen, setIsOpen] = useState(!isCollapsible);
   const isInline = typeof children === "string";
-  const language = className?.split(`language-`).pop();
 
   const content = isInline ? (
     <InlineCode className={className} id={id} {...rest}>
       {children}
     </InlineCode>
   ) : (
-    <>
-      {language ? (
-        <Text css={{ display: "inline" }} size="0">
-          {language}
-        </Text>
-      ) : null}
-      {filename ? (
-        <Text css={{ display: "inline" }} size="0" variant="blue">
-          {`: ${filename}`}
-        </Text>
-      ) : null}
-      <Box as="code" className={className} id={id} {...rest}>
-        {children}
-      </Box>
-    </>
+    <Box as="code" className={className} id={id} {...rest}>
+      {children}
+    </Box>
   );
 
   return isCollapsible ? (

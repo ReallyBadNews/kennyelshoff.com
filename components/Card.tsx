@@ -24,13 +24,11 @@ export const Card = styled("div", {
     boxSizing: "border-box",
     content: '""',
     position: "absolute",
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
+    inset: "calc($3 * -1)",
     boxShadow: "inset 0 0 0 1px rgba(0,0,0,.1)",
     borderRadius: "$3",
     pointerEvents: "none",
+    p: "$3",
   },
 
   variants: {
@@ -38,6 +36,8 @@ export const Card = styled("div", {
       interactive: {
         "&:hover": {
           "&::before": {
+            backgroundImage:
+              "linear-gradient(120deg, var(--colors-indigo2), var(--colors-crimson2))",
             boxShadow: "inset 0 0 0 1px rgba(0,0,0,.2)",
           },
         },

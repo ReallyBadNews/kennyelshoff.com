@@ -6,7 +6,7 @@ let unsplash: Unsplash;
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
-): Promise<void> {
+) {
   if (!unsplash) {
     unsplash = new Unsplash({
       accessKey: process.env.UNSPLASH_ACCESS_KEY as string,

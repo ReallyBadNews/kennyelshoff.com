@@ -62,10 +62,13 @@ export const MDXComponents: ComponentMap = {
           pl: "$3",
           my: "$6",
           "& p": {
-            color: "inherit",
-            fontSize: "$4",
+            fontSize: "$2",
             lineHeight: "$snug",
             fontWeight: "$5",
+            color: "inherit",
+          },
+          "@bp1": {
+            "& p": { fontSize: "$4" },
           },
         }}
       >
@@ -109,6 +112,21 @@ export const MDXComponents: ComponentMap = {
       </Separator>
     );
   },
+  li: ({ children }) => {
+    return (
+      <Paragraph
+        as="li"
+        css={{
+          display: "flex",
+          "&:not(:first-child)": { mt: "$3" },
+        }}
+        size="1"
+      >
+        <Box css={{ flex: "1 1 0" }}>{children}</Box>
+      </Paragraph>
+    );
+  },
+  // TODO: Pseudo element doesn't work
   ul: ({ children }) => {
     return (
       <Box
@@ -141,7 +159,7 @@ export const MDXComponents: ComponentMap = {
         as="ol"
         css={{
           my: "$6",
-          pl: "$6",
+          pl: "$3",
           color: "$hiContrast",
           fontFamily: "$mono",
           listStyle: "none",
@@ -163,27 +181,25 @@ export const MDXComponents: ComponentMap = {
       </Box>
     );
   },
-  li: ({ children }) => {
-    return (
-      <Paragraph as="li" css={{ display: "list-item" }} size="1">
-        {children}
-      </Paragraph>
-    );
-  },
   pre: ({
     children,
     theme,
+    filename,
     showLineNumbers,
     css,
   }: VariantProps<typeof Pre> & { children?: React.ReactNode; css?: CSS }) => {
     return (
-      <Pre
-        css={{ mb: "$6", ...css }}
-        showLineNumbers={typeof showLineNumbers === "string"}
-        theme={theme}
-      >
-        {children}
-      </Pre>
+      <div>
+        <Pre
+          css={{ mb: "$6", ...css }}
+          data-filename={filename}
+          filename={!!filename}
+          showLineNumbers={typeof showLineNumbers === "string"}
+          theme={theme}
+        >
+          {children}
+        </Pre>
+      </div>
     );
   },
   code: (props: CodeProps) => {

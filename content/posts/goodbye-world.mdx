@@ -17,22 +17,87 @@ produced gusts over 60 mph at times through the afternoon, causing tens of
 thousands of customers to lose power. At some point in the day, more than
 160,000 customers had lost power due to the severe weather.
 
-I love keyboard shortcuts, one of my favorites is the <kbd><Kbd>Cmd</Kbd> +
-<Kbd>K</Kbd></kbd> menu that has become a popular shortcut for navigating web
-apps.
+And if I wanted to get the team then:
+
+```tsx showLineNumbers
+const users = await prisma.user.findMany({
+  select: {
+    id: true,
+    email: true,
+    firstName: true,
+    team: true, // <-- just add the field I want
+    stringValue: "this is a string",
+  },
+});
+```
+
+```tsx lines="2-5"
+const users: Array<{
+  id: string;
+  email: string;
+  firstName: string;
+  team: Team;
+}>;
+```
+
+I love keyboard shortcuts, one of my favorites is the <kbd><Kbd>Cmd</Kbd> + <Kbd>K</Kbd></kbd>
+menu that has become a popular shortcut for navigating web apps.
+
+```tsx filename="app/route/posts/index.tsx" showLineNumbers
+import { Link, useLoaderData } from "remix";
+
+import { getPosts } from "~/post";
+import type { Post } from "~/post";
+
+export const loader = async () => {
+  return getPosts();
+};
+
+// ...
+```
 
 Several neighborhoods faced uprooted trees and toppling power lines amid the
 high winds. Select `any word` from the following list.
 
-```jsx line=2,6-8
+```tsx filename="app/routes/posts/index.tsx" showLineNumbers
 import React from "react";
-import { Button } from "../../components/Button";
+type LoaderData = Await<ReturnType<typeof getLoaderData>>;
 
-function MyButton() {
+async function getLoaderData() {
+  const users = await prismaRead.user.findMany({
+    select: {
+      id: true,
+      email: true,
+      firstName: true,
+      team: true,
+      postReads: {
+        select: {
+          postSlug: true,
+        },
+      },
+    },
+  });
+  return { users };
+}
+
+export const loader: LoaderFunction = async ({ request }) => {
+  return json(await getLoaderData());
+};
+
+export default function UsersPage() {
+  const data = useLoaderData<LoaderData>();
   return (
-    <Button size="2" variant="blue">
-      Hello world
-    </Button>
+    <div>
+      <h1>Users</h1>
+      <ul>
+        {/* all this auto-completes and type checks!! */}
+        {data.users.map((user) => (
+          <li key={user.id}>
+            <div>{user.firstName}</div>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 ```
@@ -45,6 +110,26 @@ wires, broken poles and tree-related damage.
 As of 8:20 a.m. Sunday, about 70,000 DTE Energy customers were without power. At
 that time, power was restored to about 90,000 customers so far, officials said.
 We’re tracking Sunday power outages right here.
+
+Clicking "reset" above will reset our component to a different state from its
+initial state which is probably a mistake, so we want that to not be possible.
+Click it multiple times and it's getting reset to something completely different
+every time. Now, I definitely agree with you. This is an example of someone
+using the API wrong. But if it's not a lot of work we may as well make this
+impossible right?
+
+So, how can we grab hold of the actual initial value and ignore any changes to
+that prop? I've got a hint for you. It's not so complicated as `useEffect` with
+an `isMounted` boolean or whatever. It's actually pretty simple. And there are a
+few ways we could do it:
+
+```tsx
+const { current: initialState } = React.useRef({ count: initialCount });
+const [initialState] = React.useState({ count: initialCount });
+const [initialState] = React.useReducer((s) => s, { count: initialCount });
+
+// actual initial count is: initialState.count
+```
 
 The Detroit-based utility company said Saturday that it would be calling in 500
 additional crews to help restore power to affected customers. Officials say
