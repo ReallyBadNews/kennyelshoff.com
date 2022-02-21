@@ -7,7 +7,7 @@ tags: "typescript"
 
 Drive attention to specific parts in the code:
 
-```jsx line=1,4
+```jsx lines=1,4
 import React from "react";
 
 export function Counter({ initialCount = 0 }) {
@@ -25,22 +25,80 @@ export function Counter({ initialCount = 0 }) {
 
 ### Highlight specific words
 
-Drive attention to specific words in the code:
+Drive attention to specific words and `code blocks` in the code:
 
-```jsx
-import React from "react";
+```tsx
+export const formatDate = (
+  date: string | number | Date,
+  format: "xshort" | "short" | "medium" | "long" | "full" = "short"
+): string => {
+  const __dateFormats__: Record<typeof format, Intl.DateTimeFormatOptions> = {
+    xshort: {
+      month: "numeric",
+      day: "numeric",
+    },
+    short: {
+      month: "numeric",
+      day: "numeric",
+      year: "2-digit",
+    },
+    medium: {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    },
+    long: {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    },
+    full: {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+    },
+  };
 
-export function Counter({ __initialCount__ = 0 }) {
-  const [count, setCount] = React.useState(__initialCount__);
-  return (
-    <button
-      type="button"
-      onClick={() => setCount((prevCount) => prevCount + 1)}
-    >
-      {count}
-    </button>
-  );
-}
+  const options = dateFormats[format];
+  options.timeZone = "America/Detroit";
+
+  return new Date(date).toLocaleDateString("en-us", options);
+};
+```
+
+### Diff highlighting
+
+Highlight the additions and deletions in the code
+
+```diff
+import { styled } from '@stitches/react';
+
+const Box = styled('div', {
+  width: '70px',
+  height: '70px',
+- backgroundColor: 'pink',
+
+  variants: {
+    color: {
++     pink: {
++       backgroundColor: 'pink',
++     },
+      turquoise: {
+        backgroundColor: 'turquoise',
+      },
+    },
+    shape: {
++     square: {
++       borderRadius: 0
++     },
+      round: {
+        borderRadius: '100%',
+      },
+    },
+  },
+});
 ```
 
 ### Interact with the content

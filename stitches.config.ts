@@ -218,7 +218,7 @@ export const {
       ...blackA,
 
       // Semantic colors
-      hiContrast: "$slate11",
+      hiContrast: "$slate12",
       loContrast: "$slate1",
       // loContrast: "white",
       canvas: "hsl(0 0% 93%)",

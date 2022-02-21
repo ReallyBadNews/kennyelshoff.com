@@ -13,10 +13,15 @@ export const DATA_PATH = path.join(ROOT_PATH, "content");
 
 export const postsPath = path.join(ROOT_PATH, "content/posts");
 export const stashPath = path.join(ROOT_PATH, "content/stash");
+export const gmgWorkPath = path.join(
+  ROOT_PATH,
+  "content/work/graham-media-group"
+);
 
 const content = {
   posts: postsPath,
   stash: stashPath,
+  "work/graham-media-group": gmgWorkPath,
 };
 
 interface GetMdxBySlug {
@@ -26,12 +31,9 @@ interface GetMdxBySlug {
   }>;
 }
 
-export const getMdxBySlug: GetMdxBySlug = async (
-  directory,
-  fileName
-): Promise<{ frontmatter: Frontmatter; code: string }> => {
+export const getMdxBySlug: GetMdxBySlug = async (directory, fileName) => {
   const mdxSource = fs.readFileSync(
-    path.join(DATA_PATH, directory, `${fileName}.mdx`),
+    path.join(content[directory], `${fileName}.mdx`),
     "utf8"
   );
   const { frontmatter, code } = await bundleMDX<Frontmatter>({

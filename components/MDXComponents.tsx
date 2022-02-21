@@ -1,14 +1,16 @@
-import { useEffect, useRef } from "react";
 import { ComponentMap } from "mdx-bundler/client";
 import rangeParser from "parse-numeric-range";
+import { useEffect, useRef } from "react";
 import { CSS, VariantProps } from "stitches.config";
 import { Box } from "./Box";
 import { Code, CodeProps } from "./Code";
 import { Heading } from "./Heading";
+import { Kbd } from "./Kbd";
+import NextLink from "./NextLink";
 import { Paragraph } from "./Paragraph";
 import { Pre } from "./Pre";
 import { Preview } from "./Preview";
-import { Kbd } from "./Kbd";
+import { Separator } from "./Separator";
 
 export const MDXComponents: ComponentMap = {
   h1: ({ children }) => {
@@ -60,10 +62,13 @@ export const MDXComponents: ComponentMap = {
           pl: "$3",
           my: "$6",
           "& p": {
-            color: "inherit",
-            fontSize: "$4",
+            fontSize: "$2",
             lineHeight: "$snug",
             fontWeight: "$5",
+            color: "inherit",
+          },
+          "@bp1": {
+            "& p": { fontSize: "$4" },
           },
         }}
       >
@@ -78,20 +83,123 @@ export const MDXComponents: ComponentMap = {
       </Paragraph>
     );
   },
+  strong: ({ children }) => {
+    return (
+      <Box as="strong" css={{ fontWeight: "$9" }}>
+        {children}
+      </Box>
+    );
+  },
+  a: ({ href, children }) => {
+    return (
+      <NextLink href={href as string} variant="blue">
+        {children}
+      </NextLink>
+    );
+  },
+  hr: () => {
+    return (
+      <Separator
+        css={{
+          my: "$8",
+          width: "calc($sizes$full + $space$5) !important",
+          mx: "-$3",
+        }}
+        size="full"
+        asChild
+      >
+        <hr />
+      </Separator>
+    );
+  },
+  li: ({ children }) => {
+    return (
+      <Paragraph
+        as="li"
+        css={{
+          display: "flex",
+          "&:not(:first-child)": { mt: "$3" },
+        }}
+        size="1"
+      >
+        <Box css={{ flex: "1 1 0" }}>{children}</Box>
+      </Paragraph>
+    );
+  },
+  // TODO: Pseudo element doesn't work
+  ul: ({ children }) => {
+    return (
+      <Box
+        as="ul"
+        css={{
+          my: "$6",
+          pl: "$0",
+          color: "$hiContrast",
+          fontFamily: "$mono",
+          listStyle: "none",
+          "& li": {
+            display: "flex",
+            "&:before": {
+              // content with right arrow glyph
+              content: '"\\2192"',
+              pr: "$2",
+              color: "$blue10",
+            },
+          },
+          "& li:not(:first-child)": { mt: "$3" },
+        }}
+      >
+        {children}
+      </Box>
+    );
+  },
+  ol: ({ children }) => {
+    return (
+      <Box
+        as="ol"
+        css={{
+          my: "$6",
+          pl: "$3",
+          color: "$hiContrast",
+          fontFamily: "$mono",
+          listStyle: "none",
+          "--counterName": "counts",
+          counterReset: "var(--counterName)",
+          "& li": {
+            display: "flex",
+            counterIncrement: "var(--counterName)",
+            "&:before": {
+              pr: "$2",
+              color: "$blue10",
+              content: 'counters(var(--counterName),".") ". "',
+            },
+            "&:not(:first-child)": { mt: "$3" },
+          },
+        }}
+      >
+        {children}
+      </Box>
+    );
+  },
   pre: ({
     children,
-    variant,
+    theme,
+    filename,
     showLineNumbers,
     css,
   }: VariantProps<typeof Pre> & { children?: React.ReactNode; css?: CSS }) => {
     return (
-      <Pre
-        css={{ mb: "$6", ...css }}
-        showLineNumbers={typeof showLineNumbers === "string"}
-        variant={variant}
-      >
-        {children}
-      </Pre>
+      <div>
+        <Pre
+          css={{ mb: "$6", ...css }}
+          data-filename={filename}
+          filename={!!filename}
+          showLineNumbers={typeof showLineNumbers === "string"}
+          theme={theme}
+        >
+          {children}
+        </Pre>
+      </div>
     );
   },
   code: (props: CodeProps) => {
