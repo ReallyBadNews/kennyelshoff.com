@@ -2,6 +2,7 @@ import { ComponentMap } from "mdx-bundler/client";
 import rangeParser from "parse-numeric-range";
 import { useEffect, useRef } from "react";
 import { CSS, VariantProps } from "stitches.config";
+import { Blockquote } from "./Blockquote";
 import { Box } from "./Box";
 import { Code, CodeProps } from "./Code";
 import { Heading } from "./Heading";
@@ -53,28 +54,7 @@ export const MDXComponents: ComponentMap = {
     );
   },
   blockquote: ({ children }) => {
-    return (
-      <Box
-        as="blockquote"
-        css={{
-          color: "$slate11",
-          borderLeft: "$space$1 solid $slate6",
-          pl: "$3",
-          my: "$6",
-          "& p": {
-            fontSize: "$2",
-            lineHeight: "$snug",
-            fontWeight: "$5",
-            color: "inherit",
-          },
-          "@bp1": {
-            "& p": { fontSize: "$4" },
-          },
-        }}
-      >
-        {children}
-      </Box>
-    );
+    return <Blockquote>{children}</Blockquote>;
   },
   p: ({ children }) => {
     return (
