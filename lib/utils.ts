@@ -41,3 +41,44 @@ export const wrap = (min: number, max: number, absolute: number): number => {
   const rangeSize = max - min;
   return ((((absolute - min) % rangeSize) + rangeSize) % rangeSize) + min;
 };
+
+export const isExternalLink = (url: string) => {
+  if (url.startsWith("/") || url.startsWith("#")) {
+    return false;
+  }
+  return true;
+};
+
+export type GroupByYear<T> = Record<string, Array<T>>;
+export const groupByYear = <
+  T extends {
+    date: string;
+  }
+>(
+  arr: Array<T>
+) => {
+  return arr
+    .sort((a, b) => {
+      return Number(new Date(b.date)) - Number(new Date(a.date));
+    })
+    .reduce((acc, current) => {
+      const year = new Date(current.date).getFullYear().toString();
+      if (acc[year] !== undefined) {
+        acc[year].push(current);
+      } else {
+        acc[year] = [current];
+      }
+
+      return acc;
+    }, {} as GroupByYear<T>);
+};
+
+export const getHostname = (url: string) => {
+  let hostname;
+  try {
+    hostname = new URL(url).hostname;
+  } catch (error) {
+    throw new Error("Invalid url");
+  }
+  return hostname;
+};

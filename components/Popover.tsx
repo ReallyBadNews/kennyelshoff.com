@@ -1,8 +1,8 @@
 import { ComponentProps, ReactNode, ElementRef, forwardRef } from "react";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
-import { styled, CSS } from "../stitches.config";
-import { Box } from "./Box";
-import { panelStyles } from "./Panel";
+import { styled, CSS } from "stitches.config";
+import { Box } from "@components/Box";
+import { panelStyles } from "@components/Panel";
 
 type PopoverProps = ComponentProps<typeof PopoverPrimitive.Root> & {
   children: ReactNode;

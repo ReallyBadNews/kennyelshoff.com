@@ -1,56 +1,92 @@
 import { Badge } from "@components/Badge";
-import { MDXComponents } from "@components/MDXComponents";
+import { Heading } from "@components/Heading";
 import NextLink from "@components/NextLink";
 import Page from "@components/Page";
 import { Paragraph } from "@components/Paragraph";
 import { Separator } from "@components/Separator";
 import { Stack } from "@components/Stack";
-import { getAllMdx } from "@lib/mdx";
-import { formatDate } from "@lib/utils";
-import { getMDXComponent } from "mdx-bundler/client";
+import { getAllFrontmatter } from "@lib/mdx";
+import { formatDate, groupByYear } from "@lib/utils";
 import { InferGetStaticPropsType } from "next";
+import Link from "next/link";
 import { Fragment } from "react";
 
 export const getStaticProps = async () => {
-  const mdx = await getAllMdx("stash");
+  // const mdx = await getAllMdx("stash");
+  const frontmatters = await getAllFrontmatter("stash");
+  const groupedFrontmatter = groupByYear(frontmatters);
 
-  return { props: { mdx } };
+  return { props: { frontmatters: groupedFrontmatter } };
 };
 
 const Stash: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
-  mdx,
+  frontmatters,
 }) => {
   return (
     <Page
       description="Bookmarks, save for later, and other miscellaneous tidbits I feel the need to save for later"
+      stackGap="$9"
       title="Stash"
+      showDivider
     >
-      <Stack css={{ stackGap: "$7" }}>
-        {mdx.map(({ frontmatter, code }, index) => {
-          const Component = getMDXComponent(code);
+      {Object.entries(frontmatters)
+        .reverse()
+        .map(([year, posts]) => {
           return (
-            <Fragment key={frontmatter.slug}>
-              <Stack
-                as="article"
-                css={{ position: "relative", stackGap: "$3" }}
-              >
-                <Component components={MDXComponents} />
-                <Paragraph fontFamily="mono" size="1" variant="gray">
-                  {frontmatter.description}
-                </Paragraph>
-                <NextLink href={`${frontmatter.slug}`} variant="transparent">
-                  <Badge size="1" variant="gray">
-                    <time dateTime={frontmatter.date}>
-                      {formatDate(frontmatter.date, "short")}
-                    </time>
-                  </Badge>
-                </NextLink>
+            <Stack key={year} css={{ stackGap: "$5" }}>
+              <Stack css={{ stackGap: "$3" }}>
+                <Heading>{year}</Heading>
+                <Separator size="full" />
               </Stack>
-              {index !== mdx.length - 1 && <Separator size="2" />}
-            </Fragment>
+              <Stack css={{ stackGap: "$5" }}>
+                {posts.map((post, index) => {
+                  return (
+                    <Fragment key={post.slug}>
+                      <Stack
+                        as="article"
+                        css={{ position: "relative", stackGap: "$4" }}
+                      >
+                        <Heading as="h3" size="1" weight="7">
+                          {/* @ts-expect-error TODO: use contentlayer for typings */}
+                          <NextLink href={post.url} showCitation>
+                            {post.title}
+                          </NextLink>
+                        </Heading>
+                        <Stack css={{ stackGap: "$3" }}>
+                          {post.tags && (
+                            <Stack css={{ stackGap: "$1" }} direction="row">
+                              {post.tags.map((tag) => {
+                                return (
+                                  <Link
+                                    key={tag}
+                                    href={`/stash/tagged/${tag}`}
+                                    passHref
+                                  >
+                                    <Badge as="a" size="1" variant="gray">
+                                      {tag}
+                                    </Badge>
+                                  </Link>
+                                );
+                              })}
+                            </Stack>
+                          )}
+                          <Paragraph size="0" variant="subtle">
+                            <NextLink href={`/${post.slug}`}>
+                              <time dateTime={post.date}>
+                                {`— ${formatDate(post.date, "full")}`}
+                              </time>
+                            </NextLink>
+                          </Paragraph>
+                        </Stack>
+                      </Stack>
+                      {index !== posts.length - 1 && <Separator size="2" />}
+                    </Fragment>
+                  );
+                })}
+              </Stack>
+            </Stack>
           );
         })}
-      </Stack>
     </Page>
   );
 };

@@ -47,6 +47,10 @@ const globalStyles = globalCss({
     margin: 0,
   },
 
+  cite: {
+    fontStyle: "unset",
+  },
+
   svg: {
     display: "block",
     verticalAlign: "middle",

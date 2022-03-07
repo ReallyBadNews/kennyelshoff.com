@@ -16,19 +16,7 @@ const scaleIn = keyframes({
   "100%": { opacity: 1, transform: "scale(1)" },
 });
 
-// export const tooltipContent = css({
-//   fontSize: "$2",
-//   fontWeight: 600,
-//   lineHeight: 1,
-//   py: "$2",
-//   px: "$3",
-//   borderRadius: "$3",
-//   backgroundColor: "$crimson4",
-//   transformOrigin: "var(--radix-tooltip-content-transform-origin)",
-//   animation: `${scaleIn} 320ms cubic-bezier(0.16, 1, 0.3, 1)`,
-// });
-
-const Content = styled(TooltipPrimitive.Content, {
+const TooltipContent = styled(TooltipPrimitive.Content, {
   fontSize: "$0",
   color: "$hiContrast",
   backgroundColor: "$transparentPanel",
@@ -80,7 +68,7 @@ export function Tooltip({
       onOpenChange={onOpenChange}
     >
       <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
-      <Content
+      <TooltipContent
         align="center"
         side="top"
         sideOffset={4}
@@ -107,7 +95,7 @@ export function Tooltip({
             width={11}
           />
         </Box>
-      </Content>
+      </TooltipContent>
     </TooltipPrimitive.Root>
   );
 }

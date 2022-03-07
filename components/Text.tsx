@@ -6,7 +6,7 @@ export const Text = styled("span", {
   margin: "0",
   fontWeight: 400,
   fontVariantNumeric: "tabular-nums",
-  display: "block",
+  // display: "block",
 
   variants: {
     weight: {
@@ -35,6 +35,9 @@ export const Text = styled("span", {
       },
       mono: {
         fontFamily: "$mono",
+      },
+      jet: {
+        fontFamily: "$jet",
       },
     },
     size: {
@@ -131,6 +134,9 @@ export const Text = styled("span", {
       },
       contrast: {
         color: "$hiContrast",
+      },
+      subtle: {
+        color: "$slate11",
       },
     },
     gradient: {

@@ -1,8 +1,12 @@
 import Link, { LinkProps } from "next/link";
 import { FC } from "react";
 import { Link as DSLink, LinkProps as DSLinkProps } from "@components/Link";
+import { getHostname, isExternalLink } from "@lib/utils";
+import { Stack } from "./Stack";
+import { Text } from "./Text";
 
-export type NextLinkProps = LinkProps & DSLinkProps;
+export type NextLinkProps = LinkProps &
+  DSLinkProps & { showCitation?: boolean };
 
 /// A unified component for the next/link <Link> and a standard <a> anchor.
 /// Will lift href and all other props from Link up to the Link.
@@ -17,11 +21,29 @@ const NextLink: FC<NextLinkProps> = ({
   prefetch,
   locale,
   passHref = true,
+  showCitation = false,
   ...styleProps
 }) => {
-  const isExternal = href.startsWith("http");
+  const isExternal = isExternalLink(href);
 
   if (isExternal) {
+    if (showCitation) {
+      return (
+        <Stack css={{ stackGap: "$3" }}>
+          <p>
+            <DSLink href={href} {...styleProps}>
+              {children}
+            </DSLink>
+          </p>
+          {showCitation && (
+            <Text as="cite" fontFamily="jet" size="0" variant="subtle">
+              {getHostname(href)}
+            </Text>
+          )}
+        </Stack>
+      );
+    }
+
     return (
       <DSLink href={href} {...styleProps}>
         {children}

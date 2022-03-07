@@ -22,7 +22,7 @@ const Writing: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   return (
     <Page
       description="I'm not writing it down to remember it later, I'm writing it down to remember it now."
-      stackGap="$7"
+      stackGap="$9"
       title="Writing"
     >
       <Stack css={{ stackGap: "$7" }}>

@@ -38,8 +38,11 @@ export const Pre = styled("pre", {
   width: "calc($sizes$full + $8)",
   mx: "-$3",
   // boxShadow: "$$outline",
-  borderRadius: "$lg",
   py: "$3",
+
+  "@bp1": {
+    borderRadius: "$lg",
+  },
 
   "& > code": {
     display: "inline-block",
@@ -124,7 +127,7 @@ export const Pre = styled("pre", {
     backgroundColor: "$$bgAndShadow",
     display: "inline-block",
     boxShadow: "$$xOffset 0 0 0 $$bgAndShadow, -$$xOffset 0 0 0 $$bgAndShadow",
-    borderRadius: "2px",
+    borderRadius: "$sm",
 
     // reset the color for tokens inside highlighted words
     ".token": {

@@ -29,6 +29,38 @@ export const getStaticProps = async ({ params: { slug = "" } = {} }) => {
   return { props: { frontmatter, code } };
 };
 
+// export const getStaticProps = async ({
+//   params: { slug = "" } = {},
+// }: {
+//   params?: { slug?: string };
+// }) => {
+//   const { frontmatter, code } = await getMdxBySlug("work/graham-media-group", slug);
+
+//   const imagePaths = getAllImagePathsFromDir("work/graham-media-group");
+
+//   const images = await Promise.all(
+//     imagePaths.map(async (src) => {
+//       const { base64, img } = await getPlaiceholder(src);
+
+//       return {
+//         ...img,
+//         blurDataURL: base64,
+//       };
+//     })
+//   ).then((values) => {
+//     const result: MDXImages = values.reduce((acc, curr) => {
+//       return {
+//         ...acc,
+//         [curr.src]: curr,
+//       };
+//     }, {});
+
+//     return result;
+//   });
+
+//   return { props: { frontmatter, code, images } };
+// };
+
 const Layout: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   frontmatter,
   code,

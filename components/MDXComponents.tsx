@@ -1,3 +1,5 @@
+// import Image from "next/image";
+import { isExternalLink } from "@lib/utils";
 import { ComponentMap } from "mdx-bundler/client";
 import rangeParser from "parse-numeric-range";
 import { useEffect, useRef } from "react";
@@ -73,6 +75,30 @@ export const MDXComponents: ComponentMap = {
   a: ({ href, children }) => {
     return (
       <NextLink href={href as string} variant="blue">
+        {children}
+      </NextLink>
+    );
+  },
+  // img: ({ src, alt, ...props }) => {
+  //   return (
+  //     <Box
+  //       className="mdxImage"
+  //       css={{ borderRadius: "$md", overflow: "hidden" }}
+  //     >
+  //       <Image
+  //         {...props}
+  //         alt={alt}
+  //         layout="responsive"
+  //         placeholder="blur"
+  //         {...mdxImages[src]}
+  //         priority
+  //       />
+  //     </Box>
+  //   );
+  // },
+  NextLink: ({ href, children, variant, ...rest }) => {
+    return (
+      <NextLink href={href as string} variant={variant} {...rest}>
         {children}
       </NextLink>
     );
@@ -171,7 +197,7 @@ export const MDXComponents: ComponentMap = {
     return (
       <div>
         <Pre
-          css={{ mb: "$6", ...css }}
+          css={{ ...css }}
           data-filename={filename}
           filename={!!filename}
           showLineNumbers={typeof showLineNumbers === "string"}
@@ -195,7 +221,7 @@ export const MDXComponents: ComponentMap = {
     index: number;
     href: string;
   }) => {
-    const isExternal = href.startsWith("http");
+    const isExternal = isExternalLink(href);
 
     useEffect(() => {
       const codeBlock = document.getElementById(id);

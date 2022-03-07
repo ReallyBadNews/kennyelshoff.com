@@ -1,5 +1,8 @@
+import { Heading } from "@components/Heading";
 import { MDXComponents } from "@components/MDXComponents";
+import NextLink from "@components/NextLink";
 import Page from "@components/Page";
+import { Paragraph } from "@components/Paragraph";
 import { getAllFrontmatter, getMdxBySlug } from "@lib/mdx";
 import { getMDXComponent } from "mdx-bundler/client";
 import { GetStaticPaths, InferGetStaticPropsType } from "next";
@@ -36,6 +39,18 @@ const Layout: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 
   return (
     <Page description={frontmatter.description} title={frontmatter.title}>
+      {frontmatter.title && (
+        <Heading as="h3" size="1" weight="7">
+          <NextLink href={`/${frontmatter.slug}`} variant="transparent">
+            {frontmatter.title}
+          </NextLink>
+        </Heading>
+      )}
+      {frontmatter.description && (
+        <Paragraph fontFamily="mono" size="1" variant="gray">
+          {frontmatter.description}
+        </Paragraph>
+      )}
       <Component components={MDXComponents} />
     </Page>
   );

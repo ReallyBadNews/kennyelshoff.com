@@ -1,12 +1,19 @@
+import { ArrowRightIcon } from "@radix-ui/react-icons";
+import { css } from "stitches.config";
 import { Grid } from "@components/Grid";
 import { Heading } from "@components/Heading";
 import NextLink from "@components/NextLink";
 import Page from "@components/Page";
 import { Paragraph } from "@components/Paragraph";
-import { RightArrowIcon } from "@components/RightArrowIcon";
 import { Separator } from "@components/Separator";
 import { Stack } from "@components/Stack";
 import { Text } from "@components/Text";
+
+const iconStyle = css({
+  width: "12px",
+  height: "12px",
+  color: "$slateA8",
+});
 
 interface Job {
   company: string;
@@ -141,10 +148,7 @@ export default function Work() {
                 css={{ alignItems: "center", stackGap: "$2" }}
                 direction="row"
               >
-                <RightArrowIcon
-                  aria-hidden="true"
-                  css={{ width: "12px", height: "12px", color: "$slateA8" }}
-                />
+                <ArrowRightIcon aria-hidden="true" className={iconStyle()} />
                 <Text css={{ lineHeight: "$loose" }} size="2" variant="gray">
                   {item}
                 </Text>

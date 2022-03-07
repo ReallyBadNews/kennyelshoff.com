@@ -42,8 +42,8 @@ export const Badge = styled("span", {
     size: {
       "1": {
         height: "$4",
-        px: "$1",
-        fontSize: "$1",
+        p: "$1",
+        fontSize: "$0",
       },
       "2": {
         height: "$5",

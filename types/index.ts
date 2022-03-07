@@ -1,8 +1,10 @@
 export type Frontmatter = {
-  date: string;
-  description?: string;
-  slug?: string;
   title: string;
+  description?: string;
+  url?: string;
+  date: string;
+  slug?: string;
+  tags?: string[];
 };
 
 export type MDXImages = {

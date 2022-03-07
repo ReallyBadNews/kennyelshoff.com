@@ -1,7 +1,8 @@
+import { ArrowRightIcon } from "@radix-ui/react-icons";
+import { css } from "stitches.config";
 import NextLink from "./NextLink";
 import { Text } from "./Text";
 import { Stack } from "./Stack";
-import { RightArrowIcon } from "./RightArrowIcon";
 
 const footerLinks = [
   {
@@ -26,6 +27,12 @@ const footerLinks = [
   },
 ];
 
+const iconStyle = css({
+  width: "12px",
+  height: "12px",
+  color: "$slateA8",
+});
+
 export default function Footer() {
   return (
     <Stack
@@ -47,13 +54,9 @@ export default function Footer() {
             target={external ? "_blank" : undefined}
             title={title}
             variant="subtle"
-            passHref
+            // passHref
           >
-            {external ? (
-              <RightArrowIcon
-                css={{ width: "12px", height: "12px", color: "$slateA8" }}
-              />
-            ) : null}
+            {external ? <ArrowRightIcon className={iconStyle()} /> : null}
             <Text size="0">{title}</Text>
           </NextLink>
         );
