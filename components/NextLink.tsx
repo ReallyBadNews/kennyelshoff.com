@@ -61,4 +61,8 @@ const NextLink: FC<NextLinkProps> = ({
   );
 };
 
+NextLink.defaultProps = {
+  showCitation: false,
+};
+
 export default NextLink;
