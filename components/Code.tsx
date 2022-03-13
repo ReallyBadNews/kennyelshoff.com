@@ -86,3 +86,13 @@ export const Code: FC<CodeProps> = ({
     content
   );
 };
+
+Code.defaultProps = {
+  children: undefined,
+  className: undefined,
+  id: undefined,
+  collapsible: undefined,
+  ignoreWordHighlight: undefined,
+  showLineNumbers: undefined,
+  filename: undefined,
+};

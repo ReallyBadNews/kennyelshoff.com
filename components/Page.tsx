@@ -65,4 +65,14 @@ const Page = ({
   );
 };
 
+Page.defaultProps = {
+  type: "basic",
+  title: undefined,
+  description: undefined,
+  showDivider: false,
+  showHeader: true,
+  stackGap: "$5",
+  children: undefined,
+};
+
 export default Page;
