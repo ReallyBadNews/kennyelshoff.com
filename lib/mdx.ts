@@ -26,6 +26,7 @@ const content = {
 
 interface GetMdxBySlug {
   (type: keyof typeof content, slug: string): Promise<{
+    date: string;
     frontmatter: Frontmatter;
     code: string;
   }>;
@@ -64,6 +65,7 @@ export const getMdxBySlug: GetMdxBySlug = async (directory, fileName) => {
   });
 
   return {
+    date: frontmatter.date,
     frontmatter: {
       ...frontmatter,
       slug: `${directory}/${fileName}`,

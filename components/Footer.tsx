@@ -54,7 +54,6 @@ export default function Footer() {
             target={external ? "_blank" : undefined}
             title={title}
             variant="subtle"
-            // passHref
           >
             {external ? <ArrowRightIcon className={iconStyle()} /> : null}
             <Text size="0">{title}</Text>

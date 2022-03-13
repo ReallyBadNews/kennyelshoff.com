@@ -49,6 +49,14 @@ export const isExternalLink = (url: string) => {
   return true;
 };
 
+export const sortByDate = <T extends { date: string }>(
+  arr: Array<T>
+): Array<T> => {
+  return arr.sort((a, b) => {
+    return Number(new Date(b.date)) - Number(new Date(a.date));
+  });
+};
+
 export type GroupByYear<T> = Record<string, Array<T>>;
 export const groupByYear = <
   T extends {

@@ -61,10 +61,7 @@ export const Link = styled("a", {
         "&:before": {
           content: "",
           position: "absolute",
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: 0,
+          inset: "-$2 -$3",
           outlineWidth: "1px",
           outlineStyle: "solid",
           outlineOffset: "$space$2",

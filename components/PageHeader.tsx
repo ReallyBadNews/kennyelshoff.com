@@ -16,9 +16,9 @@ const PageHeader: FC<PageHeaderProps> = ({
 
   return (
     <>
-      <Stack as="header" css={{ stackGap: "$3" }}>
+      <Stack as="header" css={{ stackGap: "$1" }}>
         {title ? (
-          <Heading size="2" variant="contrast" weight="9" gradient>
+          <Heading size="3" variant="contrast" weight="9">
             {title}
           </Heading>
         ) : null}

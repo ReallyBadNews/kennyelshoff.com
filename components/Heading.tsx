@@ -6,7 +6,7 @@ import { VariantProps, CSS } from "../stitches.config";
 const DEFAULT_TAG = "h1";
 
 type TextSizeVariants = Pick<VariantProps<typeof Text>, "size">;
-type HeadingSizeVariants = "1" | "2" | "3" | "4";
+type HeadingSizeVariants = "1" | "2" | "3" | "4" | "5";
 type HeadingVariants = { size?: HeadingSizeVariants } & Omit<
   VariantProps<typeof Text>,
   "size"
@@ -21,17 +21,19 @@ export const Heading = forwardRef<ElementRef<typeof DEFAULT_TAG>, HeadingProps>(
     // This is the mapping of Heading Variants to Text variants
     const textSize: Record<HeadingSizeVariants, TextSizeVariants["size"]> = {
       1: { "@initial": "1", "@bp1": "3" },
-      2: { "@initial": "3", "@bp1": "5" },
-      3: { "@initial": "5", "@bp1": "7" },
-      4: { "@initial": "7", "@bp1": "9" },
+      2: { "@initial": "2", "@bp1": "4" },
+      3: { "@initial": "3", "@bp1": "5" },
+      4: { "@initial": "4", "@bp1": "6" },
+      5: { "@initial": "5", "@bp1": "7" },
     };
 
     // This is the mapping of Heading Variants to Text css
     const textCss: Record<HeadingSizeVariants, CSS> = {
-      1: { lineHeight: "$normal", "@bp2": { lineHeight: "$none" } },
-      2: { lineHeight: "$normal", "@bp2": { lineHeight: "$none" } },
-      3: { lineHeight: "$normal", "@bp2": { lineHeight: "$none" } },
-      4: { lineHeight: "$normal", "@bp2": { lineHeight: "$none" } },
+      1: { lineHeight: "$normal", "@bp1": { lineHeight: "$normal" } },
+      2: { lineHeight: "$normal", "@bp1": { lineHeight: "$normal" } },
+      3: { lineHeight: "$normal", "@bp1": { lineHeight: "$normal" } },
+      4: { lineHeight: "$normal", "@bp1": { lineHeight: "$normal" } },
+      5: { lineHeight: "$normal", "@bp1": { lineHeight: "$normal" } },
     };
 
     return (

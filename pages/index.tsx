@@ -9,8 +9,8 @@ export default function Home() {
   return (
     <Page>
       <Stack css={{ stackGap: "$3" }}>
-        <Heading size="2" variant="blue" weight="9" gradient>
-          Hi, I&apos;m Kenny.
+        <Heading size="3" variant="blue" weight="9" gradient>
+          Hello! I&apos;m Kenny.
         </Heading>
         <Stack css={{ stackGap: "$4" }}>
           <Paragraph size="2" variant="gray">

@@ -1,6 +1,6 @@
 import { Helmet } from "@components/Helmet";
 import { motion, useReducedMotion } from "framer-motion";
-import { FC } from "react";
+import { ReactNode } from "react";
 import { CSS } from "stitches.config";
 import { Box } from "./Box";
 import PageHeader from "./PageHeader";
@@ -11,19 +11,22 @@ export interface PageProps {
   title?: string;
   description?: string;
   showDivider?: boolean;
+  showHeader?: boolean;
   stackGap?: CSS["stackGap"];
+  children?: ReactNode;
 }
 
-const Page: FC<PageProps> = ({
+const Page = ({
   title,
   description,
   // date,
   // thumbnail,
   type = "basic",
   stackGap = "$5",
-  showDivider,
+  showDivider = false,
+  showHeader = true,
   children,
-}) => {
+}: PageProps) => {
   const shouldReduceMotion = useReducedMotion();
   const hasMeta = !!(title || description);
 
@@ -34,18 +37,22 @@ const Page: FC<PageProps> = ({
         as={type === "basic" ? "main" : "article"}
         css={{ my: "$6", "@bp1": { my: "$9" } }}
       >
-        <PageHeader
-          description={description}
-          showDivider={showDivider}
-          title={title}
-        />
+        {(showHeader || showDivider) && (
+          <PageHeader
+            description={description}
+            showDivider={showDivider}
+            title={title}
+          />
+        )}
         <Stack
           animate={{ y: 0, opacity: 1 }}
           as={motion.section}
           css={{
             stackGap,
             display: "block",
-            ...(hasMeta ? { my: "$6", "@bp1": { my: "$9" } } : { my: "$0" }),
+            ...(hasMeta && showHeader
+              ? { my: "$6", "@bp1": { my: "$9" } }
+              : { my: "$0" }),
           }}
           initial={
             shouldReduceMotion ? { y: 0, opacity: 1 } : { y: -10, opacity: 0 }

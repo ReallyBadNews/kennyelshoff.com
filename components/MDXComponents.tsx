@@ -14,6 +14,7 @@ import { Paragraph } from "./Paragraph";
 import { Pre } from "./Pre";
 import { Preview } from "./Preview";
 import { Separator } from "./Separator";
+import { Badge } from "./Badge";
 
 export const MDXComponents: ComponentMap = {
   h1: ({ children }) => {
@@ -138,7 +139,7 @@ export const MDXComponents: ComponentMap = {
       <Box
         as="ul"
         css={{
-          my: "$6",
+          // my: "$6",
           pl: "$0",
           color: "$hiContrast",
           fontFamily: "$mono",
@@ -286,8 +287,15 @@ export const MDXComponents: ComponentMap = {
 
     return <code ref={triggerRef} {...props} />;
   },
-  Preview,
   Kbd: ({ children }) => {
     return <Kbd>{children}</Kbd>;
   },
+  Badge: ({ children, ...rest }) => {
+    return (
+      <div>
+        <Badge {...rest}>{children}</Badge>
+      </div>
+    );
+  },
+  Preview,
 };

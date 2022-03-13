@@ -29,12 +29,12 @@ const NextLink: FC<NextLinkProps> = ({
   if (isExternal) {
     if (showCitation) {
       return (
-        <Stack css={{ stackGap: "$3" }}>
-          <p>
+        <Stack css={{ stackGap: "$1" }}>
+          <span>
             <DSLink href={href} {...styleProps}>
               {children}
             </DSLink>
-          </p>
+          </span>
           {showCitation && (
             <Text as="cite" fontFamily="jet" size="0" variant="subtle">
               {getHostname(href)}

@@ -6,18 +6,18 @@ import { Paragraph } from "@components/Paragraph";
 import { Separator } from "@components/Separator";
 import { Stack } from "@components/Stack";
 import { getAllFrontmatter } from "@lib/mdx";
-import { formatDate } from "@lib/utils";
+import { formatDate, sortByDate } from "@lib/utils";
 import { InferGetStaticPropsType } from "next";
 import { Fragment } from "react";
 
 export const getStaticProps = async () => {
-  const frontmatter = await getAllFrontmatter("posts");
+  const frontmatters = await getAllFrontmatter("posts");
 
-  return { props: { frontmatter } };
+  return { props: { frontmatters: sortByDate(frontmatters) } };
 };
 
 const Writing: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
-  frontmatter,
+  frontmatters,
 }) => {
   return (
     <Page
@@ -26,22 +26,22 @@ const Writing: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
       title="Writing"
     >
       <Stack css={{ stackGap: "$7" }}>
-        {frontmatter.map((post, index) => {
+        {frontmatters.map((post, index) => {
           return (
             <Fragment key={post.slug}>
               <Stack
                 as="article"
                 css={{ position: "relative", stackGap: "$1" }}
               >
-                <Heading as="h3" size="1" weight="7">
-                  <NextLink
-                    href={`/${post.slug}`}
-                    outline="hover"
-                    variant="transparent"
-                  >
+                <NextLink
+                  href={`/${post.slug}`}
+                  outline="hover"
+                  variant="transparent"
+                >
+                  <Heading as="h3" size="2" weight="7">
                     {post.title}
-                  </NextLink>
-                </Heading>
+                  </Heading>
+                </NextLink>
                 <Paragraph fontFamily="mono" size="1" variant="gray">
                   {post.description}
                 </Paragraph>
@@ -53,7 +53,7 @@ const Writing: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                   </Badge>
                 </div>
               </Stack>
-              {index !== frontmatter.length - 1 && <Separator size="2" />}
+              {index !== frontmatters.length - 1 && <Separator size="2" />}
             </Fragment>
           );
         })}

@@ -121,7 +121,7 @@ export default function Work() {
           variant="contrast"
           weight="7"
         >
-          Passions
+          Interests
         </Heading>
         <Separator css={{ my: "$3", "@bp1": { my: "$5" } }} size="2" />
         <Grid
