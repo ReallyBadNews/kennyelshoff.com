@@ -42,24 +42,43 @@ export default function Footer() {
         pt: "$4",
         mt: "auto",
         borderTop: "1px solid $grayA4",
+        justifyContent: "space-between",
       }}
-      direction="row"
+      direction={{ "@initial": "column", "@bp1": "row" }}
     >
-      {footerLinks.map(({ title, url, external }) => {
-        return (
-          <NextLink
-            key={title}
-            css={{ display: "flex", gap: "$2" }}
-            href={url}
-            target={external ? "_blank" : undefined}
-            title={title}
-            variant="subtle"
-          >
-            {external ? <ArrowRightIcon className={iconStyle()} /> : null}
-            <Text size="0">{title}</Text>
-          </NextLink>
-        );
-      })}
+      <Stack css={{ stackGap: "$4" }} direction="row">
+        {footerLinks.map(({ title, url, external }) => {
+          return (
+            <NextLink
+              key={title}
+              css={{ display: "flex", gap: "$2" }}
+              href={url}
+              target={external ? "_blank" : undefined}
+              title={title}
+              variant="subtle"
+            >
+              {external ? <ArrowRightIcon className={iconStyle()} /> : null}
+              <Text size="0">{title}</Text>
+            </NextLink>
+          );
+        })}
+      </Stack>
+      <Stack css={{ stackGap: "$4" }} direction="row">
+        <NextLink
+          css={{ display: "flex", gap: "$2" }}
+          href="/colophon"
+          variant="subtle"
+        >
+          <Text size="0">Colophon</Text>
+        </NextLink>
+        <NextLink
+          css={{ display: "flex", gap: "$2" }}
+          href="/tools"
+          variant="subtle"
+        >
+          <Text size="0">Tools</Text>
+        </NextLink>
+      </Stack>
     </Stack>
   );
 }
