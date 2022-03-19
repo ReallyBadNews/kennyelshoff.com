@@ -43,7 +43,7 @@ export const Link = styled("a", {
           outlineStyle: "solid",
           outlineOffset: "0",
           outlineColor: "$slate4",
-          borderRadius: "$rg",
+          borderRadius: "$lg",
         },
         "&:hover": {
           "&:before": {
