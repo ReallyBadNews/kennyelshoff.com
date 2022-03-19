@@ -44,17 +44,11 @@ const GMGWork: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 }) => {
   return (
     <Page
-      description="Design Engineer building tools for storytellers and developers. Creating a community through local news"
+      description="Design & code, building tools for storytellers, marketers and fellow developers. Creating a community through local news."
       title="Graham Media Group"
     >
-      <Stack css={{ stackGap: "$5", display: "block" }}>
-        <Heading
-          as="h2"
-          fontFamily="mono"
-          size="2"
-          variant="contrast"
-          weight="7"
-        >
+      <Stack css={{ stackGap: "$7" }} marginCollapse>
+        <Heading as="h2" size="2" variant="contrast" weight="7">
           Select Projects
         </Heading>
         <Separator css={{ my: "$3", "@bp1": { my: "$5" } }} size="2" />

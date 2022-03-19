@@ -6,11 +6,14 @@ import Page from "@components/Page";
 import { Paragraph } from "@components/Paragraph";
 import { Stack } from "@components/Stack";
 import { Text } from "@components/Text";
+import { getAllImagePathsFromDir } from "@lib/images";
 import { getAllFrontmatter, getMdxBySlug } from "@lib/mdx";
 import { formatDate } from "@lib/utils";
+import { MDXImages } from "types";
 import { getMDXComponent } from "mdx-bundler/client";
 import { GetStaticPaths, InferGetStaticPropsType } from "next";
 import Link from "next/link";
+import { getPlaiceholder } from "plaiceholder";
 import { FC, useMemo } from "react";
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -31,12 +34,35 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps = async ({ params: { slug = "" } = {} }) => {
   const { frontmatter, code } = await getMdxBySlug("stash", slug);
 
-  return { props: { frontmatter, code } };
+  const imagePaths = getAllImagePathsFromDir("stash");
+
+  const images = await Promise.all(
+    imagePaths.map(async (src) => {
+      const { base64, img } = await getPlaiceholder(src);
+
+      return {
+        ...img,
+        blurDataURL: base64,
+      };
+    })
+  ).then((values) => {
+    const result = values.reduce<MDXImages>((acc, curr) => {
+      return {
+        ...acc,
+        [curr.src]: curr,
+      };
+    }, {});
+
+    return result;
+  });
+
+  return { props: { frontmatter, code, images } };
 };
 
 const Layout: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   frontmatter,
   code,
+  images,
 }) => {
   const Component = useMemo(() => {
     return getMDXComponent(code);
@@ -85,7 +111,7 @@ const Layout: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
           </Stack>
         )}
       </Stack>
-      <Component components={MDXComponents} />
+      <Component components={MDXComponents(images)} />
     </Page>
   );
 };
