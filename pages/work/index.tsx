@@ -46,19 +46,12 @@ const experience: Job[] = [
 export default function Work() {
   return (
     <Page
-      description="I love the little details, the subtle touches that show the care and
-            craft that went into producing the work. Trust in the process. Play, experiment, iterate, repeat."
+      description="I love the little details, the subtle touches that show the care and craft that went into producing the work. Trust in the process. Play, experiment, iterate, repeat."
       stackGap="$9"
       title="Work"
     >
       <Stack css={{ stackGap: "$3" }}>
-        <Heading
-          as="h2"
-          fontFamily="mono"
-          size="2"
-          variant="contrast"
-          weight="7"
-        >
+        <Heading as="h2" size="2" variant="contrast" weight="7">
           Experience
         </Heading>
         <Separator css={{ my: "$3", "@bp1": { my: "$5" } }} size="2" />
@@ -70,14 +63,14 @@ export default function Work() {
                 css={{
                   position: "relative",
                   stackGap: "$3",
-                  p: "$5 $3",
-                  borderRadius: "$rg",
+                  p: "$4 $3",
+                  borderRadius: "$lg",
                   background:
                     "linear-gradient(135deg, $slateA1 50%, $slateA2 100%)",
                   ...(index === 0 && { gridColumn: "-1 / 1" }),
                 }}
               >
-                <Stack css={{ stackGap: "$3" }}>
+                <Stack css={{ stackGap: "$2" }}>
                   {url ? (
                     <NextLink
                       href={url || ""}
@@ -114,21 +107,16 @@ export default function Work() {
         </Grid>
       </Stack>
       <Stack css={{ stackGap: "$3" }}>
-        <Heading
-          as="h2"
-          fontFamily="mono"
-          size="2"
-          variant="contrast"
-          weight="7"
-        >
+        <Heading as="h2" size="2" variant="contrast" weight="7">
           Interests
         </Heading>
         <Separator css={{ my: "$3", "@bp1": { my: "$5" } }} size="2" />
         <Grid
           as="ul"
           columns={{ "@initial": 2, "@bp1": 3 }}
-          css={{ p: 0, m: 0 }}
-          gap="3"
+          css={{ p: 0, ml: 0 }}
+          gapX="3"
+          gapY="5"
         >
           {[
             "Design Thinking",
@@ -149,7 +137,7 @@ export default function Work() {
                 direction="row"
               >
                 <ArrowRightIcon aria-hidden="true" className={iconStyle()} />
-                <Text css={{ lineHeight: "$loose" }} size="2" variant="gray">
+                <Text fontFamily="mono" size="2" variant="gray">
                   {item}
                 </Text>
               </Stack>

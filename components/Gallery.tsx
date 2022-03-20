@@ -1,5 +1,5 @@
 /**
- * Thanks to the great Framer Motion docs for the great demo
+ * Thanks to the Framer Motion docs for the great demo
  * https://codesandbox.io/s/framer-motion-image-gallery-pqvx3
  */
 

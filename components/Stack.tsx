@@ -22,6 +22,11 @@ export const Stack = styled("div", {
         [childWithGap]: { margin: "0 0 $$gap 0" },
       },
     },
+    marginCollapse: {
+      true: {
+        display: "block",
+      },
+    },
   },
   defaultVariants: {
     direction: "column",

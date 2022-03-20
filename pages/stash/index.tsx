@@ -41,7 +41,7 @@ const Stash: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                     {frontmatter.title}
                   </Heading>
                 </NextLink>
-                <Component components={MDXComponents} />
+                <Component components={MDXComponents()} />
                 <Paragraph size="0" variant="subtle">
                   <NextLink href={`/${frontmatter.slug}`}>
                     <time dateTime={frontmatter.date}>

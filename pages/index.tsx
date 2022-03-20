@@ -9,20 +9,20 @@ export default function Home() {
   return (
     <Page>
       <Stack css={{ stackGap: "$3" }}>
-        <Heading size="3" variant="blue" weight="9" gradient>
-          Hello! I&apos;m Kenny.
+        <Heading size="4" variant="contrast" weight="9" gradient>
+          Hello! I&apos;m Kenny Elshoff.
         </Heading>
         <Stack css={{ stackGap: "$4" }}>
           <Paragraph size="2" variant="gray">
-            A user interface engineer & designer interested in digital craft,
-            maintainable CSS, motion, React, TypeScript, and of course who can
-            forget about design systems.
+            A design engineer focused on digital craft, maintainable CSS,
+            motion, React, TypeScript, and of course who can forget about design
+            systems.
           </Paragraph>
           <Separator size="2" />
           <Paragraph size="1" variant="gray">
             {`In my free time, I'm usually goofing off with my twin sons (who are now four!!), `}
             <Link
-              href="https://unsplash.com/"
+              href="https://unsplash.com/@reallybadnews/collections"
               target="_blank"
               variant="contrast"
             >
@@ -30,7 +30,7 @@ export default function Home() {
             </Link>
             {", and occasionally some "}
             <Link
-              href="https://unsplash.com/"
+              href="https://unsplash.com/@reallybadnews"
               target="_blank"
               variant="contrast"
             >

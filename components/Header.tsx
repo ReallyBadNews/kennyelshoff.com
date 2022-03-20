@@ -3,6 +3,7 @@ import { Image } from "@components/Image";
 import NextLink from "@components/NextLink";
 import { ThemeToggle } from "@components/ThemeToggle";
 import { motion } from "framer-motion";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { Stack } from "./Stack";
 
@@ -13,7 +14,15 @@ const navItems = [
 ];
 
 export const Header = () => {
-  const [activeItem, setActiveItem] = useState<number | null>(null);
+  const router = useRouter();
+
+  // This array destructuring is kinda weird
+  const [, currentPageSlug] = router.pathname.split("/");
+  const currentPageIndex = navItems.findIndex((item) => {
+    return item.path === `/${currentPageSlug}`;
+  });
+
+  const [activeItem, setActiveItem] = useState<number>(currentPageIndex);
 
   return (
     <Box
@@ -43,6 +52,9 @@ export const Header = () => {
           }}
           href="/"
           title="Home"
+          onClick={() => {
+            return setActiveItem(-1);
+          }}
         >
           <Image
             alt="Kenny Elshoff doing a method on a snowboard"
@@ -68,12 +80,12 @@ export const Header = () => {
             }}
             direction="row"
             onHoverEnd={() => {
-              return setActiveItem(null);
+              return setActiveItem(currentPageIndex);
             }}
             onHoverStart={() => {}}
           >
             {navItems.map((item, index) => {
-              const activeIndex = activeItem === index;
+              const activeIndex = activeItem !== -1 && activeItem === index;
 
               return (
                 <motion.li
@@ -83,12 +95,22 @@ export const Header = () => {
                   }}
                 >
                   <NextLink
-                    css={{ position: "relative", px: "$2", py: "$2" }}
+                    css={{
+                      position: "relative",
+                      px: "$2",
+                      py: "$2",
+                      "&:focus span": {
+                        outline: "2px solid $slate7",
+                      },
+                    }}
                     href={item.path}
                     title={item.title}
                     variant="transparent"
                     onBlur={() => {
-                      return setActiveItem(null);
+                      return setActiveItem(currentPageIndex);
+                    }}
+                    onClick={() => {
+                      return setActiveItem(index);
                     }}
                     onFocus={() => {
                       return setActiveItem(index);
