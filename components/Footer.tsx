@@ -4,28 +4,39 @@ import NextLink from "./NextLink";
 import { Text } from "./Text";
 import { Stack } from "./Stack";
 
-const footerLinks = [
-  {
-    title: "Github",
-    url: "https://github.com/reallybadnews",
-    external: true,
-  },
-  {
-    title: "Twitter",
-    url: "https://twitter.com/kennyelshoff",
-    external: true,
-  },
-  {
-    title: "LinkedIn",
-    url: "https://linkedin.com/kennyelshoff",
-    external: true,
-  },
-  {
-    title: "Email",
-    url: "mailto:hello@kennyelshoff.com",
-    external: true,
-  },
-];
+const footerLinks = {
+  left: [
+    {
+      title: "Github",
+      url: "https://github.com/reallybadnews",
+      external: true,
+    },
+    {
+      title: "Twitter",
+      url: "https://twitter.com/kennyelshoff",
+      external: true,
+    },
+    {
+      title: "LinkedIn",
+      url: "https://linkedin.com/kennyelshoff",
+      external: true,
+    },
+    {
+      title: "Email",
+      url: "mailto:hello@kennyelshoff.com",
+      external: true,
+    },
+    {
+      title: "Resume",
+      url: "/kenny_elshoff-resume.pdf",
+      external: true,
+    },
+  ],
+  right: [
+    { title: "Colophon", url: "/colophon", external: false },
+    { title: "Tools", url: "/tools", external: false },
+  ],
+};
 
 const iconStyle = css({
   width: "12px",
@@ -47,7 +58,7 @@ export default function Footer() {
       direction={{ "@initial": "column", "@bp1": "row" }}
     >
       <Stack css={{ stackGap: "$4" }} direction="row">
-        {footerLinks.map(({ title, url, external }) => {
+        {footerLinks.left.map(({ title, url, external }) => {
           return (
             <NextLink
               key={title}
@@ -64,20 +75,21 @@ export default function Footer() {
         })}
       </Stack>
       <Stack css={{ stackGap: "$4" }} direction="row">
-        <NextLink
-          css={{ display: "flex", gap: "$2" }}
-          href="/colophon"
-          variant="subtle"
-        >
-          <Text size="0">Colophon</Text>
-        </NextLink>
-        <NextLink
-          css={{ display: "flex", gap: "$2" }}
-          href="/tools"
-          variant="subtle"
-        >
-          <Text size="0">Tools</Text>
-        </NextLink>
+        {footerLinks.right.map(({ title, url, external }) => {
+          return (
+            <NextLink
+              key={title}
+              css={{ display: "flex", gap: "$2" }}
+              href={url}
+              target={external ? "_blank" : undefined}
+              title={title}
+              variant="subtle"
+            >
+              {external ? <ArrowRightIcon className={iconStyle()} /> : null}
+              <Text size="0">{title}</Text>
+            </NextLink>
+          );
+        })}
       </Stack>
     </Stack>
   );
