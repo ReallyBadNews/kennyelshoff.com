@@ -19,7 +19,7 @@ thousands of customers to lose power. At some point in the day, more than
 
 And if I wanted to get the team then:
 
-```tsx showLineNumbers
+```tsx showLineNumbers {1, 9-16}
 const users = await prisma.user.findMany({
   select: {
     id: true,
@@ -28,16 +28,58 @@ const users = await prisma.user.findMany({
     team: true, // <-- just add the field I want
     stringValue: "this is a string",
   },
+  where: {
+    team: {
+      id: {
+        equals: "this is a string",
+      },
+    },
+  },
 });
 ```
 
-```tsx lines="2-5"
+```jsx
+import create from "zustand";
+
+const useStore = create((set) => ({
+  bears: 0,
+  increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
+  removeAllBears: () => set({ bears: 0 }),
+}));
+```
+
+```tsx
+// Block without line numbers
 const users: Array<{
   id: string;
   email: string;
   firstName: string;
   team: Team;
 }>;
+```
+
+```css showLineNumbers filename=app/styles/shared.css
+/* scope with class names */
+.PrimaryButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+}
+
+.TileGrid {
+  /* ... */
+}
+
+/* or scope with data attributes to avoid concatenating
+   className props, but it's really up to you */
+[data-primary-button] {
+  /* ... */
+}
+
+[data-tile-grid] {
+  /* ... */
+}
 ```
 
 I love keyboard shortcuts, one of my favorites is the <kbd><Kbd>Cmd</Kbd> + <Kbd>K</Kbd></kbd>
@@ -80,9 +122,9 @@ async function getLoaderData() {
   return { users };
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
-  return json(await getLoaderData());
-};
+// export const loader: LoaderFunction = async ({ request }) => {
+//   return json(await getLoaderData());
+// };
 
 export default function UsersPage() {
   const data = useLoaderData<LoaderData>();
