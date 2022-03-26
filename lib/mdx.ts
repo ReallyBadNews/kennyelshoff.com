@@ -4,8 +4,12 @@ import { bundleMDX } from "mdx-bundler";
 import path from "path";
 import remarkSlug from "remark-slug";
 import remarkUnwrapImages from "remark-unwrap-images";
+import readingTime from "reading-time";
+import remarkGfm from "remark-gfm";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypePrism from "rehype-prism-plus";
 import { Frontmatter } from "types";
-import rehypeHighlightCode from "./rehype-highlight-code";
 import rehypeMetaAttribute from "./rehype-meta-attribute";
 
 const ROOT_PATH = process.cwd();
@@ -24,34 +28,40 @@ const content = {
   "work/graham-media-group": gmgWorkPath,
 };
 
-interface GetMdxBySlug {
-  (type: keyof typeof content, slug: string): Promise<{
-    date: string;
-    frontmatter: Frontmatter;
-    code: string;
-  }>;
-}
-
-export const getMdxBySlug: GetMdxBySlug = async (directory, fileName) => {
+export const getMdxBySlug = async (
+  directory: keyof typeof content,
+  fileName: string
+) => {
   const mdxSource = fs.readFileSync(
     path.join(content[directory], `${fileName}.mdx`),
     "utf8"
   );
-  const { frontmatter, code } = await bundleMDX<Frontmatter>({
+
+  const { code, frontmatter } = await bundleMDX<Frontmatter>({
     source: mdxSource,
-    cwd: path.join(DATA_PATH, directory),
     xdmOptions(options) {
       options.remarkPlugins = [
-        ...(options.remarkPlugins ?? []),
+        ...(options?.remarkPlugins ?? []),
+        remarkGfm,
         remarkSlug,
         remarkUnwrapImages,
-      ];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ] as any;
       options.rehypePlugins = [
-        ...(options.rehypePlugins ?? []),
+        ...(options?.rehypePlugins ?? []),
+        rehypeSlug,
+        rehypePrism,
         rehypeMetaAttribute,
-        rehypeHighlightCode,
-      ];
-
+        [
+          rehypeAutolinkHeadings,
+          {
+            properties: {
+              className: ["anchor"],
+            },
+          },
+        ],
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ] as any;
       return options;
     },
     esbuildOptions: (options) => {
@@ -71,6 +81,7 @@ export const getMdxBySlug: GetMdxBySlug = async (directory, fileName) => {
       slug: `${directory}/${fileName}`,
     },
     code,
+    readingTime: readingTime(mdxSource),
   };
 };
 

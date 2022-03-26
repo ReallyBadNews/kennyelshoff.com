@@ -16,14 +16,10 @@ export interface CodeProps {
 
 export const InlineCode = styled("code", {
   fontFamily: "$jet",
-  fontSize: "$1",
+  fontSize: "inherit",
   whiteSpace: "nowrap",
   padding: "0 $1 2px $1",
   borderRadius: "$md",
-
-  "@bp1": {
-    fontSize: "$2",
-  },
 
   variants: {
     variant: {

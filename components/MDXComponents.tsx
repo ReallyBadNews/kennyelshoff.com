@@ -1,10 +1,9 @@
 // import Image from "next/image";
 import { isExternalLink } from "@lib/utils";
 import { ComponentMap } from "mdx-bundler/client";
-import rangeParser from "parse-numeric-range";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { CSS, VariantProps } from "stitches.config";
-import Image from "next/image";
+import Image, { ImageProps } from "next/image";
 import { MDXImages } from "types";
 import { Blockquote } from "./Blockquote";
 import { Box } from "./Box";
@@ -17,6 +16,7 @@ import { Pre } from "./Pre";
 import { Preview } from "./Preview";
 import { Separator } from "./Separator";
 import { Badge } from "./Badge";
+import { Gallery } from "./Gallery";
 
 export const MDXComponents = (mdxImages?: MDXImages): ComponentMap => {
   return {
@@ -24,8 +24,8 @@ export const MDXComponents = (mdxImages?: MDXImages): ComponentMap => {
       return (
         <Heading
           as="h1"
-          css={{ "&:not(:first-child)": { mt: "$6", mb: "$3" } }}
-          size="3"
+          css={{ "&:not(:first-child)": { mt: "$6", mb: "-$3" } }}
+          size="4"
           variant="contrast"
           weight="9"
         >
@@ -37,8 +37,8 @@ export const MDXComponents = (mdxImages?: MDXImages): ComponentMap => {
       return (
         <Heading
           as="h2"
-          css={{ "&:not(:first-child)": { mt: "$6", mb: "$3" } }}
-          size="2"
+          css={{ "&:not(:first-child)": { mt: "$6", mb: "-$3" } }}
+          size="3"
           variant="contrast"
           weight="7"
         >
@@ -51,7 +51,7 @@ export const MDXComponents = (mdxImages?: MDXImages): ComponentMap => {
         <Heading
           as="h3"
           css={{ "&:not(:first-child)": { mt: "$6", mb: "$3" } }}
-          size="1"
+          size="2"
           variant="contrast"
           weight="7"
         >
@@ -71,9 +71,16 @@ export const MDXComponents = (mdxImages?: MDXImages): ComponentMap => {
     },
     strong: ({ children }) => {
       return (
-        <Box as="strong" css={{ fontWeight: "$9" }}>
+        <Paragraph as="strong" weight="9">
           {children}
-        </Box>
+        </Paragraph>
+      );
+    },
+    em: ({ children }) => {
+      return (
+        <Paragraph as="em" css={{ fontStyle: "italic" }}>
+          {children}
+        </Paragraph>
       );
     },
     a: ({ href, children }) => {
@@ -98,6 +105,19 @@ export const MDXComponents = (mdxImages?: MDXImages): ComponentMap => {
               {...mdxImages[src]}
             />
           </Box>
+        );
+      }
+      throw new Error(`Image not found: ${src}`);
+    },
+    Image: ({ src, ...props }: ImageProps) => {
+      if (mdxImages && src) {
+        return (
+          <Image
+            layout="responsive"
+            placeholder="blur"
+            {...props}
+            {...mdxImages[src as string]}
+          />
         );
       }
       throw new Error(`Image not found: ${src}`);
@@ -195,7 +215,6 @@ export const MDXComponents = (mdxImages?: MDXImages): ComponentMap => {
     },
     pre: ({
       children,
-      theme,
       filename,
       showLineNumbers,
       css,
@@ -210,7 +229,6 @@ export const MDXComponents = (mdxImages?: MDXImages): ComponentMap => {
             data-filename={filename}
             filename={!!filename}
             showLineNumbers={typeof showLineNumbers === "string"}
-            theme={theme}
           >
             {children}
           </Pre>
@@ -252,50 +270,6 @@ export const MDXComponents = (mdxImages?: MDXImages): ComponentMap => {
 
       return null;
     },
-    H: ({ id, index, ...props }) => {
-      const triggerRef = useRef<HTMLElement>(null);
-
-      useEffect(() => {
-        const { current: trigger } = triggerRef;
-
-        if (trigger) {
-          const codeBlock = document.getElementById(id);
-          if (!codeBlock) return undefined;
-
-          const allHighlightWords =
-            codeBlock.querySelectorAll(".highlight-word");
-          const targetIndex = rangeParser(index).map((i) => {
-            return i - 1;
-          });
-
-          if (Math.max(...targetIndex) >= allHighlightWords.length) {
-            return undefined;
-          }
-
-          const addClass = () => {
-            return targetIndex.forEach((i) => {
-              return allHighlightWords[i].classList.add("on");
-            });
-          };
-          const removeClass = () => {
-            return targetIndex.forEach((i) => {
-              return allHighlightWords[i].classList.remove("on");
-            });
-          };
-
-          trigger.addEventListener("mouseenter", addClass);
-          trigger.addEventListener("mouseleave", removeClass);
-
-          return () => {
-            trigger.removeEventListener("mouseenter", addClass);
-            trigger.removeEventListener("mouseleave", removeClass);
-          };
-        }
-        return undefined;
-      }, [id, index]);
-
-      return <code ref={triggerRef} {...props} />;
-    },
     Kbd: ({ children }) => {
       return <Kbd>{children}</Kbd>;
     },
@@ -307,5 +281,6 @@ export const MDXComponents = (mdxImages?: MDXImages): ComponentMap => {
       );
     },
     Preview,
+    Gallery,
   };
 };
