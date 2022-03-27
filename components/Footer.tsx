@@ -55,9 +55,12 @@ export default function Footer() {
         borderTop: "1px solid $grayA4",
         justifyContent: "space-between",
       }}
-      direction={{ "@initial": "column", "@bp1": "row" }}
+      direction="row"
     >
-      <Stack css={{ stackGap: "$4" }} direction="row">
+      <Stack
+        css={{ stackGap: "$4" }}
+        direction={{ "@initial": "column", "@bp1": "row" }}
+      >
         {footerLinks.left.map(({ title, url, external }) => {
           return (
             <NextLink
@@ -74,7 +77,10 @@ export default function Footer() {
           );
         })}
       </Stack>
-      <Stack css={{ stackGap: "$4" }} direction="row">
+      <Stack
+        css={{ stackGap: "$4" }}
+        direction={{ "@initial": "column", "@bp1": "row" }}
+      >
         {footerLinks.right.map(({ title, url, external }) => {
           return (
             <NextLink

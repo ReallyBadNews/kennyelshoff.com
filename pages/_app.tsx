@@ -76,11 +76,8 @@ function BabaBooey({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <ThemeProvider
       attribute="class"
-      defaultTheme="system"
       value={{ light: "light-theme", dark: darkTheme.className }}
       disableTransitionOnChange
-      enableColorScheme
-      enableSystem
     >
       <TooltipProvider>
         <Container

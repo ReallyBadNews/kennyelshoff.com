@@ -5,7 +5,8 @@
       "@components/*": ["components/*"],
       "@pages/*": ["pages/*"],
       "@lib/*": ["lib/*"],
-      "@types/*": ["types/*"]
+      "@types/*": ["types/*"],
+      "@hooks/*": ["hooks/*"]
     },
     "target": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],

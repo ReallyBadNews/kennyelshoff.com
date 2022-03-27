@@ -22,7 +22,7 @@ const Stash: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 }) => {
   return (
     <Page
-      description="Bookmarks, articles, tweets, notes and other miscellaneous tidbits I feel the need to enumerate so maybe I can remember where I saved it this time"
+      description="Bookmarks, articles, tweets, notes and other miscellaneous tidbits I feel the need to enumerate. Maybe I can remember where I saved it this time."
       stackGap="$9"
       title="Stash"
     >
@@ -35,12 +35,12 @@ const Stash: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                 as="article"
                 css={{ position: "relative", stackGap: "$4" }}
               >
-                {/* @ts-expect-error TODO: use contentlayer for typings */}
-                <NextLink href={frontmatter.url} target="_blank" showCitation>
-                  <Heading as="h4" size="2" weight="7">
+                <Heading as="h4" size="2" weight="7">
+                  {/* @ts-expect-error TODO: use contentlayer for typings */}
+                  <NextLink href={frontmatter.url} target="_blank" showCitation>
                     {frontmatter.title}
-                  </Heading>
-                </NextLink>
+                  </NextLink>
+                </Heading>
                 <Component components={MDXComponents()} />
                 <Paragraph size="0" variant="subtle">
                   <NextLink href={`/${frontmatter.slug}`}>

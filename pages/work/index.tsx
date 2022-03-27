@@ -27,7 +27,7 @@ const experience: Job[] = [
   {
     company: "Graham Media Group",
     url: "/work/graham-media-group/",
-    title: "Front-end Engineer",
+    title: "Design Engineer",
     date: "2018 - Present",
   },
   {
@@ -46,7 +46,7 @@ const experience: Job[] = [
 export default function Work() {
   return (
     <Page
-      description="I love the little details, the subtle touches that show the care and craft that went into producing the work. Trust in the process. Play, experiment, iterate, repeat."
+      description="Helping teams design and build consistent, high-quality, user experiences. Focused on building delightful experiences with the modern web."
       stackGap="$9"
       title="Work"
     >

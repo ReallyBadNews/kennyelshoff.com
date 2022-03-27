@@ -1,46 +1,22 @@
-import { Badge } from "@components/Badge";
-import { Gallery } from "@components/Gallery";
 import { Heading } from "@components/Heading";
-import { Image } from "@components/Image";
 import NextLink from "@components/NextLink";
 import Page from "@components/Page";
 import { Paragraph } from "@components/Paragraph";
 import { Separator } from "@components/Separator";
 import { Stack } from "@components/Stack";
-import { getAllImagePathsFromDir } from "@lib/images";
+import { Text } from "@components/Text";
 import { getAllFrontmatter } from "@lib/mdx";
-import { formatDate } from "@lib/utils";
 import { InferGetStaticPropsType } from "next";
-import { getPlaiceholder } from "plaiceholder";
 import { Fragment } from "react";
 
 export const getStaticProps = async () => {
-  const frontmatter = await getAllFrontmatter("work/graham-media-group");
+  const projects = await getAllFrontmatter("work/graham-media-group");
 
-  const imagePaths = getAllImagePathsFromDir("work/gmg");
-
-  const images = await Promise.all(
-    imagePaths.map(async (src) => {
-      const { base64, img } = await getPlaiceholder(src);
-
-      return {
-        ...img,
-        blurDataURL: base64,
-      };
-    })
-  ).then((values) => {
-    // Remove height and width from each image since we're using layout="fill"
-    return values.map(({ height, width, ...rest }) => {
-      return rest;
-    });
-  });
-
-  return { props: { images, frontmatter } };
+  return { props: { projects } };
 };
 
 const GMGWork: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
-  images,
-  frontmatter,
+  projects,
 }) => {
   return (
     <Page
@@ -48,11 +24,38 @@ const GMGWork: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
       title="Graham Media Group"
     >
       <Stack css={{ stackGap: "$7" }} marginCollapse>
+        <Stack as="dl" css={{ stackGap: "$4" }}>
+          <Stack css={{ stackGap: "$2" }}>
+            <Text as="dt" fontFamily="mono" size="1" variant="subtle">
+              Start Date
+            </Text>
+            <Text as="dt" fontFamily="mono" size="2" variant="contrast">
+              December 2018
+            </Text>
+          </Stack>
+          <Stack css={{ stackGap: "$2" }}>
+            <Text as="dt" fontFamily="mono" size="1" variant="subtle">
+              Position
+            </Text>
+            <Text as="dt" fontFamily="mono" size="2" variant="contrast">
+              Design Engineer
+            </Text>
+          </Stack>
+          <Stack css={{ stackGap: "$2" }}>
+            <Text as="dt" fontFamily="mono" size="1" variant="subtle">
+              Tools
+            </Text>
+            <Text as="dt" fontFamily="mono" size="2" variant="contrast">
+              TypeScript, React, ArcXP, styled-components, NextJS
+            </Text>
+          </Stack>
+        </Stack>
+        {/* <Separator css={{ my: "$5" }} size="2" /> */}
         <Heading as="h2" size="2" variant="contrast" weight="7">
           Select Projects
         </Heading>
-        <Separator css={{ my: "$3", "@bp1": { my: "$5" } }} size="2" />
-        {frontmatter.map((post, index) => {
+        <Separator css={{ my: "$5" }} size="2" />
+        {projects.map((post, index) => {
           return (
             <Fragment key={post.slug}>
               <Stack
@@ -71,44 +74,11 @@ const GMGWork: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                 <Paragraph fontFamily="mono" size="1" variant="gray">
                   {post.description}
                 </Paragraph>
-                <div>
-                  <Badge size="1" variant="gray">
-                    <time dateTime={post.date}>
-                      {formatDate(post.date, "medium")}
-                    </time>
-                  </Badge>
-                </div>
               </Stack>
-              {index !== frontmatter.length - 1 && <Separator size="2" />}
+              {index !== projects.length - 1 && <Separator size="2" />}
             </Fragment>
           );
         })}
-        <Gallery aspectRatio="3 / 2">
-          <Image
-            {...images[0]}
-            alt="Article page on clickondetroit.com"
-            css={{ borderRadius: "$rg" }}
-            layout="fill"
-            objectFit="contain"
-            placeholder="blur"
-          />
-          <Image
-            {...images[1]}
-            alt="Home page on clickondetroit.com"
-            css={{ borderRadius: "$rg" }}
-            layout="fill"
-            objectFit="contain"
-            placeholder="blur"
-          />
-          <Image
-            {...images[2]}
-            alt="Registration dialog on clickondetroit.com"
-            css={{ borderRadius: "$rg" }}
-            layout="fill"
-            objectFit="contain"
-            placeholder="blur"
-          />
-        </Gallery>
       </Stack>
     </Page>
   );

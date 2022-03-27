@@ -34,8 +34,8 @@ export const Paragraph = forwardRef<
 
   // This is the mapping of Paragraph Variants to Text css
   const textCss: Record<ParagraphSizeVariants, CSS> = {
-    0: { lh: "$normal" },
-    1: { lh: "$relaxed" },
+    0: { lineHeight: "$normal" },
+    1: { lineHeight: "$relaxed", "@bp1": { lineHeight: "$loose" } },
     2: { lineHeight: "$normal", "@bp1": { lineHeight: "$relaxed" } },
     3: { lineHeight: "$snug", "@bp1": { lineHeight: "$snug" } },
   };
