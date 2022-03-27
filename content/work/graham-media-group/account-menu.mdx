@@ -6,7 +6,7 @@ date: "2022-03-23T00:53:18.258Z"
 
 As [Pedro Duarte](https://ped.ro/) said in his [video](https://www.youtube.com/watch?v=pcMYcjtWwVI) demonstrating the capibilities of [Radix Primitives](https://radix-ui.com/), building an accessable dropdown is much harder than it appears on the surface.
 
-There are countless factors to consider, from keyboard navigation and focus management to aria-roles and screen reader support the [Menu Button WAI_ARIA design pattern](https://www.w3.org/TR/wai-aria-practices-1.2/#menubutton) lists many design details to implement and test, as well warnings and common mistakes.
+There are countless factors to consider, from keyboard navigation and focus management to aria-roles and screen reader support the [Menu Button WAI-ARIA design pattern](https://www.w3.org/TR/wai-aria-practices-1.2/#menubutton) lists many design details to implement and test, as well warnings and common mistakes.
 
 For example, the button element that triggers the menu should include the following interactions with focus on the button:
 
@@ -20,11 +20,11 @@ For example, the button element that triggers the menu should include the follow
 There are a number of open souce libraries who's goal it is to make building accessable ccomponents easier. These components typically come unstyled, and offer a variety of different ways to compose and style them to fit into your design system.
 
 - [Radix Primitives](https://radix-ui.com/): a set of primitives that are styled by default.
-- [Headless UI](https://headlessui.dev/): by the team behind [Tailwind CSS](https://tailwindcss.com/), a set of primitives that are styled by default. Comes in `React` and `Vue` flavors.
+- [Headless UI](https://headlessui.dev/): from the team behind [Tailwind CSS](https://tailwindcss.com/), a set of primitives that are styled by default. Comes in `React` and `Vue` flavors.
 - [Reakit](https://reakit.io/): Accessable, compostable, customizable, tiny & fast.
 - [React Aria](https://react-spectrum.adobe.com/react-aria/): A library of React Hooks that provides accessible UI primitives for your design system.
 
-For Graham Media Group's design system we chose to use Headlelss UI's [Menu (Dropdown)](https://headlessui.dev/react/menu/) for it's simple an compostable API.
+For Graham Media Group's design system we chose to use Headlelss UI's [Menu (Dropdown)](https://headlessui.dev/react/menu/) for it's simple and compostable API.
 
 ```tsx showLineNumbers {8-14} filename=src/components/Dropdown/Dropdown.tsx
 import { Dropdown } from "@ds/components";
@@ -45,6 +45,8 @@ const Menu = ({ children }) => {
   );
 };
 ```
+
+In the component library we compose the `Menu` and `Menu.Items` components to create a dropdown menu with some basic themeing included.
 
 <Gallery aspectRatio={16 / 9}>
   <Image

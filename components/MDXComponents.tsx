@@ -1,4 +1,3 @@
-// import Image from "next/image";
 import { isExternalLink } from "@lib/utils";
 import { ComponentMap } from "mdx-bundler/client";
 import { useEffect } from "react";
@@ -24,7 +23,7 @@ export const MDXComponents = (mdxImages?: MDXImages): ComponentMap => {
       return (
         <Heading
           as="h1"
-          css={{ "&:not(:first-child)": { mt: "$6", mb: "-$3" } }}
+          css={{ "&:not(:first-child)": { mt: "$6", mb: "-$4" } }}
           size="4"
           variant="contrast"
           weight="9"
@@ -37,7 +36,7 @@ export const MDXComponents = (mdxImages?: MDXImages): ComponentMap => {
       return (
         <Heading
           as="h2"
-          css={{ "&:not(:first-child)": { mt: "$6", mb: "-$3" } }}
+          css={{ "&:not(:first-child)": { mt: "$6", mb: "-$4" } }}
           size="3"
           variant="contrast"
           weight="7"
@@ -175,7 +174,7 @@ export const MDXComponents = (mdxImages?: MDXImages): ComponentMap => {
                 // content with right arrow glyph
                 content: '"\\2192"',
                 pr: "$2",
-                color: "$blue10",
+                color: "$slate10",
               },
             },
             "& li:not(:first-child)": { mt: "$3" },

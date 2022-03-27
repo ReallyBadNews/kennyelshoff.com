@@ -23,15 +23,12 @@ export const Pre = styled("pre", {
   backgroundColor: "$$background",
   color: "$$text",
   width: "calc($sizes$full + $8)",
-  borderTop: "1px solid $slate6",
-  borderBottom: "1px solid $slate6",
   mx: "-$3",
   py: "$3",
 
   "@bp1": {
     fontSize: "$1",
     borderRadius: "$lg",
-    border: "1px solid $slate6",
   },
 
   "& > code": {

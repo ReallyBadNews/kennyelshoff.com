@@ -9,9 +9,6 @@ export interface CodeProps {
   className?: string;
   id?: string;
   collapsible?: string;
-  ignoreWordHighlight?: string;
-  showLineNumbers?: string;
-  filename?: string;
 }
 
 export const InlineCode = styled("code", {
@@ -43,22 +40,17 @@ export const Code: FC<CodeProps> = ({
   className,
   id,
   collapsible,
-  // destructure the following vars so they don't get passed to the dom node
-  ignoreWordHighlight,
-  showLineNumbers,
-  filename,
-  ...rest
 }) => {
   const isCollapsible = typeof collapsible !== "undefined";
   const [isOpen, setIsOpen] = useState(!isCollapsible);
   const isInline = typeof children === "string";
 
   const content = isInline ? (
-    <InlineCode className={className} id={id} {...rest}>
+    <InlineCode className={className} id={id}>
       {children}
     </InlineCode>
   ) : (
-    <Box as="code" className={className} id={id} {...rest}>
+    <Box as="code" className={className} id={id}>
       {children}
     </Box>
   );
@@ -88,7 +80,4 @@ Code.defaultProps = {
   className: undefined,
   id: undefined,
   collapsible: undefined,
-  ignoreWordHighlight: undefined,
-  showLineNumbers: undefined,
-  filename: undefined,
 };
