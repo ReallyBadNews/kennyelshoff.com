@@ -1,6 +1,4 @@
-import { isExternalLink } from "@lib/utils";
 import { ComponentMap } from "mdx-bundler/client";
-import { useEffect } from "react";
 import { CSS, VariantProps } from "stitches.config";
 import Image, { ImageProps } from "next/image";
 import { MDXImages } from "types";
@@ -236,38 +234,6 @@ export const MDXComponents = (mdxImages?: MDXImages): ComponentMap => {
     },
     code: (props: CodeProps) => {
       return <Code {...props} />;
-    },
-    // @ts-expect-error - mdx-bundler expects to return a component, not void
-    RegisterLink: ({
-      id,
-      index = 0,
-      href,
-    }: {
-      id: string;
-      index: number;
-      href: string;
-    }) => {
-      const isExternal = isExternalLink(href);
-
-      useEffect(() => {
-        const codeBlock = document.getElementById(id);
-        if (!codeBlock) return undefined;
-
-        const allHighlightWords = codeBlock.querySelectorAll(".highlight-word");
-        const target = allHighlightWords[index - 1];
-        if (!target) return undefined;
-
-        return target.replaceWith(
-          Object.assign(document.createElement("a"), {
-            href,
-            innerHTML: target.innerHTML,
-            className: target.className,
-            ...(isExternal ? { target: "_blank", rel: "noopener" } : {}),
-          })
-        );
-      }, [href, id, index, isExternal]);
-
-      return null;
     },
     Kbd: ({ children }) => {
       return <Kbd>{children}</Kbd>;
