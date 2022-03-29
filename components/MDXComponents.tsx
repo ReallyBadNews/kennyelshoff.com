@@ -47,7 +47,7 @@ export const MDXComponents = (mdxImages?: MDXImages): ComponentMap => {
       return (
         <Heading
           as="h3"
-          css={{ "&:not(:first-child)": { mt: "$6", mb: "$3" } }}
+          css={{ "&:not(:first-child)": { mt: "$6", mb: "-$3" } }}
           size="2"
           variant="contrast"
           weight="7"

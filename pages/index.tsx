@@ -50,9 +50,14 @@ export default function Home() {
             {` to build Local News better.`}
           </Paragraph>
           <Paragraph size="1" variant="gray">
-            I think of this site as a playground, and a location free to
+            I think of this site as a playground and a location free to
             experiment with new techniques and technologies. Is it overkill?
-            Yeah, of course. Is it fun to build? Hell yeah.
+            Yeah, of course. Is it fun to build? Hell yeah. Will it ever be
+            finished? Probably not. This site is built with Next.js, Stitches,
+            Radix Primitives & Colors, TypeScript, MDX and hosted on Vercel.
+          </Paragraph>
+          <Paragraph size="1" variant="gray">
+            ¯\_(ツ)_/¯
           </Paragraph>
         </Stack>
       </Stack>
