@@ -3,8 +3,12 @@ import Footer from "@components/Footer";
 import { Header } from "@components/Header";
 import { TooltipProvider } from "@components/Tooltip";
 import { ThemeProvider } from "next-themes";
+import { useEffect } from "react";
+import Script from "next/script";
+import { useRouter } from "next/router";
 import type { AppProps } from "next/app";
 import { darkTheme, globalCss } from "stitches.config";
+import * as gtag from "@lib/analytics";
 
 const globalStyles = globalCss({
   /**
@@ -73,28 +77,60 @@ const globalStyles = globalCss({
 function BabaBooey({ Component, pageProps }: AppProps): JSX.Element {
   globalStyles();
 
+  const router = useRouter();
+  useEffect(() => {
+    const handleRouteChange = (url: string) => {
+      gtag.pageview(url);
+    };
+    router.events.on("routeChangeComplete", handleRouteChange);
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router.events]);
+
   return (
-    <ThemeProvider
-      attribute="class"
-      value={{ light: "light-theme", dark: darkTheme.className }}
-      disableTransitionOnChange
-    >
-      <TooltipProvider>
-        <Container
-          css={{
-            display: "flex",
-            flexDirection: "column",
-            minHeight: "100vh",
-            py: "$6",
-          }}
-          size="2"
-        >
-          <Header />
-          <Component {...pageProps} />
-          <Footer />
-        </Container>
-      </TooltipProvider>
-    </ThemeProvider>
+    <>
+      {/* Global Site Tag (gtag.js) - Google Analytics */}
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
+        strategy="afterInteractive"
+      />
+      <Script
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${gtag.GA_TRACKING_ID}', {
+              page_path: window.location.pathname,
+            });
+          `,
+        }}
+        id="gtag-init"
+        strategy="afterInteractive"
+      />
+      <ThemeProvider
+        attribute="class"
+        value={{ light: "light-theme", dark: darkTheme.className }}
+        disableTransitionOnChange
+      >
+        <TooltipProvider>
+          <Container
+            css={{
+              display: "flex",
+              flexDirection: "column",
+              minHeight: "100vh",
+              py: "$6",
+            }}
+            size="2"
+          >
+            <Header />
+            <Component {...pageProps} />
+            <Footer />
+          </Container>
+        </TooltipProvider>
+      </ThemeProvider>
+    </>
   );
 }
 

@@ -24,7 +24,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params: { slug = "" } = {} }) => {
-  const { frontmatter, code } = await getMdxBySlug(
+  const { frontmatter, code, readingTime } = await getMdxBySlug(
     "work/graham-media-group",
     slug
   );
@@ -51,13 +51,14 @@ export const getStaticProps = async ({ params: { slug = "" } = {} }) => {
     return result;
   });
 
-  return { props: { frontmatter, code, images } };
+  return { props: { frontmatter, code, images, readingTime } };
 };
 
-const Layout: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
+const GMGWork: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   frontmatter,
   code,
   images,
+  // readingTime,
 }) => {
   const Component = useMemo(() => {
     return getMDXComponent(code);
@@ -70,4 +71,4 @@ const Layout: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   );
 };
 
-export default Layout;
+export default GMGWork;

@@ -32,7 +32,7 @@ export const Heading = forwardRef<ElementRef<typeof DEFAULT_TAG>, HeadingProps>(
       1: { lineHeight: "$normal", "@bp1": { lineHeight: "$normal" } },
       2: { lineHeight: "$normal", "@bp1": { lineHeight: "$normal" } },
       3: { lineHeight: "$normal", "@bp1": { lineHeight: "$normal" } },
-      4: { lineHeight: "$normal", "@bp1": { lineHeight: "$normal" } },
+      4: { lineHeight: "$normal", "@bp1": { lineHeight: "$tight" } },
       5: { lineHeight: "$normal", "@bp1": { lineHeight: "$normal" } },
     };
 

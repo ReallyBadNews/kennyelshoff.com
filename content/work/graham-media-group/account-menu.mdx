@@ -1,73 +1,84 @@
 ---
-title: Building an Accessable Dropdown Menu
+title: Building an Accessible Dropdown Menu
 description: From keyboard navigation to focus management, the humble dropdown is more complex than it seems
 date: "2022-03-23T00:53:18.258Z"
 ---
 
-As [Pedro Duarte](https://ped.ro/) said in his [video](https://www.youtube.com/watch?v=pcMYcjtWwVI) demonstrating the capibilities of [Radix Primitives](https://radix-ui.com/), building an accessable dropdown is much harder than it appears on the surface.
+As [Pedro Duarte](https://ped.ro/) said in his [video](https://www.youtube.com/watch?v=pcMYcjtWwVI) demonstrating the capabilities of [Radix Primitives](https://radix-ui.com/), building an accessible dropdown is much harder than it appears on the surface.
 
 There are countless factors to consider, from keyboard navigation and focus management to aria-roles and screen reader support the [Menu Button WAI-ARIA design pattern](https://www.w3.org/TR/wai-aria-practices-1.2/#menubutton) lists many design details to implement and test, as well warnings and common mistakes.
 
-For example, the button element that triggers the menu should include the following interactions with focus on the button:
+For example, the `button` element that triggers the `Dropdown` should include the following interactions while focus is on the button:
 
-- **Enter**: opens the menu and places focus on the first menu item.
-- **Space**: opens the menu and places focus on the first menu item.
-- **Down Arrow _(optional)_**: opens the menu and moves focus to the first menu item.
-- **Up Arrow _(optional)_**: opens the menu and moves focus to the last menu item.
+- <Kbd>Enter</Kbd>: opens the menu and places focus on the first menu item.
+- <Kbd>Space</Kbd>: opens the menu and places focus on the first menu item.
+- <Kbd>Down Arrow</Kbd> _(optional)_: opens the menu and moves focus to the first
+  menu item.
+- <Kbd>Up Arrow</Kbd> _(optional)_: opens the menu and moves focus to the last menu
+  item.
 
-## Accessable Primitives
+## Accessible Primitives
 
-There are a number of open souce libraries who's goal it is to make building accessable ccomponents easier. These components typically come unstyled, and offer a variety of different ways to compose and style them to fit into your design system.
+There are a number of open source libraries who's goal it is to make building accessible components easier. These components typically come unstyled, and offer a variety of different ways to compose and style them to fit into your design system.
 
 - [Radix Primitives](https://radix-ui.com/): a set of primitives that are styled by default.
 - [Headless UI](https://headlessui.dev/): from the team behind [Tailwind CSS](https://tailwindcss.com/), a set of primitives that are styled by default. Comes in `React` and `Vue` flavors.
-- [Reakit](https://reakit.io/): Accessable, compostable, customizable, tiny & fast.
+- [Reakit](https://reakit.io/): Accessible, composable, customizable, tiny & fast.
 - [React Aria](https://react-spectrum.adobe.com/react-aria/): A library of React Hooks that provides accessible UI primitives for your design system.
 
-For Graham Media Group's design system we chose to use Headlelss UI's [Menu (Dropdown)](https://headlessui.dev/react/menu/) for it's simple and compostable API.
+For Graham Media Group's design system we chose to use Headless UI's [Menu (Dropdown)](https://headlessui.dev/react/menu/) for it's simple and composable API. While this package is written and maintained by the Tailwind CSS team, it is not dependant on Tailwind for styling.
 
-```tsx showLineNumbers {8-14} filename=src/components/Dropdown/Dropdown.tsx
-import { Dropdown } from "@ds/components";
+We use [styled-components](https://www.styled-components.com/) and a TypeScript variant of [styled-system](https://www.styled-system.com/) for styling, and gaining access to all of our defined style props was as easy as passing transforming a component into a primitive through the `as` prop. The component will merge the prop interfaces of the primitive and the component, and the primitive will be styled with the component's props.
 
-const Menu = ({ children }) => {
-  if (!children) return null;
+```tsx showLineNumbers filename=src/components/Dropdown.tsx {16, 20}
+import { Menu, Transition } from "@headlessui/react";
+import { Box } from "../Box";
+import { Button } from "../Button";
 
+function Dropdown({
+  children,
+  buttonText = "Open",
+  variant = "$primary",
+  size = "rg",
+}) {
   return (
-    <Box width="$full" minHeight="$256">
-      <Dropdown
-        alignment="left"
-        buttonIcon={faChevronDown}
-        buttonText="My Account"
-      >
-        {children}
-      </Dropdown>
-    </Box>
+    <Menu>
+      {({ open }) => {
+        return (
+          <Box>
+            {/* By using the polymorphic `as` prop, we gain access to `size` and `variant` */}
+            <Menu.Button as={Button} size={size} variant={variant}>
+              {buttonText}
+            </Menu.Button>
+            <Transition show={open}>
+              <Menu.Items as={Box} sx={menuItemStyles} static>
+                {children}
+              </Menu.Items>
+            </Transition>
+          </Box>
+        );
+      }}
+    </Menu>
   );
-};
+}
 ```
 
-In the component library we compose the `Menu` and `Menu.Items` components to create a dropdown menu with some basic themeing included.
+By composing the primitives from the `@headlessui/react` package within our component library, we are able to distribute variant derived styles to the `Menu.Button`, `Menu.Items` and `Menu.Item` components to allow for easy customization, and to allow for easy composition of in the consuming application.
 
-<Gallery aspectRatio={16 / 9}>
-  <Image
-    src="/images/work/gmg/reg-wall.jpg"
-    alt="Article page on clickondetroit.com"
-    css={{ borderRadius: "$rg" }}
-    layout="fill"
-    objectFit="contain"
-  />
-  <Image
-    src="/images/work/gmg/menu.jpg"
-    alt="Article page on clickondetroit.com"
-    css={{ borderRadius: "$rg" }}
-    layout="fill"
-    objectFit="contain"
-  />
-  <Image
-    src="/images/work/gmg/cod-article.jpg"
-    alt="Article page on clickondetroit.com"
-    css={{ borderRadius: "$rg" }}
-    layout="fill"
-    objectFit="contain"
-  />
-</Gallery>
+### In Action
+
+The primary use-case of the dropdown menu is the `<AccountMenu />` component, which lives in the site header and is only accessible to logged in users. This provides a quick way to interact with our third party comment provider, navigate to popular pages and account features such as logging out.
+
+<video
+  style={{
+    width: "var(--sizes-full)",
+    height: "auto",
+    borderRadius: "var(--radii-lg)",
+  }}
+  loop
+  muted
+  autoPlay
+  playsInline
+>
+  <source src="/videos/account-menu.mp4" type="video/mp4" />
+</video>

@@ -1,23 +1,27 @@
 ---
-title: Goodbye World
-description: Opposite of Hello World
+title: Everything but the Kitchen Sink
+description: A Way to Test Features in MDX. Every article template needs a kitchen sink!
 date: 1640115120237
 ---
 
-DETROIT - Widespread power outages caused by intense winds have prompted DTE
+**DETROIT** - This is the "Kitchen Sink" article, what follows is just a bunch of nonsense so I can dogfood my styling and featue set. I feel like this is a common practice as we do it at Graham Media Group, and the `@tailwindcss/typography` plugin has a [great example](https://play.tailwindcss.com/uj1vGACRJA?layout=preview) of testing possible typography combinations.
+
+## Break up content with an h2 tag
+
+Widespread power outages caused by intense winds have prompted DTE
 Energy to call in hundreds of out-of-state crews to help restore power to
 Southeastern Michigan residents.
 
-> Every line of code written comes at a price: maintenance. To avoid paying for
-> a lot of code, we build reusable software. The problem with code re-use is
-> that it gets in the way of changing your mind later on.
+> Every line of code written comes at a price: maintenance. To avoid paying for a lot of code, we build reusable software. The problem with code re-use is that it gets in the way of changing your mind later on.
 
 All of Metro Detroit faced a high wind warning Saturday, as the windy day
 produced gusts over 60 mph at times through the afternoon, causing tens of
 thousands of customers to lose power. At some point in the day, more than
 160,000 customers had lost power due to the severe weather.
 
-And if I wanted to get the team then:
+## Code blocks
+
+Syntax highighting through `rehype-prism-plus` and a custom rehype plugin providing meta value parsing for filenames.
 
 ```tsx showLineNumbers {1, 9-16}
 const users = await prisma.user.findMany({
@@ -38,7 +42,7 @@ const users = await prisma.user.findMany({
 });
 ```
 
-```jsx
+```jsx filename=useStore.ts
 import create from "zustand";
 
 const useStore = create((set) => ({
@@ -85,21 +89,44 @@ const users: Array<{
 I love keyboard shortcuts, one of my favorites is the <kbd><Kbd>Cmd</Kbd> + <Kbd>K</Kbd></kbd>
 menu that has become a popular shortcut for navigating web apps.
 
-```tsx filename="app/route/posts/index.tsx" showLineNumbers
-import { Link, useLoaderData } from "remix";
+## Framer Motion is awesome, it helped me build the gallery
 
-import { getPosts } from "~/post";
-import type { Post } from "~/post";
+<Gallery aspectRatio="16 / 9">
+  <Image
+    src="/images/posts/kitchen-sink/detroit-skyline.jpg"
+    alt="Detroit skyline"
+    css={{ borderRadius: "0" }}
+  />
+  <Image
+    src="/images/posts/kitchen-sink/drone-snow.jpg"
+    alt="Snowy river shot from above via drone"
+    css={{ borderRadius: "0" }}
+  />
+  <Image
+    src="/images/posts/kitchen-sink/sleeping-bear.jpg"
+    alt="Kids playing on a sand dune in the distance"
+    css={{ borderRadius: "0" }}
+    height={undefined}
+    width={undefined}
+    layout="fill"
+    objectFit="contain"
+  />
+</Gallery>
 
-export const loader = async () => {
-  return getPosts();
-};
+It's important to cover all of these use cases for a few reasons:
 
-// ...
-```
+1. We want everything to look good out of the box.
+2. Really just the first reason, that's the whole point of the plugin.
+3. Here's a third pretend reason though a list with three items looks more realistic than a list with two items.
 
 Several neighborhoods faced uprooted trees and toppling power lines amid the
 high winds. Select `any word` from the following list.
+
+Now I'm going to show you an example of an unordered list to make sure that looks good, too:
+
+- So here is the first item in this list.
+- In this example we're keeping the items short.
+- Later, we'll use longer, more complex list items.
 
 ```tsx filename="app/routes/posts/index.tsx" showLineNumbers
 import React from "react";

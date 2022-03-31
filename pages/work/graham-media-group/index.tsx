@@ -45,16 +45,24 @@ const GMGWork: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
             <Text as="dt" fontFamily="mono" size="1" variant="subtle">
               Tools
             </Text>
-            <Text as="dt" fontFamily="mono" size="2" variant="contrast">
+            <Text
+              as="dt"
+              css={{ lineHeight: "$snug" }}
+              fontFamily="mono"
+              size="2"
+              variant="contrast"
+            >
               TypeScript, React, ArcXP, styled-components, NextJS
             </Text>
           </Stack>
         </Stack>
-        {/* <Separator css={{ my: "$5" }} size="2" /> */}
         <Heading as="h2" size="2" variant="contrast" weight="7">
           Select Projects
         </Heading>
-        <Separator css={{ my: "$5" }} size="2" />
+        <Separator
+          css={{ mt: "$3", mb: "-$4", "@bp1": { my: "$5" } }}
+          size="2"
+        />
         {projects.map((post, index) => {
           return (
             <Fragment key={post.slug}>

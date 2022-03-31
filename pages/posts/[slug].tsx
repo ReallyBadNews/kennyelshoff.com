@@ -26,7 +26,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps = async ({ params: { slug = "" } = {} }) => {
   const { frontmatter, code, readingTime } = await getMdxBySlug("posts", slug);
 
-  const imagePaths = getAllImagePathsFromDir("posts");
+  const imagePaths = getAllImagePathsFromDir(`posts/${slug}`);
 
   const images = await Promise.all(
     imagePaths.map(async (src) => {
