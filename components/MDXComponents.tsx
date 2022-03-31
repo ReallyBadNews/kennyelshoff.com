@@ -1,7 +1,8 @@
 import { ComponentMap } from "mdx-bundler/client";
 import { CSS, VariantProps } from "stitches.config";
-import Image, { ImageProps } from "next/image";
+import { ImageProps } from "next/image";
 import { MDXImages } from "types";
+import { Image } from "./Image";
 import { Blockquote } from "./Blockquote";
 import { Box } from "./Box";
 import { Code, CodeProps } from "./Code";
@@ -21,7 +22,7 @@ export const MDXComponents = (mdxImages?: MDXImages): ComponentMap => {
       return (
         <Heading
           as="h1"
-          css={{ "&:not(:first-child)": { mt: "$6", mb: "-$4" } }}
+          css={{ "&:not(:first-child)": { mt: "$7", mb: "-$4" } }}
           size="4"
           variant="contrast"
           weight="9"
@@ -34,7 +35,7 @@ export const MDXComponents = (mdxImages?: MDXImages): ComponentMap => {
       return (
         <Heading
           as="h2"
-          css={{ "&:not(:first-child)": { mt: "$6", mb: "-$4" } }}
+          css={{ "&:not(:first-child)": { mt: "$7", mb: "-$3" } }}
           size="3"
           variant="contrast"
           weight="7"
@@ -47,7 +48,7 @@ export const MDXComponents = (mdxImages?: MDXImages): ComponentMap => {
       return (
         <Heading
           as="h3"
-          css={{ "&:not(:first-child)": { mt: "$6", mb: "-$3" } }}
+          css={{ "&:not(:first-child)": { mt: "$7", mb: "-$3" } }}
           size="2"
           variant="contrast"
           weight="7"
@@ -110,10 +111,11 @@ export const MDXComponents = (mdxImages?: MDXImages): ComponentMap => {
       if (mdxImages && src) {
         return (
           <Image
+            css={{ borderRadius: "$lg" }}
             layout="responsive"
             placeholder="blur"
-            {...props}
             {...mdxImages[src as string]}
+            {...props}
           />
         );
       }

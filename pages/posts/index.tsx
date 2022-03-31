@@ -2,9 +2,9 @@ import { Badge } from "@components/Badge";
 import { Heading } from "@components/Heading";
 import NextLink from "@components/NextLink";
 import Page from "@components/Page";
-import { Paragraph } from "@components/Paragraph";
 import { Separator } from "@components/Separator";
 import { Stack } from "@components/Stack";
+import { Text } from "@components/Text";
 import { getAllFrontmatter } from "@lib/mdx";
 import { formatDate, sortByDate } from "@lib/utils";
 import { InferGetStaticPropsType } from "next";
@@ -42,9 +42,14 @@ const Writing: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                     {post.title}
                   </Heading>
                 </NextLink>
-                <Paragraph fontFamily="mono" size="1" variant="gray">
+                <Text
+                  css={{ lineHeight: "$snug" }}
+                  fontFamily="mono"
+                  size="2"
+                  variant="gray"
+                >
                   {post.description}
-                </Paragraph>
+                </Text>
                 <div>
                   <Badge size="1" variant="gray">
                     <time dateTime={post.date}>
