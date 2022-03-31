@@ -48,6 +48,7 @@
   "devDependencies": {
     "@radix-ui/react-polymorphic": "^0.0.14",
     "@types/glob": "^7.2.0",
+    "@types/gtag.js": "^0.0.10",
     "@types/lodash.merge": "^4.6.6",
     "@types/react": "17.0.40",
     "@types/unsplash-js": "6.3.1",
