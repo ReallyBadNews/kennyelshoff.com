@@ -39,7 +39,7 @@ export const getMdxBySlug = async (
 
   const { code, frontmatter } = await bundleMDX<Frontmatter>({
     source: mdxSource,
-    xdmOptions(options) {
+    mdxOptions(options) {
       options.remarkPlugins = [
         ...(options?.remarkPlugins ?? []),
         remarkGfm,
