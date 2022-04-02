@@ -79,7 +79,7 @@ function BabaBooey({ Component, pageProps }: AppProps): JSX.Element {
 
   const router = useRouter();
   useEffect(() => {
-    const handleRouteChange = (url: string) => {
+    const handleRouteChange = (url: URL) => {
       gtag.pageview(url);
     };
     router.events.on("routeChangeComplete", handleRouteChange);
@@ -98,12 +98,14 @@ function BabaBooey({ Component, pageProps }: AppProps): JSX.Element {
       <Script
         dangerouslySetInnerHTML={{
           __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${gtag.GA_TRACKING_ID}', {
-              page_path: window.location.pathname,
-            });
+            if (document.location.hostname !== "www.kennyelshoff.com") {
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${gtag.GA_TRACKING_ID}', {
+                page_path: window.location.pathname,
+              });
+            }
           `,
         }}
         id="gtag-init"
