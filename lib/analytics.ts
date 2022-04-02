@@ -1,29 +1,29 @@
-export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID;
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import * as Fathom from "fathom-client";
 
-// https://developers.google.com/analytics/devguides/collection/gtagjs/pages
-export const pageview = (url: string) => {
-  // @ts-expect-error @types/gtag is not up to date
-  window.gtag("config", GA_TRACKING_ID, {
-    page_path: url,
-  });
-};
+export const useAnalytics = () => {
+  const router = useRouter();
 
-// https://developers.google.com/analytics/devguides/collection/gtagjs/events
-export const event = ({
-  action,
-  category,
-  label,
-  value,
-}: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  action: any;
-  category?: string;
-  label?: string;
-  value?: string;
-}) => {
-  window.gtag("event", action, {
-    event_category: category,
-    event_label: label,
-    value,
-  });
+  useEffect(() => {
+    Fathom.load(process.env.NEXT_PUBLIC_FATHOM_SITE_ID as string, {
+      includedDomains: [
+        "kennyelshoff.com",
+        "www.kennyelshoff.com",
+        "badnews.dev",
+        "www.badnews.dev",
+      ],
+      url: "https://two-independent.kennyelshoff.com/script.js",
+    });
+
+    function onRouteChangeComplete() {
+      Fathom.trackPageview();
+    }
+
+    router.events.on("routeChangeComplete", onRouteChangeComplete);
+
+    return () => {
+      router.events.off("routeChangeComplete", onRouteChangeComplete);
+    };
+  }, [router.events]);
 };

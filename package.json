@@ -24,6 +24,7 @@
     "@radix-ui/react-tooltip": "^0.1.7",
     "@stitches/react": "^1.2.7",
     "esbuild": "^0.14.25",
+    "fathom-client": "^3.4.1",
     "framer-motion": "^6.2.8",
     "glob": "^7.2.0",
     "lodash.merge": "^4.6.2",
@@ -48,7 +49,6 @@
   "devDependencies": {
     "@radix-ui/react-polymorphic": "^0.0.14",
     "@types/glob": "^7.2.0",
-    "@types/gtag.js": "^0.0.10",
     "@types/lodash.merge": "^4.6.6",
     "@types/react": "17.0.40",
     "@types/unsplash-js": "6.3.1",
