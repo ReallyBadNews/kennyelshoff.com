@@ -6,7 +6,7 @@ export const useAnalytics = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === "development") {
       Fathom.load(process.env.FATHOM_SITE_ID as string, {
         includedDomains: [
           "kennyelshoff.com",
@@ -14,7 +14,7 @@ export const useAnalytics = () => {
           "badnews.dev",
           "www.badnews.dev",
         ],
-        url: "https://two-independent.kennyelshoff.com/script.js",
+        url: "https://boop.kennyelshoff.com/script.js",
       });
     }
 
