@@ -141,6 +141,10 @@ const fontStack = {
   jet: "JetBrains Mono",
 };
 
+/**
+ * Selectors
+ */
+export const child = "> *";
 export const childWithGap = "> * + *";
 
 export const {
