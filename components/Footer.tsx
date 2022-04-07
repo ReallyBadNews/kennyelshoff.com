@@ -55,17 +55,21 @@ export default function Footer() {
         borderTop: "1px solid $grayA4",
         justifyContent: "space-between",
       }}
-      direction="row"
+      direction={{ "@initial": "column", "@bp1": "row" }}
     >
       <Stack
-        css={{ stackGap: "$4" }}
-        direction={{ "@initial": "column", "@bp1": "row" }}
+        css={{
+          stackGap: "$0",
+          justifyContent: "space-between",
+          "@bp1": { stackGap: "$4", justifyContent: "flex-start" },
+        }}
+        direction="row"
       >
         {footerLinks.left.map(({ title, url, external }) => {
           return (
             <NextLink
               key={title}
-              css={{ display: "flex", gap: "$2" }}
+              css={{ display: "flex", gap: "$1", "@bp1": { gap: "$2" } }}
               href={url}
               target={external ? "_blank" : undefined}
               title={title}
@@ -77,15 +81,12 @@ export default function Footer() {
           );
         })}
       </Stack>
-      <Stack
-        css={{ stackGap: "$4" }}
-        direction={{ "@initial": "column", "@bp1": "row" }}
-      >
+      <Stack css={{ stackGap: "$4", justifyContent: "center" }} direction="row">
         {footerLinks.right.map(({ title, url, external }) => {
           return (
             <NextLink
               key={title}
-              css={{ display: "flex", gap: "$2" }}
+              css={{ display: "flex", gap: "$1", "@bp1": { gap: "$2" } }}
               href={url}
               target={external ? "_blank" : undefined}
               title={title}
