@@ -36,8 +36,13 @@ const Stash: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                 css={{ position: "relative", stackGap: "$4" }}
               >
                 <Heading as="h4" size="2" weight="7">
-                  {/* @ts-expect-error TODO: use contentlayer for typings */}
-                  <NextLink href={frontmatter.url} target="_blank" showCitation>
+                  <NextLink
+                    css={{ fontWeight: "inherit" }}
+                    // @ts-expect-error TODO: use contentlayer for typings
+                    href={frontmatter.url}
+                    target="_blank"
+                    showCitation
+                  >
                     {frontmatter.title}
                   </NextLink>
                 </Heading>

@@ -34,6 +34,7 @@ export const formatDate = (
   const options = dateFormats[format];
   options.timeZone = "America/Detroit";
 
+  // TODO: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString#performance
   return new Date(date).toLocaleDateString("en-us", options);
 };
 

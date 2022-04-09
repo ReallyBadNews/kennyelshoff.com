@@ -86,7 +86,7 @@ const Layout: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
         </Heading>
       )}
       <Stack css={{ stackGap: "$2" }}>
-        <Paragraph size="0" variant="orange">
+        <Paragraph size="0" variant="contrast">
           <Text size="0" variant="subtle">
             {`Saved: `}
           </Text>
