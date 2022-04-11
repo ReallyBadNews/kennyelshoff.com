@@ -11,9 +11,10 @@ export default function Colophon() {
       <Paragraph size="1">
         Here are some of the projects that make this site possible:
       </Paragraph>
-      <List>
-        <li>Stitches</li>
-        <li>Radix</li>
+      <List type="ol">
+        <List.Item>Stitches</List.Item>
+        <List.Item>Radix</List.Item>
+        <List.Item>Radix</List.Item>
       </List>
     </Page>
   );

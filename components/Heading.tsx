@@ -1,5 +1,5 @@
 import { ComponentProps, ElementType, ElementRef, forwardRef } from "react";
-import merge from "lodash.merge";
+import merge from "just-merge";
 import { Text } from "./Text";
 import { VariantProps, CSS } from "../stitches.config";
 
@@ -43,7 +43,7 @@ export const Heading = forwardRef<ElementRef<typeof DEFAULT_TAG>, HeadingProps>(
         ref={forwardedRef}
         css={{
           fontVariantNumeric: "proportional-nums",
-          ...merge(textCss[size], props.css),
+          ...merge(textCss[size], props.css || {}),
         }}
         size={textSize[size]}
       />
