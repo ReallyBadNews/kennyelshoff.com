@@ -15,6 +15,7 @@ import { Preview } from "./Preview";
 import { Separator } from "./Separator";
 import { Badge } from "./Badge";
 import { Gallery } from "./Gallery";
+import { List } from "./List";
 
 export const MDXComponents = (mdxImages?: MDXImages): ComponentMap => {
   return {
@@ -144,73 +145,13 @@ export const MDXComponents = (mdxImages?: MDXImages): ComponentMap => {
       );
     },
     li: ({ children }) => {
-      return (
-        <Paragraph
-          as="li"
-          css={{
-            display: "flex",
-            "&:not(:first-child)": { mt: "$3" },
-          }}
-          size="1"
-        >
-          <Box css={{ flex: "1 1 0" }}>{children}</Box>
-        </Paragraph>
-      );
+      return <List.Item>{children}</List.Item>;
     },
-    // TODO: Pseudo element doesn't work
     ul: ({ children }) => {
-      return (
-        <Box
-          as="ul"
-          css={{
-            // my: "$6",
-            pl: "$0",
-            color: "$hiContrast",
-            fontFamily: "$mono",
-            listStyle: "none",
-            "& li": {
-              display: "flex",
-              "&:before": {
-                // content with right arrow glyph
-                content: '"\\2192"',
-                pr: "$2",
-                color: "$slate10",
-              },
-            },
-            "& li:not(:first-child)": { mt: "$3" },
-          }}
-        >
-          {children}
-        </Box>
-      );
+      return <List type="ul">{children}</List>;
     },
     ol: ({ children }) => {
-      return (
-        <Box
-          as="ol"
-          css={{
-            my: "$6",
-            pl: "$3",
-            color: "$hiContrast",
-            fontFamily: "$mono",
-            listStyle: "none",
-            "--counterName": "counts",
-            counterReset: "var(--counterName)",
-            "& li": {
-              display: "flex",
-              counterIncrement: "var(--counterName)",
-              "&:before": {
-                pr: "$2",
-                color: "$blue10",
-                content: 'counters(var(--counterName),".") ". "',
-              },
-              "&:not(:first-child)": { mt: "$3" },
-            },
-          }}
-        >
-          {children}
-        </Box>
-      );
+      return <List type="ol">{children}</List>;
     },
     pre: ({
       children,
