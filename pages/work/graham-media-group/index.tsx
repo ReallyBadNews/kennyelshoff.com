@@ -25,23 +25,35 @@ const GMGWork: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     >
       <Stack css={{ stackGap: "$7" }} marginCollapse>
         <Stack as="dl" css={{ stackGap: "$4" }}>
-          <Stack css={{ stackGap: "$2" }}>
+          <Stack css={{ stackGap: "$1" }}>
             <Text as="dt" fontFamily="mono" size="1" variant="subtle">
               Start Date
             </Text>
-            <Text as="dt" fontFamily="mono" size="2" variant="contrast">
+            <Text
+              as="dt"
+              css={{ lineHeight: "$snug" }}
+              fontFamily="mono"
+              size="2"
+              variant="contrast"
+            >
               December 2018
             </Text>
           </Stack>
-          <Stack css={{ stackGap: "$2" }}>
+          <Stack css={{ stackGap: "$1" }}>
             <Text as="dt" fontFamily="mono" size="1" variant="subtle">
               Position
             </Text>
-            <Text as="dt" fontFamily="mono" size="2" variant="contrast">
+            <Text
+              as="dt"
+              css={{ lineHeight: "$snug" }}
+              fontFamily="mono"
+              size="2"
+              variant="contrast"
+            >
               Design Engineer
             </Text>
           </Stack>
-          <Stack css={{ stackGap: "$2" }}>
+          <Stack css={{ stackGap: "$1" }}>
             <Text as="dt" fontFamily="mono" size="1" variant="subtle">
               Tools
             </Text>
