@@ -1,4 +1,4 @@
-import merge from "lodash.merge";
+import merge from "just-merge";
 import { ComponentProps, ElementRef, forwardRef } from "react";
 import { CSS, VariantProps } from "stitches.config";
 import { Text } from "./Text";
@@ -11,7 +11,8 @@ type ParagraphVariants = { size?: ParagraphSizeVariants } & Omit<
   VariantProps<typeof Text>,
   "size"
 >;
-type ParagraphProps = ComponentProps<typeof DEFAULT_TAG> &
+
+export type ParagraphProps = ComponentProps<typeof DEFAULT_TAG> &
   ParagraphVariants & {
     css?: CSS;
     as?: React.ElementType;
@@ -46,7 +47,7 @@ export const Paragraph = forwardRef<
       {...textProps}
       ref={forwardedRef}
       css={{
-        ...merge(textCss[size], props.css),
+        ...merge(textCss[size], props.css || {}),
       }}
       size={textSize[size]}
     />
