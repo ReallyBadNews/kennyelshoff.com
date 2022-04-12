@@ -51,7 +51,7 @@ export default function Work() {
       title="Work"
     >
       <Stack css={{ stackGap: "$3" }}>
-        <Heading as="h2" size="2" variant="contrast" weight="7">
+        <Heading as="h2" size="2">
           Experience
         </Heading>
         <Separator css={{ my: "$3", "@bp1": { my: "$5" } }} size="2" />
@@ -77,12 +77,12 @@ export default function Work() {
                       outline="always"
                       variant="transparent"
                     >
-                      <Heading as="h3" weight="9">
+                      <Heading as="h3" size="1" weight="9">
                         {company}
                       </Heading>
                     </NextLink>
                   ) : (
-                    <Heading as="h3" weight="9">
+                    <Heading as="h3" size="1" weight="9">
                       {company}
                     </Heading>
                   )}
@@ -107,7 +107,7 @@ export default function Work() {
         </Grid>
       </Stack>
       <Stack css={{ stackGap: "$3" }}>
-        <Heading as="h2" size="2" variant="contrast" weight="7">
+        <Heading as="h2" size="2">
           Interests
         </Heading>
         <Separator css={{ my: "$3", "@bp1": { my: "$5" } }} size="2" />
