@@ -35,7 +35,7 @@ const Stash: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                 as="article"
                 css={{ position: "relative", stackGap: "$4" }}
               >
-                <Heading as="h4" size="2" weight="7">
+                <Heading as="h4" size="2">
                   <NextLink
                     css={{ fontWeight: "inherit" }}
                     // @ts-expect-error TODO: use contentlayer for typings

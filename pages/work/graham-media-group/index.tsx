@@ -68,9 +68,7 @@ const GMGWork: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
             </Text>
           </Stack>
         </Stack>
-        <Heading as="h2" size="2" variant="contrast" weight="7">
-          Select Projects
-        </Heading>
+        <Heading as="h2">Select Projects</Heading>
         <Separator
           css={{ mt: "$3", mb: "-$4", "@bp1": { my: "$5" } }}
           size="2"
@@ -82,7 +80,7 @@ const GMGWork: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                 as="article"
                 css={{ position: "relative", stackGap: "$1" }}
               >
-                <Heading as="h3" size="1" weight="7">
+                <Heading as="h3" size="1">
                   <NextLink
                     href={`/${post.slug}`}
                     outline="hover"

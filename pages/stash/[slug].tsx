@@ -76,12 +76,12 @@ const Layout: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     >
       {frontmatter.url ? (
         <NextLink href={frontmatter.url} target="_blank" showCitation>
-          <Heading as="h1" size="3" weight="9">
+          <Heading as="h1" weight="9">
             {frontmatter.title}
           </Heading>
         </NextLink>
       ) : (
-        <Heading as="h4" size="3" weight="9">
+        <Heading as="h4" weight="9">
           {frontmatter.title}
         </Heading>
       )}

@@ -38,7 +38,7 @@ const Writing: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                   outline="hover"
                   variant="transparent"
                 >
-                  <Heading as="h3" size="2" weight="7">
+                  <Heading as="h3" size="2">
                     {post.title}
                   </Heading>
                 </NextLink>
