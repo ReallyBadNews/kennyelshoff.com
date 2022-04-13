@@ -64,7 +64,8 @@ const GMGWork: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
               size="2"
               variant="contrast"
             >
-              TypeScript, React, ArcXP, styled-components, NextJS
+              React, TypeScript, ArcXP, styled-components, Next.js, Gatsby,
+              React Native
             </Text>
           </Stack>
         </Stack>
