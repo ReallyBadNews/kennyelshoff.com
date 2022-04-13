@@ -35,7 +35,7 @@ export default function Local4Work({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <Page
-      description="Motion and brand designer in the Creative Services department"
+      description="Motion and brand designer in the Creative Services department supporting the newsroom, marketing, and sales teams"
       title="WDIV-TV / Local 4"
     >
       <Stack css={{ stackGap: "$7" }} marginCollapse>
@@ -83,7 +83,7 @@ export default function Local4Work({
             </Text>
           </Stack>
         </Stack>
-        <Heading as="h2">Select Projects</Heading>
+        <Heading as="h2">Projects</Heading>
         <Separator
           css={{ mt: "$3", mb: "-$4", "@bp1": { my: "$5" } }}
           size="2"
@@ -123,7 +123,9 @@ export default function Local4Work({
                 layout="fill"
                 objectFit="contain"
                 {...image}
+                height={undefined}
                 placeholder="blur"
+                width={undefined}
               />
             );
           })}
