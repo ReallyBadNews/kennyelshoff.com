@@ -62,7 +62,12 @@ const Layout: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   }, [code]);
 
   return (
-    <Page description={frontmatter.description} title={frontmatter.title}>
+    <Page
+      description={frontmatter.description}
+      slug={frontmatter.slug}
+      title={frontmatter.title}
+      type="post"
+    >
       <Component components={MDXComponents(images)} />
     </Page>
   );

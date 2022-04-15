@@ -1,24 +1,34 @@
 import { Helmet } from "@components/Helmet";
+import { formatDate } from "@lib/utils";
 import { motion, useReducedMotion } from "framer-motion";
 import { ReactNode } from "react";
 import { CSS } from "stitches.config";
 import { Box } from "./Box";
+import ViewCounter from "./metrics/ViewCounter";
 import PageHeader from "./PageHeader";
 import { Stack } from "./Stack";
+import { Text } from "./Text";
 
 export interface PageProps {
-  type?: "basic" | "post" | "work";
   title?: string;
   description?: string;
+  date?: string;
   showDivider?: boolean;
   showHeader?: boolean;
   stackGap?: CSS["stackGap"];
   children?: ReactNode;
 }
 
+// Make slug requied when type is "post"
+type PageType =
+  | { type?: "post"; slug: string }
+  | { type?: "basic" | "work"; slug?: never };
+
 const Page = ({
   title,
   description,
+  date,
+  slug,
   // date,
   // thumbnail,
   type = "basic",
@@ -26,7 +36,7 @@ const Page = ({
   showDivider = false,
   showHeader = true,
   children,
-}: PageProps) => {
+}: PageProps & PageType) => {
   const shouldReduceMotion = useReducedMotion();
   const hasMeta = !!(title || description);
 
@@ -58,6 +68,15 @@ const Page = ({
             shouldReduceMotion ? { y: 0, opacity: 1 } : { y: -10, opacity: 0 }
           }
         >
+          {type === "post" ? (
+            <ViewCounter slug={slug?.split("/")[1] as string} />
+          ) : null}
+          <Text size="0" variant="subtle">
+            <Text size="0">{`Date: `}</Text>
+            <time dateTime={date}>
+              {`${formatDate(date as string, "full")}`}
+            </time>
+          </Text>
           {children}
         </Stack>
       </Box>
@@ -66,9 +85,9 @@ const Page = ({
 };
 
 Page.defaultProps = {
-  type: "basic",
   title: undefined,
   description: undefined,
+  date: undefined,
   showDivider: false,
   showHeader: true,
   stackGap: "$5",
