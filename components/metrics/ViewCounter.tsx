@@ -1,14 +1,9 @@
-import { useEffect } from "react";
-import useSWR from "swr";
-import fetcher from "@lib/fetcher";
-import { Views } from "@lib/types";
 import { Text } from "@components/Text";
+import { useViews } from "@hooks/use-views";
+import { useEffect } from "react";
 
 export default function ViewCounter({ slug }: { slug: string }) {
-  const { data } = useSWR<Views>(`/api/views/${slug}`, fetcher);
-
-  // eslint-disable-next-line no-new-wrappers
-  const views = new Number(data?.total);
+  const { views, isLoading } = useViews(slug);
 
   useEffect(() => {
     const registerView = () => {
@@ -22,7 +17,7 @@ export default function ViewCounter({ slug }: { slug: string }) {
 
   return (
     <Text size="0" variant="subtle">
-      <Text size="0">{`${views > 0 ? views.toLocaleString() : "–––"}`}</Text>
+      <Text size="0">{isLoading ? "–––" : views?.total.toLocaleString()}</Text>
       {` views`}
     </Text>
   );

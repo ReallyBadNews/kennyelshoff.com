@@ -2,6 +2,7 @@ import { Helmet } from "@components/Helmet";
 import { formatDate } from "@lib/utils";
 import { motion, useReducedMotion } from "framer-motion";
 import { ReactNode } from "react";
+import { ReadTimeResults } from "reading-time";
 import { CSS } from "stitches.config";
 import { Box } from "./Box";
 import ViewCounter from "./metrics/ViewCounter";
@@ -21,15 +22,15 @@ export interface PageProps {
 
 // Make slug requied when type is "post"
 type PageType =
-  | { type?: "post"; slug: string }
-  | { type?: "basic" | "work"; slug?: never };
+  | { type?: "post"; slug: string; readingTime?: ReadTimeResults }
+  | { type?: "basic" | "work"; slug?: never; readingTime?: never };
 
 const Page = ({
   title,
   description,
   date,
   slug,
-  // date,
+  readingTime,
   // thumbnail,
   type = "basic",
   stackGap = "$5",
@@ -69,14 +70,25 @@ const Page = ({
           }
         >
           {type === "post" ? (
-            <ViewCounter slug={slug?.split("/")[1] as string} />
+            <Stack
+              css={{ stackGap: "$1", justifyContent: "space-between" }}
+              direction="row"
+            >
+              <Text size="1" variant="subtle">
+                <time dateTime={date}>
+                  {`${formatDate(date as string, "long")}`}
+                </time>
+              </Text>
+              <Stack
+                css={{ stackGap: "$1", alignItems: "baseline" }}
+                direction="row"
+              >
+                {readingTime ? <Text size="0">{readingTime.text}</Text> : null}
+                <Text size="0">•</Text>
+                <ViewCounter slug={slug?.split("/")[1] as string} />
+              </Stack>
+            </Stack>
           ) : null}
-          <Text size="0" variant="subtle">
-            <Text size="0">{`Date: `}</Text>
-            <time dateTime={date}>
-              {`${formatDate(date as string, "full")}`}
-            </time>
-          </Text>
           {children}
         </Stack>
       </Box>
