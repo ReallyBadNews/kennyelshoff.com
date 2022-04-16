@@ -55,14 +55,21 @@ const Layout: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   frontmatter,
   code,
   images,
-  // readingTime,
+  readingTime,
 }) => {
   const Component = useMemo(() => {
     return getMDXComponent(code);
   }, [code]);
 
   return (
-    <Page description={frontmatter.description} title={frontmatter.title}>
+    <Page
+      date={frontmatter.date}
+      description={frontmatter.description}
+      readingTime={readingTime}
+      slug={frontmatter.slug}
+      title={frontmatter.title}
+      type="post"
+    >
       <Component components={MDXComponents(images)} />
     </Page>
   );

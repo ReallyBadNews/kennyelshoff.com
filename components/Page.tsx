@@ -1,32 +1,43 @@
 import { Helmet } from "@components/Helmet";
+import { formatDate } from "@lib/utils";
 import { motion, useReducedMotion } from "framer-motion";
 import { ReactNode } from "react";
+import { ReadTimeResults } from "reading-time";
 import { CSS } from "stitches.config";
 import { Box } from "./Box";
+import ViewCounter from "./metrics/ViewCounter";
 import PageHeader from "./PageHeader";
 import { Stack } from "./Stack";
+import { Text } from "./Text";
 
 export interface PageProps {
-  type?: "basic" | "post" | "work";
   title?: string;
   description?: string;
+  date?: string;
   showDivider?: boolean;
   showHeader?: boolean;
   stackGap?: CSS["stackGap"];
   children?: ReactNode;
 }
 
+// Make slug requied when type is "post"
+type PageType =
+  | { type?: "post"; slug: string; readingTime?: ReadTimeResults }
+  | { type?: "basic" | "work"; slug?: never; readingTime?: never };
+
 const Page = ({
   title,
   description,
-  // date,
+  date,
+  slug,
+  readingTime,
   // thumbnail,
   type = "basic",
   stackGap = "$5",
   showDivider = false,
   showHeader = true,
   children,
-}: PageProps) => {
+}: PageProps & PageType) => {
   const shouldReduceMotion = useReducedMotion();
   const hasMeta = !!(title || description);
 
@@ -58,6 +69,26 @@ const Page = ({
             shouldReduceMotion ? { y: 0, opacity: 1 } : { y: -10, opacity: 0 }
           }
         >
+          {type === "post" ? (
+            <Stack
+              css={{ stackGap: "$1", justifyContent: "space-between" }}
+              direction="row"
+            >
+              <Text size="1" variant="subtle">
+                <time dateTime={date}>
+                  {`${formatDate(date as string, "long")}`}
+                </time>
+              </Text>
+              <Stack
+                css={{ stackGap: "$1", alignItems: "baseline" }}
+                direction="row"
+              >
+                {readingTime ? <Text size="0">{readingTime.text}</Text> : null}
+                <Text size="0">•</Text>
+                <ViewCounter slug={slug?.split("/")[1] as string} />
+              </Stack>
+            </Stack>
+          ) : null}
           {children}
         </Stack>
       </Box>
@@ -66,9 +97,9 @@ const Page = ({
 };
 
 Page.defaultProps = {
-  type: "basic",
   title: undefined,
   description: undefined,
+  date: undefined,
   showDivider: false,
   showHeader: true,
   stackGap: "$5",
