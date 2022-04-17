@@ -3,7 +3,7 @@ export type Frontmatter = {
   description?: string;
   url?: string;
   date: string;
-  slug?: string;
+  slug: string;
   tags?: string[];
 };
 

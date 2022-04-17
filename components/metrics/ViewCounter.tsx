@@ -1,8 +1,9 @@
 import { Text } from "@components/Text";
 import { useViews } from "@hooks/use-views";
+import { Frontmatter } from "types";
 import { useEffect } from "react";
 
-export default function ViewCounter({ slug }: { slug: string }) {
+export default function ViewCounter({ slug }: Pick<Frontmatter, "slug">) {
   const { views, isLoading } = useViews(slug);
 
   useEffect(() => {

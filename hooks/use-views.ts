@@ -2,8 +2,8 @@ import fetcher from "@lib/fetcher";
 import { Views } from "@lib/types";
 import useSWR from "swr";
 
-export const useViews = (id: string) => {
-  const { data, error } = useSWR<Views>(`/api/views/${id}`, fetcher);
+export const useViews = (slug: string) => {
+  const { data, error } = useSWR<Views>(`/api/views/${slug}`, fetcher);
 
   return {
     views: data,
