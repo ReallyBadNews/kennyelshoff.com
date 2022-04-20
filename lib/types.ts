@@ -7,7 +7,34 @@ export interface UnsplashStats {
   views: number;
 }
 
-export interface UnsplashAPIResp {
+export type UnsplashPhotosAPIResp = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  width: number;
+  height: number;
+  color: string;
+  blur_hash: string;
+  description: string;
+  alt_description: string;
+  urls: {
+    raw: string;
+    full: string;
+    regular: string;
+    small: string;
+    thumb: string;
+  };
+  links: {
+    self: string;
+    html: string;
+    download: string;
+    download_location: string;
+  };
+  categories: string[];
+  likes: number;
+}[];
+
+export interface UnsplashStatsAPIResp {
   id: string;
   username: string;
   downloads: Downloads;

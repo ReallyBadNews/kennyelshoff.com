@@ -1,12 +1,10 @@
 import { Heading } from "@components/Heading";
 import { Stack } from "@components/Stack";
 import { Paragraph } from "@components/Paragraph";
-import { useUnsplash } from "@hooks/use-unsplash";
-
-// import MetricCard from "components/metrics/Card";
+import { useUnsplashStats } from "@hooks/use-unsplash";
 
 export default function UnsplashCard() {
-  const { data, isLoading } = useUnsplash();
+  const { data, isLoading } = useUnsplashStats();
 
   // const link = "https://unsplash.com/@reallybadnews";
 
