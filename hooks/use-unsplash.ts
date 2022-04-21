@@ -1,9 +1,13 @@
 import fetcher from "@lib/fetcher";
 import { UnsplashPhotosAPIResp, UnsplashStats } from "@lib/types";
-import useSWR from "swr";
+import useSWR, { SWRConfiguration } from "swr";
 
-export const useUnsplashStats = () => {
-  const { data, error } = useSWR<UnsplashStats>(`/api/unsplash/stats`, fetcher);
+export const useUnsplashStats = (config?: SWRConfiguration) => {
+  const { data, error } = useSWR<UnsplashStats>(
+    `/api/unsplash/stats`,
+    fetcher,
+    config
+  );
 
   return {
     data,
@@ -12,10 +16,11 @@ export const useUnsplashStats = () => {
   };
 };
 
-export const useUnsplashPhotos = () => {
+export const useUnsplashPhotos = (config?: SWRConfiguration) => {
   const { data, error } = useSWR<UnsplashPhotosAPIResp>(
     `/api/unsplash/photos`,
-    fetcher
+    fetcher,
+    config
   );
 
   return {

@@ -2,6 +2,8 @@ import { Box } from "@components/Box";
 import { Grid } from "@components/Grid";
 import { Image } from "@components/Image";
 import Page from "@components/Page";
+import { Paragraph } from "@components/Paragraph";
+import { useUnsplashPhotos } from "@hooks/use-unsplash";
 import { getUnsplashPhotos } from "@lib/unsplash";
 import { InferGetStaticPropsType } from "next";
 import { getPlaiceholder } from "plaiceholder";
@@ -23,47 +25,73 @@ export const getStaticProps = async () => {
 
   return {
     props: {
+      fallback: photos,
       images,
     },
+    revalidate: 10,
   };
 };
 
 export const Photos: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
+  fallback,
   images,
 }) => {
+  const { data, isLoading } = useUnsplashPhotos({
+    fallbackData: fallback,
+    revalidateOnMount: false,
+  });
+
+  if (isLoading) return <Paragraph>Loading...</Paragraph>;
+
+  const pictures = data || fallback;
+
   return (
     <Page>
       <Grid
-        // columns="2"
         css={{
-          minColumnWidth: "$128",
+          minColumnWidth: "440px",
           width: "100vw",
-          px: "$3",
           position: "relative",
           left: "50%",
           marginLeft: "-50vw",
+          "@bp1": {
+            px: "$3",
+          },
         }}
         gap="3"
       >
-        {images.map((photo) => {
+        {pictures.map((photo, index) => {
           return (
             <Box
-              key={photo.src}
+              key={photo.id}
               css={{
                 position: "relative",
                 height: "700px",
                 overflow: "hidden",
-                borderRadius: "$md",
+                "@bp1": {
+                  borderRadius: "$md",
+                },
               }}
             >
-              <Image
-                {...photo}
-                height={undefined}
-                layout="fill"
-                objectFit="cover"
-                placeholder="blur"
-                width={undefined}
-              />
+              {images.length === pictures.length ? (
+                <Image
+                  {...images[index]}
+                  height={undefined}
+                  layout="fill"
+                  objectFit="cover"
+                  placeholder="blur"
+                  width={undefined}
+                />
+              ) : (
+                <Image
+                  height={photo.height}
+                  layout="fill"
+                  objectFit="cover"
+                  placeholder="blur"
+                  src={photo.urls.regular}
+                  width={photo.width}
+                />
+              )}
             </Box>
           );
         })}
