@@ -11,10 +11,7 @@ export default async function handler(
       return response;
     });
 
-    res.setHeader(
-      "Cache-Control",
-      "public, s-maxage=1200, stale-while-revalidate=600"
-    );
+    res.setHeader("Cache-Control", "s-maxage=10, stale-while-revalidate=59");
     res.status(200).json(photos);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
