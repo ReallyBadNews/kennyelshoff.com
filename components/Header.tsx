@@ -4,7 +4,7 @@ import NextLink from "@components/NextLink";
 import { ThemeToggle } from "@components/ThemeToggle";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Stack } from "./Stack";
 
 const navItems = [
@@ -23,6 +23,23 @@ export const Header = () => {
   });
 
   const [activeItem, setActiveItem] = useState<number>(currentPageIndex);
+
+  // Remove the nav highlight if the user navigates to a page that isn't in the nav
+  useEffect(() => {
+    const handleRouteChange = () => {
+      if (currentPageIndex === -1) {
+        setActiveItem(-1);
+      }
+    };
+
+    router.events.on("routeChangeComplete", handleRouteChange);
+
+    // If the component is unmounted, unsubscribe
+    // from the event with the `off` method:
+    return () => {
+      return router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router.events, currentPageIndex]);
 
   return (
     <Box
@@ -52,9 +69,6 @@ export const Header = () => {
           }}
           href="/"
           title="Home"
-          onClick={() => {
-            return setActiveItem(-1);
-          }}
         >
           <Image
             alt="Kenny Elshoff doing a method on a snowboard"
