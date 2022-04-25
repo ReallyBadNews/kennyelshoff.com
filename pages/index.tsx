@@ -1,5 +1,6 @@
 import { Heading } from "@components/Heading";
 import { Link } from "@components/Link";
+import NextLink from "@components/NextLink";
 import Page from "@components/Page";
 import { Paragraph } from "@components/Paragraph";
 import { Stack } from "@components/Stack";
@@ -29,13 +30,9 @@ export default function Home() {
               snowboarding
             </Link>
             {", and occasionally some "}
-            <Link
-              href="https://unsplash.com/@reallybadnews"
-              target="_blank"
-              variant="contrast"
-            >
+            <NextLink href="/photos" variant="contrast">
               photography
-            </Link>
+            </NextLink>
           </Paragraph>
           <Paragraph size="1" variant="gray">
             {`Currently working with `}

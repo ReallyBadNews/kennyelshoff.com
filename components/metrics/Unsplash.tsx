@@ -1,36 +1,24 @@
-import useSWR from "swr";
-
-import fetcher from "lib/fetcher";
-// import MetricCard from "components/metrics/Card";
-
-export type Unsplash = {
-  downloads: number;
-  views: number;
-};
+import { Heading } from "@components/Heading";
+import { Stack } from "@components/Stack";
+import { Paragraph } from "@components/Paragraph";
+import { useUnsplashStats } from "@hooks/use-unsplash";
 
 export default function UnsplashCard() {
-  const { data } = useSWR<Unsplash>("/api/unsplash", fetcher);
+  const { data, isLoading } = useUnsplashStats();
 
   // const link = "https://unsplash.com/@reallybadnews";
 
   return (
-    // <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 my-2 w-full">
-    //   <MetricCard
-    //     header="Unsplash Downloads"
-    //     isCurrency={false}
-    //     link={link}
-    //     metric={data?.downloads}
-    //   />
-    //   <MetricCard
-    //     header="Unsplash Views"
-    //     isCurrency={false}
-    //     link={link}
-    //     metric={data?.views}
-    //   />
-    // </div>
-    <>
-      <div>yet to implement, here is some data</div>
-      <pre>{data}</pre>
-    </>
+    <Stack css={{ stackGap: "$3" }}>
+      <Heading>Unsplash Stats</Heading>
+      <Paragraph>
+        Views:
+        {isLoading ? "——" : ` ${data?.views.toLocaleString()}`}
+      </Paragraph>
+      <Paragraph>
+        Downloads:
+        {isLoading ? "——" : ` ${data?.downloads.toLocaleString()}`}
+      </Paragraph>
+    </Stack>
   );
 }

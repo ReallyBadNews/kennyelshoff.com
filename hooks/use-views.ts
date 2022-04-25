@@ -7,7 +7,7 @@ export const useViews = (slug: string) => {
 
   return {
     views: data,
-    isLoading: !error && !data,
+    isLoading: !error && typeof data === "undefined",
     isError: error,
   };
 };
