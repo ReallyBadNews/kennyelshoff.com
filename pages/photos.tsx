@@ -3,6 +3,7 @@ import { Button } from "@components/Button";
 import { Dialog, DialogContent, DialogTrigger } from "@components/Dialog";
 import { Grid } from "@components/Grid";
 import { Image } from "@components/Image";
+import UnsplashStats from "@components/metrics/Unsplash";
 import Page from "@components/Page";
 import { Paragraph } from "@components/Paragraph";
 import { useUnsplashPhotos } from "@hooks/use-unsplash";
@@ -50,6 +51,7 @@ export const Photos: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 
   return (
     <Page>
+      <UnsplashStats />
       <Dialog allowPinchZoom>
         <DialogContent
           css={{

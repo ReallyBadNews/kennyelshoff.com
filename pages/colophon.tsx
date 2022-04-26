@@ -1,6 +1,5 @@
 import { Link } from "@components/Link";
 import { List } from "@components/List";
-import UnsplashCard from "@components/metrics/Unsplash";
 import Page from "@components/Page";
 import { Paragraph } from "@components/Paragraph";
 
@@ -10,7 +9,6 @@ export default function Colophon() {
       description="There are loads of helpful open source projects that make this site possible"
       title="Colophon"
     >
-      <UnsplashCard />
       <Paragraph size="1">
         Here are some of the projects that make this site possible:
       </Paragraph>
