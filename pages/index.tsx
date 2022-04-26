@@ -1,5 +1,4 @@
 import { Heading } from "@components/Heading";
-import { Link } from "@components/Link";
 import NextLink from "@components/NextLink";
 import Page from "@components/Page";
 import { Paragraph } from "@components/Paragraph";
@@ -22,13 +21,12 @@ export default function Home() {
           <Separator size="2" />
           <Paragraph size="1" variant="gray">
             {`In my free time, I'm usually goofing off with my twin sons (who are now four!!), `}
-            <Link
+            <NextLink
               href="https://unsplash.com/@reallybadnews/collections"
-              target="_blank"
               variant="contrast"
             >
               snowboarding
-            </Link>
+            </NextLink>
             {", and occasionally some "}
             <NextLink href="/photos" variant="contrast">
               photography
@@ -36,14 +34,13 @@ export default function Home() {
           </Paragraph>
           <Paragraph size="1" variant="gray">
             {`Currently working with `}
-            <Link
+            <NextLink
               href="https://grahammedia.com/"
               rel="noopener"
-              target="_blank"
               variant="contrast"
             >
               Graham Media Group
-            </Link>
+            </NextLink>
             {` to build Local News better.`}
           </Paragraph>
           <Paragraph size="1" variant="gray">

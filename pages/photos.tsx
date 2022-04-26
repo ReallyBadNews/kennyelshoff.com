@@ -3,6 +3,7 @@ import { Button } from "@components/Button";
 import { Dialog, DialogContent, DialogTrigger } from "@components/Dialog";
 import { Grid } from "@components/Grid";
 import { Image } from "@components/Image";
+import UnsplashStats from "@components/metrics/Unsplash";
 import Page from "@components/Page";
 import { Paragraph } from "@components/Paragraph";
 import { useUnsplashPhotos } from "@hooks/use-unsplash";
@@ -50,7 +51,32 @@ export const Photos: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 
   return (
     <Page>
+      <UnsplashStats />
       <Dialog allowPinchZoom>
+        <DialogContent
+          css={{
+            maxHeight: "96vh",
+            maxWidth: "96vw",
+            width: "$full",
+            height: "$full",
+          }}
+          onCloseAutoFocus={(e) => {
+            return e.preventDefault();
+          }}
+        >
+          <Box css={{ position: "relative", height: "$full", width: "$full" }}>
+            <Image
+              {...images[zoomedPhoto as number]}
+              css={{ borderRadius: "$sm" }}
+              height={undefined}
+              layout="fill"
+              objectFit="contain"
+              placeholder="blur"
+              src={fallback[zoomedPhoto as number]?.urls.full}
+              width={undefined}
+            />
+          </Box>
+        </DialogContent>
         <Grid
           css={{
             minColumnWidth: "440px",
@@ -64,31 +90,6 @@ export const Photos: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
           }}
           gap="2"
         >
-          <DialogContent
-            css={{
-              maxHeight: "90vh",
-              maxWidth: "90vw",
-              width: "$full",
-              height: "$full",
-            }}
-            forceMount
-            onCloseAutoFocus={(e) => {
-              return e.preventDefault();
-            }}
-          >
-            <Box
-              css={{ position: "relative", height: "$full", width: "$full" }}
-            >
-              <Image
-                {...images[zoomedPhoto as number]}
-                css={{ borderRadius: "$sm" }}
-                layout="fill"
-                objectFit="contain"
-                placeholder="blur"
-                src={fallback[zoomedPhoto as number]?.urls.full}
-              />
-            </Box>
-          </DialogContent>
           {pictures.map((photo, index) => {
             return (
               <DialogTrigger key={photo.id} asChild>

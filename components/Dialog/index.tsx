@@ -1,17 +1,27 @@
 import React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { Cross1Icon } from "@radix-ui/react-icons";
-import { styled, CSS } from "stitches.config";
+import { styled, CSS, keyframes } from "stitches.config";
 import { panelStyles } from "@components/Panel";
 import { overlayStyles } from "@components/Overlay";
 import { IconButton } from "@components/IconButton";
 
+const overlayShow = keyframes({
+  "0%": { opacity: 0 },
+  "100%": { opacity: 1 },
+});
+
+const contentShow = keyframes({
+  "0%": { opacity: 0, transform: "translate(-50%, -48%) scale(.96)" },
+  "100%": { opacity: 1, transform: "translate(-50%, -50%) scale(1)" },
+});
+
 const StyledOverlay = styled(DialogPrimitive.Overlay, overlayStyles, {
   position: "fixed",
-  top: 0,
-  right: 0,
-  bottom: 0,
-  left: 0,
+  inset: "0",
+  "@media (prefers-reduced-motion: no-preference)": {
+    animation: `${overlayShow} 150ms cubic-bezier(0.16, 1, 0.3, 1) forwards`,
+  },
 });
 
 const StyledContent = styled(DialogPrimitive.Content, panelStyles, {
@@ -26,6 +36,10 @@ const StyledContent = styled(DialogPrimitive.Content, panelStyles, {
   // Among other things, prevents text alignment inconsistencies when dialog can't be centered in the viewport evenly.
   // Affects animated and non-animated dialogs alike.
   willChange: "transform",
+
+  "@media (prefers-reduced-motion: no-preference)": {
+    animation: `${contentShow} 150ms cubic-bezier(0.16, 1, 0.3, 1) forwards`,
+  },
 
   "&:focus": {
     outline: "none",

@@ -40,7 +40,6 @@ const Stash: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                     css={{ fontWeight: "inherit" }}
                     // @ts-expect-error TODO: use contentlayer for typings
                     href={frontmatter.url}
-                    target="_blank"
                     showCitation
                   >
                     {frontmatter.title}

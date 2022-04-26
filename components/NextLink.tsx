@@ -31,7 +31,7 @@ const NextLink: FC<NextLinkProps> = ({
       return (
         <Stack css={{ stackGap: "$1" }}>
           <span>
-            <DSLink href={href} {...styleProps}>
+            <DSLink href={href} target="_blank" {...styleProps}>
               {children}
             </DSLink>
           </span>
@@ -45,7 +45,7 @@ const NextLink: FC<NextLinkProps> = ({
     }
 
     return (
-      <DSLink href={href} {...styleProps}>
+      <DSLink href={href} target="_blank" {...styleProps}>
         {children}
       </DSLink>
     );

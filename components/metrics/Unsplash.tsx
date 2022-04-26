@@ -1,24 +1,20 @@
-import { Heading } from "@components/Heading";
-import { Stack } from "@components/Stack";
-import { Paragraph } from "@components/Paragraph";
+import { Grid } from "@components/Grid";
 import { useUnsplashStats } from "@hooks/use-unsplash";
+import MetricCard from "./Card";
 
-export default function UnsplashCard() {
-  const { data, isLoading } = useUnsplashStats();
+export default function UnsplashStats() {
+  const { data } = useUnsplashStats();
 
-  // const link = "https://unsplash.com/@reallybadnews";
+  const link = "https://unsplash.com/@reallybadnews";
 
   return (
-    <Stack css={{ stackGap: "$3" }}>
-      <Heading>Unsplash Stats</Heading>
-      <Paragraph>
-        Views:
-        {isLoading ? "——" : ` ${data?.views.toLocaleString()}`}
-      </Paragraph>
-      <Paragraph>
-        Downloads:
-        {isLoading ? "——" : ` ${data?.downloads.toLocaleString()}`}
-      </Paragraph>
-    </Stack>
+    <Grid columns={{ "@initial": 1, "@bp1": 2 }} gap="3">
+      <MetricCard header="Unsplash Views" metric={data?.views} url={link} />
+      <MetricCard
+        header="Unsplash Downloads"
+        metric={data?.downloads}
+        url={link}
+      />
+    </Grid>
   );
 }
