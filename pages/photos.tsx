@@ -79,12 +79,13 @@ export const Photos: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
         </DialogContent>
         <Grid
           css={{
-            minColumnWidth: "440px",
+            minColumnWidth: "1fr",
             width: "100vw",
             position: "relative",
             left: "50%",
             marginLeft: "-50vw",
             "@bp1": {
+              minColumnWidth: "440px",
               px: "$2",
             },
           }}
