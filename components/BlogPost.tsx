@@ -1,6 +1,6 @@
 import { useViews } from "@hooks/use-views";
 import { formatDate } from "@lib/utils";
-import { Frontmatter } from "types";
+import { Post } from "contentlayer/generated";
 import { Badge } from "./Badge";
 import { Heading } from "./Heading";
 import NextLink from "./NextLink";
@@ -12,12 +12,12 @@ export function BlogPost({
   description,
   date,
   slug,
-}: Pick<Frontmatter, "title" | "description" | "date" | "slug">) {
-  const { views, isLoading } = useViews(slug.replace("posts/", ""));
+}: Pick<Post, "title" | "description" | "date" | "slug">) {
+  const { views, isLoading } = useViews(slug);
 
   return (
     <Stack as="article" css={{ position: "relative", stackGap: "$1" }}>
-      <NextLink href={`/${slug}`} outline="hover" variant="transparent">
+      <NextLink href={slug} outline="hover" variant="transparent">
         <Heading as="h2" size="2">
           {title}
         </Heading>

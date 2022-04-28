@@ -9,12 +9,12 @@ import { Text } from "@components/Text";
 import { getAllImagePathsFromDir } from "@lib/images";
 import { getAllFrontmatter, getMdxBySlug } from "@lib/mdx";
 import { formatDate } from "@lib/utils";
-import { MDXImages } from "types";
 import { getMDXComponent } from "mdx-bundler/client";
 import { GetStaticPaths, InferGetStaticPropsType } from "next";
 import Link from "next/link";
 import { getPlaiceholder } from "plaiceholder";
 import { FC, useMemo } from "react";
+import { MDXImages } from "types";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const frontmatters = await getAllFrontmatter("stash");

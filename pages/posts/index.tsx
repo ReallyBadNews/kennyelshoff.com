@@ -2,19 +2,19 @@ import { BlogPost } from "@components/BlogPost";
 import Page from "@components/Page";
 import { Separator } from "@components/Separator";
 import { Stack } from "@components/Stack";
-import { getAllFrontmatter } from "@lib/mdx";
 import { sortByDate } from "@lib/utils";
 import { InferGetStaticPropsType } from "next";
 import { Fragment } from "react";
+import { allPosts } from "contentlayer/generated";
 
 export const getStaticProps = async () => {
-  const frontmatters = await getAllFrontmatter("posts");
-
-  return { props: { frontmatters: sortByDate(frontmatters) } };
+  return {
+    props: { posts: sortByDate(allPosts) },
+  };
 };
 
 const Writing: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
-  frontmatters,
+  posts,
 }) => {
   return (
     <Page
@@ -23,7 +23,7 @@ const Writing: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
       title="Writing"
     >
       <Stack css={{ stackGap: "$7" }}>
-        {frontmatters.map((post, index) => {
+        {posts.map((post, index) => {
           return (
             <Fragment key={post.slug}>
               <BlogPost
@@ -32,7 +32,7 @@ const Writing: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                 slug={post.slug}
                 title={post.title}
               />
-              {index !== frontmatters.length - 1 && <Separator size="2" />}
+              {index !== posts.length - 1 && <Separator size="2" />}
             </Fragment>
           );
         })}

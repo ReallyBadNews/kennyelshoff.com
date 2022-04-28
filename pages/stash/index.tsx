@@ -1,20 +1,16 @@
-import { Heading } from "@components/Heading";
-import { MDXComponents } from "@components/MDXComponents";
-import NextLink from "@components/NextLink";
 import Page from "@components/Page";
-import { Paragraph } from "@components/Paragraph";
 import { Separator } from "@components/Separator";
 import { Stack } from "@components/Stack";
-import { getAllMdx } from "@lib/mdx";
-import { formatDate, sortByDate } from "@lib/utils";
-import { getMDXComponent } from "mdx-bundler/client";
+import { StashPost } from "@components/StashPost";
+import { sortByDate } from "@lib/utils";
+import { allStashes } from "contentlayer/generated";
 import { InferGetStaticPropsType } from "next";
 import { Fragment } from "react";
 
 export const getStaticProps = async () => {
-  const stashes = await getAllMdx("stash");
-
-  return { props: { stashes: sortByDate(stashes) } };
+  return {
+    props: { stashes: sortByDate(allStashes) },
+  };
 };
 
 const Stash: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
@@ -27,33 +23,10 @@ const Stash: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
       title="Stash"
     >
       <Stack css={{ stackGap: "$5", "@bp1": { stackGap: "$7" } }}>
-        {stashes.map(({ frontmatter, code }, index) => {
-          const Component = getMDXComponent(code);
+        {stashes.map((stash, index) => {
           return (
-            <Fragment key={frontmatter.slug}>
-              <Stack
-                as="article"
-                css={{ position: "relative", stackGap: "$4" }}
-              >
-                <Heading as="h4" size="2">
-                  <NextLink
-                    css={{ fontWeight: "inherit" }}
-                    // @ts-expect-error TODO: use contentlayer for typings
-                    href={frontmatter.url}
-                    showCitation
-                  >
-                    {frontmatter.title}
-                  </NextLink>
-                </Heading>
-                <Component components={MDXComponents()} />
-                <Paragraph size="0" variant="subtle">
-                  <NextLink href={`/${frontmatter.slug}`}>
-                    <time dateTime={frontmatter.date}>
-                      {`— ${formatDate(frontmatter.date, "full")}`}
-                    </time>
-                  </NextLink>
-                </Paragraph>
-              </Stack>
+            <Fragment key={stash.slug}>
+              <StashPost {...stash} />
               {index !== stashes.length - 1 && <Separator size="2" />}
             </Fragment>
           );

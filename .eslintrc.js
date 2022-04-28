@@ -31,6 +31,7 @@ module.exports = {
     "arrow-body-style": ["error", "always"],
     "react/react-in-jsx-scope": "off",
     "no-console": ["error", { allow: ["warn", "error"] }],
+    "no-underscore-dangle": "off",
     "import/prefer-default-export": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "react/jsx-sort-props": [
