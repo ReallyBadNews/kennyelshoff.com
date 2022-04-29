@@ -1,21 +1,19 @@
 import { MDXComponents } from "@components/MDXComponents";
 import Page from "@components/Page";
 import { getAllImagePathsFromDir } from "@lib/images";
-import { getAllFrontmatter, getMdxBySlug } from "@lib/mdx";
-import { MDXImages } from "types";
-import { getMDXComponent } from "mdx-bundler/client";
+import { allPosts, Post } from "contentlayer/generated";
 import { GetStaticPaths, InferGetStaticPropsType } from "next";
+import { useMDXComponent } from "next-contentlayer/hooks";
 import { getPlaiceholder } from "plaiceholder";
-import { FC, useMemo } from "react";
+import { FC } from "react";
+import { MDXImages } from "types";
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const frontmatters = await getAllFrontmatter("posts");
-
   return {
-    paths: frontmatters.map((frontmatter) => {
+    paths: allPosts.map((post) => {
       return {
         params: {
-          slug: frontmatter.slug?.replace("posts/", ""),
+          slug: post.path,
         },
       };
     }),
@@ -24,7 +22,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params: { slug = "" } = {} }) => {
-  const { frontmatter, code, readingTime } = await getMdxBySlug("posts", slug);
+  const post = allPosts.find((p) => {
+    return p.path === slug;
+  }) as Post;
 
   const imagePaths = getAllImagePathsFromDir(`posts/${slug}`);
 
@@ -48,26 +48,22 @@ export const getStaticProps = async ({ params: { slug = "" } = {} }) => {
     return result;
   });
 
-  return { props: { frontmatter, code, images, readingTime } };
+  return { props: { post, images } };
 };
 
 const Layout: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
-  frontmatter,
-  code,
+  post,
   images,
-  readingTime,
 }) => {
-  const Component = useMemo(() => {
-    return getMDXComponent(code);
-  }, [code]);
+  const Component = useMDXComponent(post.body.code);
 
   return (
     <Page
-      date={frontmatter.date}
-      description={frontmatter.description}
-      readingTime={readingTime}
-      slug={frontmatter.slug}
-      title={frontmatter.title}
+      date={post.date}
+      description={post.description}
+      readingTime={post.readingTime}
+      slug={post.slug}
+      title={post.title}
       type="post"
     >
       <Component components={MDXComponents(images)} />

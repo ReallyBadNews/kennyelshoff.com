@@ -1,7 +1,6 @@
-import { ComponentMap } from "mdx-bundler/client";
 import { CSS, VariantProps } from "stitches.config";
 import { ImageProps } from "next/image";
-import { MDXImages } from "types";
+import { ComponentMap, MDXImages } from "types";
 import { Image } from "./Image";
 import { Blockquote } from "./Blockquote";
 import { Box } from "./Box";

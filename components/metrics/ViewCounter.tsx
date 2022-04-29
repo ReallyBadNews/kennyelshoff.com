@@ -1,14 +1,14 @@
 import { Text } from "@components/Text";
 import { useViews } from "@hooks/use-views";
-import { Frontmatter } from "types";
 import { useEffect } from "react";
+import { Post } from "contentlayer/generated";
 
-export default function ViewCounter({ slug }: Pick<Frontmatter, "slug">) {
+export default function ViewCounter({ slug }: Pick<Post, "slug">) {
   const { views, isLoading } = useViews(slug);
 
   useEffect(() => {
     const registerView = () => {
-      return fetch(`/api/views/${slug}`, {
+      return fetch(`/api/views${slug}`, {
         method: "POST",
       });
     };

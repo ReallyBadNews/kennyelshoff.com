@@ -1,21 +1,19 @@
 import { MDXComponents } from "@components/MDXComponents";
 import Page from "@components/Page";
 import { getAllImagePathsFromDir } from "@lib/images";
-import { getAllFrontmatter, getMdxBySlug } from "@lib/mdx";
-import { MDXImages } from "types";
-import { getMDXComponent } from "mdx-bundler/client";
+import { allWorks, Work } from "contentlayer/generated";
 import { GetStaticPaths, InferGetStaticPropsType } from "next";
+import { useMDXComponent } from "next-contentlayer/hooks";
 import { getPlaiceholder } from "plaiceholder";
-import { FC, useMemo } from "react";
+import { FC } from "react";
+import { MDXImages } from "types";
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const frontmatters = await getAllFrontmatter("work/graham-media-group");
-
   return {
-    paths: frontmatters.map((frontmatter) => {
+    paths: allWorks.map((work) => {
       return {
         params: {
-          slug: frontmatter.slug?.replace("work/graham-media-group/", ""),
+          slug: work.path,
         },
       };
     }),
@@ -24,10 +22,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params: { slug = "" } = {} }) => {
-  const { frontmatter, code, readingTime } = await getMdxBySlug(
-    "work/graham-media-group",
-    slug
-  );
+  const workPost = allWorks.find((p) => {
+    return p.path === slug;
+  }) as Work;
 
   const imagePaths = getAllImagePathsFromDir("work/gmg");
 
@@ -51,21 +48,17 @@ export const getStaticProps = async ({ params: { slug = "" } = {} }) => {
     return result;
   });
 
-  return { props: { frontmatter, code, images, readingTime } };
+  return { props: { post: workPost, images } };
 };
 
 const GMGWork: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
-  frontmatter,
-  code,
+  post,
   images,
-  // readingTime,
 }) => {
-  const Component = useMemo(() => {
-    return getMDXComponent(code);
-  }, [code]);
+  const Component = useMDXComponent(post.body.code);
 
   return (
-    <Page description={frontmatter.description} title={frontmatter.title}>
+    <Page description={post.description} title={post.title}>
       <Component components={MDXComponents(images)} />
     </Page>
   );

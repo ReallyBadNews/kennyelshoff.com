@@ -1,12 +1,3 @@
-export type Frontmatter = {
-  title: string;
-  description?: string;
-  url?: string;
-  date: string;
-  slug: string;
-  tags?: string[];
-};
-
 export type MDXImages = {
   [key: string]: {
     blurDataURL: string;
@@ -16,3 +7,5 @@ export type MDXImages = {
     type?: string | undefined;
   };
 };
+
+export type ComponentMap = import("mdx/types").MDXComponents;

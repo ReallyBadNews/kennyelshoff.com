@@ -69,7 +69,7 @@ const Page = ({
             shouldReduceMotion ? { y: 0, opacity: 1 } : { y: -10, opacity: 0 }
           }
         >
-          {type === "post" ? (
+          {type === "post" && slug ? (
             <Stack
               css={{ stackGap: "$1", justifyContent: "space-between" }}
               direction="row"
@@ -85,7 +85,7 @@ const Page = ({
               >
                 {readingTime ? <Text size="0">{readingTime.text}</Text> : null}
                 <Text size="0">•</Text>
-                <ViewCounter slug={slug?.split("/")[1] as string} />
+                <ViewCounter slug={slug} />
               </Stack>
             </Stack>
           ) : null}

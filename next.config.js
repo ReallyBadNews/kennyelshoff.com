@@ -5,9 +5,8 @@
  * */
 
 const { withPlaiceholder } = require("@plaiceholder/next");
+const { withContentlayer } = require("next-contentlayer");
 
-module.exports = withPlaiceholder({
-  images: {
-    domains: ["images.unsplash.com"],
-  },
-});
+module.exports = withContentlayer(
+  withPlaiceholder({ images: { domains: ["images.unsplash.com"] } })
+);

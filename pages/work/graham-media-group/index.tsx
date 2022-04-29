@@ -5,14 +5,12 @@ import { Paragraph } from "@components/Paragraph";
 import { Separator } from "@components/Separator";
 import { Stack } from "@components/Stack";
 import { Text } from "@components/Text";
-import { getAllFrontmatter } from "@lib/mdx";
 import { InferGetStaticPropsType } from "next";
 import { Fragment } from "react";
+import { allWorks } from "contentlayer/generated";
 
 export const getStaticProps = async () => {
-  const projects = await getAllFrontmatter("work/graham-media-group");
-
-  return { props: { projects } };
+  return { props: { projects: allWorks } };
 };
 
 const GMGWork: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
@@ -83,7 +81,7 @@ const GMGWork: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
               >
                 <Heading as="h3" size="1">
                   <NextLink
-                    href={`/${post.slug}`}
+                    href={post.slug}
                     outline="hover"
                     variant="transparent"
                   >
