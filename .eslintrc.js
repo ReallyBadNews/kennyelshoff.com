@@ -25,6 +25,7 @@ module.exports = {
   ],
   rules: {
     "prettier/prettier": "error",
+    "import/no-extraneous-dependencies": ["error", { devDependencies: true }],
     "react/prop-types": "off",
     "react/function-component-definition": "off",
     "react/jsx-one-expression-per-line": ["error", { allow: "single-child" }],
