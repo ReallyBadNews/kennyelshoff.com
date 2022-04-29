@@ -7,23 +7,21 @@ import { Paragraph } from "@components/Paragraph";
 import { Stack } from "@components/Stack";
 import { Text } from "@components/Text";
 import { getAllImagePathsFromDir } from "@lib/images";
-import { getAllFrontmatter, getMdxBySlug } from "@lib/mdx";
 import { formatDate } from "@lib/utils";
-import { getMDXComponent } from "mdx-bundler/client";
+import { allStashes, Stash } from "contentlayer/generated";
 import { GetStaticPaths, InferGetStaticPropsType } from "next";
+import { useMDXComponent } from "next-contentlayer/hooks";
 import Link from "next/link";
 import { getPlaiceholder } from "plaiceholder";
-import { FC, useMemo } from "react";
+import { FC } from "react";
 import { MDXImages } from "types";
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const frontmatters = await getAllFrontmatter("stash");
-
   return {
-    paths: frontmatters.map((frontmatter) => {
+    paths: allStashes.map((stash) => {
       return {
         params: {
-          slug: frontmatter.slug?.replace("stash/", ""),
+          slug: stash.path,
         },
       };
     }),
@@ -32,7 +30,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params: { slug = "" } = {} }) => {
-  const { frontmatter, code } = await getMdxBySlug("stash", slug);
+  const stash = allStashes.find((s) => {
+    return s.path === slug;
+  }) as Stash;
 
   const imagePaths = getAllImagePathsFromDir("stash");
 
@@ -56,33 +56,30 @@ export const getStaticProps = async ({ params: { slug = "" } = {} }) => {
     return result;
   });
 
-  return { props: { frontmatter, code, images } };
+  return { props: { stash, images } };
 };
 
 const Layout: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
-  frontmatter,
-  code,
+  stash,
   images,
 }) => {
-  const Component = useMemo(() => {
-    return getMDXComponent(code);
-  }, [code]);
+  const Component = useMDXComponent(stash.body.code);
 
   return (
     <Page
-      description={frontmatter.description}
+      description={stash.description}
       showHeader={false}
-      title={frontmatter.title}
+      title={stash.title}
     >
-      {frontmatter.url ? (
-        <NextLink href={frontmatter.url} showCitation>
+      {stash.url ? (
+        <NextLink href={stash.url} showCitation>
           <Heading as="h1" weight="9">
-            {frontmatter.title}
+            {stash.title}
           </Heading>
         </NextLink>
       ) : (
         <Heading as="h4" weight="9">
-          {frontmatter.title}
+          {stash.title}
         </Heading>
       )}
       <Stack css={{ stackGap: "$2" }}>
@@ -90,16 +87,16 @@ const Layout: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
           <Text size="0" variant="subtle">
             {`Saved: `}
           </Text>
-          <time dateTime={frontmatter.date}>
-            {`${formatDate(frontmatter.date, "full")}`}
+          <time dateTime={stash.date}>
+            {`${formatDate(stash.date, "full")}`}
           </time>
         </Paragraph>
-        {frontmatter.tags && (
+        {stash.tags && (
           <Stack css={{ stackGap: "$1", alignItems: "center" }} direction="row">
             <Text size="0" variant="subtle">
               {`Tags: `}
             </Text>
-            {frontmatter.tags.map((tag) => {
+            {stash.tags.map((tag) => {
               return (
                 <Link key={tag} href={`/stash/tagged/${tag}`} passHref>
                   <Badge as="a" size="1" variant="gray">

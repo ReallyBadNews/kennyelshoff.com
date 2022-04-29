@@ -14,7 +14,7 @@ import remarkSlug from "remark-slug";
 import remarkUnwrapImages from "remark-unwrap-images";
 import rehypeMetaAttribute from "./lib/rehype-meta-attribute";
 
-const readTime = defineNestedType(() => {
+const ReadTime = defineNestedType(() => {
   return {
     name: "ReadingTime",
     fields: {
@@ -65,7 +65,7 @@ export const Post = defineDocumentType(() => {
       },
       readingTime: {
         type: "nested",
-        of: readTime,
+        of: ReadTime,
         resolve: (post) => {
           return readingTime(post.body.raw);
         },
@@ -126,9 +126,50 @@ export const Stash = defineDocumentType(() => {
   };
 });
 
+export const Work = defineDocumentType(() => {
+  return {
+    name: "Work",
+    filePathPattern: "work/**/*.mdx",
+    contentType: "mdx",
+    fields: {
+      title: {
+        type: "string",
+        description: "The title of the work",
+        required: true,
+      },
+      description: {
+        type: "string",
+        description: "The description of the work",
+        required: false,
+      },
+      date: {
+        type: "date",
+        description: "The date of the work",
+        required: true,
+      },
+    },
+    computedFields: {
+      path: {
+        type: "string",
+        resolve: (work) => {
+          return work._raw.sourceFileName.split(".")[0];
+        },
+      },
+      slug: {
+        type: "string",
+        description:
+          'The URL path of this page absolute to site root. For example "/posts/helo-wold"',
+        resolve: (work) => {
+          return `/${work._raw.flattenedPath}`;
+        },
+      },
+    },
+  };
+});
+
 export default makeSource({
   contentDirPath: "content",
-  documentTypes: [Post, Stash],
+  documentTypes: [Post, Stash, Work],
   mdx: {
     rehypePlugins: [
       rehypeSlug,

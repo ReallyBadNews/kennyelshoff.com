@@ -13,7 +13,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     paths: allPosts.map((post) => {
       return {
         params: {
-          slug: post.slug.replace("/posts/", ""),
+          slug: post.path,
         },
       };
     }),
