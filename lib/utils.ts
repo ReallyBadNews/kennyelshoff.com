@@ -1,3 +1,15 @@
+import sidSlugify, { Options } from "@sindresorhus/slugify";
+
+export const slugify = (text: string, options?: Options): string => {
+  return sidSlugify(text, {
+    customReplacements: [
+      ["TypeScript", "typescript"],
+      ["JavaScript", "javascript"],
+    ],
+    ...options,
+  });
+};
+
 export const formatDate = (
   date: string | number | Date,
   format: "xshort" | "short" | "medium" | "long" | "full" = "short"
