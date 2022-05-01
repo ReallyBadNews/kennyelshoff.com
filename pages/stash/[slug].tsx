@@ -7,7 +7,7 @@ import { Paragraph } from "@components/Paragraph";
 import { Stack } from "@components/Stack";
 import { Text } from "@components/Text";
 import { getAllImagePathsFromDir } from "@lib/images";
-import { formatDate } from "@lib/utils";
+import { formatDate, slugify } from "@lib/utils";
 import { allStashes, Stash } from "contentlayer/generated";
 import { GetStaticPaths, InferGetStaticPropsType } from "next";
 import { useMDXComponent } from "next-contentlayer/hooks";
@@ -98,7 +98,7 @@ const Layout: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
             </Text>
             {stash.tags.map((tag) => {
               return (
-                <Link key={tag} href={`/stash/tagged/${tag}`} passHref>
+                <Link key={tag} href={`/stash/tags/${slugify(tag)}`} passHref>
                   <Badge as="a" size="1" variant="gray">
                     {tag}
                   </Badge>
