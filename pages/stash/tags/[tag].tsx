@@ -2,7 +2,7 @@ import Page from "@components/Page";
 import { Separator } from "@components/Separator";
 import { Stack } from "@components/Stack";
 import { StashPost } from "@components/StashPost";
-import { slugify } from "@lib/utils";
+import { slugify, sortByDate } from "@lib/utils";
 import { allStashes } from "contentlayer/generated";
 import { GetStaticPaths, InferGetStaticPropsType } from "next";
 import { FC, Fragment } from "react";
@@ -41,7 +41,7 @@ export const getStaticProps = async ({ params: { tag = "" } = {} }) => {
 
   return {
     props: {
-      items: filteredItems,
+      items: sortByDate(filteredItems),
       title: tag,
     },
   };
