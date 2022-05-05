@@ -1,3 +1,5 @@
+import { InlineCode } from "@components/Code";
+import { Heading } from "@components/Heading";
 import Page from "@components/Page";
 import { Separator } from "@components/Separator";
 import { Stack } from "@components/Stack";
@@ -31,18 +33,24 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params: { tag = "" } = {} }) => {
+  let properTag: string | undefined;
+
   const filteredItems = allStashes.filter((item) => {
+    properTag = item?.tags?.find((t) => {
+      return slugify(t ?? "") === tag;
+    });
+
     const slugifiedTags = item.tags?.map((stashTag) => {
       return slugify(stashTag ?? "");
     });
 
-    return slugifiedTags?.includes(tag);
+    return slugifiedTags?.includes(tag) ? item.tags : undefined;
   });
 
   return {
     props: {
       items: sortByDate(filteredItems),
-      title: tag,
+      title: properTag,
     },
   };
 };
@@ -61,6 +69,12 @@ const StashTags: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 
   return (
     <Page showHeader={false} title={`Stashes tagged with ${title}`}>
+      {title ? (
+        <Heading size="4">
+          {`Stashes tagged with `}
+          <InlineCode>{title}</InlineCode>
+        </Heading>
+      ) : null}
       <Stack css={{ stackGap: "$5", "@bp1": { stackGap: "$7" } }}>
         {items.map((stash, index) => {
           return (
