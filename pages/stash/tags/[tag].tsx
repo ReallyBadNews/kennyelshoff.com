@@ -33,13 +33,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params: { tag = "" } = {} }) => {
-  let properTag: string | undefined;
-
   const filteredItems = allStashes.filter((item) => {
-    properTag = item?.tags?.find((t) => {
-      return slugify(t ?? "") === tag;
-    });
-
     const slugifiedTags = item.tags?.map((stashTag) => {
       return slugify(stashTag ?? "");
     });
@@ -47,10 +41,19 @@ export const getStaticProps = async ({ params: { tag = "" } = {} }) => {
     return slugifiedTags?.includes(tag) ? item.tags : undefined;
   });
 
+  // Get the non slugified tag from the array index
+  const tagIndex = filteredItems[0].tags
+    ?.map((stashTag) => {
+      return slugify(stashTag ?? "");
+    })
+    .indexOf(tag) as number;
+
+  const nonSlugifiedTag = filteredItems[0]?.tags?.[tagIndex];
+
   return {
     props: {
       items: sortByDate(filteredItems),
-      title: properTag,
+      title: nonSlugifiedTag,
     },
   };
 };
