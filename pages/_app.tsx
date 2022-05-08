@@ -1,3 +1,4 @@
+import { CommandPalette } from "@components/CommandPalette";
 import { Container } from "@components/Container";
 import Footer from "@components/Footer";
 import { Header } from "@components/Header";
@@ -82,6 +83,7 @@ function BabaBooey({ Component, pageProps }: AppProps): JSX.Element {
       disableTransitionOnChange
     >
       <TooltipProvider>
+        <CommandPalette />
         <Container
           css={{
             display: "flex",
