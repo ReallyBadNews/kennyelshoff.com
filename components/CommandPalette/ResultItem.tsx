@@ -1,4 +1,5 @@
 import { Flex } from "@components/Flex";
+import { Kbd } from "@components/Kbd";
 import { Action } from "kbar";
 import React from "react";
 
@@ -12,25 +13,18 @@ export const ResultItem = React.forwardRef<
   return (
     <Flex
       ref={ref}
-      // className={cx(
-      //   "px-4 py-2 flex items-center justify-between border-l-2 border-transparent cursor-pointer",
-      //   "text-gray-600",
-      //   "dark:text-gray-300",
-      //   active &&
-      //     cx(
-      //       "border-violet-600 bg-violet-200",
-      //       "dark:border-violet-800 dark:bg-violet-600 dark:text-white"
-      //     )
-      // )}
       css={{
         px: "$4",
         py: "$2",
-        bg: "$slate9",
+        backgroundColor: "$loContrast",
         alignItems: "center",
-        justifyContent: "center",
-        borderLeft: "2px solid $slate7",
+        justifyContent: "space-between",
+        borderLeft: "4px solid transparent",
         cursor: "pointer",
-        ...(active && { bg: "$blue9" }),
+        ...(active && {
+          backgroundColor: "$slate4",
+          borderLeft: "4px solid $slate7",
+        }),
       }}
     >
       <div className="flex gap-4 items-center">
@@ -41,7 +35,7 @@ export const ResultItem = React.forwardRef<
       {action.shortcut?.length ? (
         <div className="grid grid-flow-col gap-2">
           {action.shortcut.map((shortcut) => {
-            return <kbd key={shortcut}>{shortcut}</kbd>;
+            return <Kbd key={shortcut}>{shortcut}</Kbd>;
           })}
         </div>
       ) : null}
