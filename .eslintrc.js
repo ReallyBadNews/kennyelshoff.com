@@ -29,6 +29,7 @@ module.exports = {
     "react/prop-types": "off",
     "react/function-component-definition": "off",
     "react/jsx-one-expression-per-line": ["error", { allow: "single-child" }],
+    // "react/no-unstable-nested-components": ["error", { allowAsProps: true }],
     "arrow-body-style": ["error", "always"],
     "react/react-in-jsx-scope": "off",
     "no-console": ["error", { allow: ["warn", "error"] }],

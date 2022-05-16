@@ -33,6 +33,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params: { tag = "" } = {} }) => {
+  // Filter the stashes so that only the ones with the tag are returned
   const filteredItems = allStashes.filter((item) => {
     const slugifiedTags = item.tags?.map((stashTag) => {
       return slugify(stashTag ?? "");
