@@ -1,7 +1,9 @@
 import { Flex } from "@components/Flex";
 import { Kbd } from "@components/Kbd";
+import { Stack } from "@components/Stack";
+import { Text } from "@components/Text";
 import { Action } from "kbar";
-import React from "react";
+import React, { Fragment } from "react";
 
 export const ResultItem = React.forwardRef<
   HTMLDivElement,
@@ -14,30 +16,38 @@ export const ResultItem = React.forwardRef<
     <Flex
       ref={ref}
       css={{
-        px: "$4",
-        py: "$2",
+        padding: "$3",
         backgroundColor: "$loContrast",
         alignItems: "center",
         justifyContent: "space-between",
-        borderLeft: "4px solid transparent",
+        borderLeft: "2px solid transparent",
         cursor: "pointer",
         ...(active && {
           backgroundColor: "$slate4",
-          borderLeft: "4px solid $slate7",
+          borderLeft: "2px solid $slate8",
         }),
       }}
     >
-      <div className="flex gap-4 items-center">
-        <div className="flex flex-col">
-          <span className="font-mono">{action.name}</span>
-        </div>
-      </div>
+      <Text fontFamily="mono" size="2">
+        {action.name}
+      </Text>
       {action.shortcut?.length ? (
-        <div className="grid grid-flow-col gap-2">
-          {action.shortcut.map((shortcut) => {
-            return <Kbd key={shortcut}>{shortcut}</Kbd>;
+        <Stack css={{ stackGap: "$2", alignItems: "center" }} direction="row">
+          {action.shortcut.map((shortcut, index) => {
+            return (
+              <Fragment key={shortcut}>
+                <Kbd size="2">{shortcut}</Kbd>
+                {action.shortcut?.length
+                  ? action.shortcut.length - 1 !== index && (
+                      <Text size="2" variant="subtle">
+                        +
+                      </Text>
+                    )
+                  : null}
+              </Fragment>
+            );
           })}
-        </div>
+        </Stack>
       ) : null}
     </Flex>
   );

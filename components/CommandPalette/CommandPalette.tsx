@@ -69,7 +69,6 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
     {
       id: "source",
       name: "View Source",
-      shortcut: ["$mod+Shift+KeyS"],
       keywords: "view-source",
       section: "General",
       perform: () => {
@@ -167,7 +166,7 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
   const kbarPosition = css({ position: "absolute" });
 
   const StyledSearch = styled(KBarSearch, {
-    padding: "$3 $4",
+    padding: "$3",
     fontSize: "$2",
     width: "100%",
     boxSizing: "border-box",
