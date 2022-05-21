@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unstable-nested-components */
+import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import {
   Action,
   KBarAnimator,
@@ -10,7 +11,18 @@ import {
 import { useTheme } from "next-themes";
 import { useRouter } from "next/router";
 import { css, styled } from "stitches.config";
+import { Kbd } from "../Kbd";
+import { Stack } from "../Stack";
 import { RenderResults } from "./RenderResults";
+
+const iconStyle = css({
+  width: "$5",
+  height: "$5",
+  marginRight: "$2",
+  color: "$slateA8",
+});
+
+const kbarPosition = css({ position: "absolute" });
 
 export function CommandPalette({ children }: { children?: React.ReactNode }) {
   const router = useRouter();
@@ -163,10 +175,8 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
     },
   ];
 
-  const kbarPosition = css({ position: "absolute" });
-
   const StyledSearch = styled(KBarSearch, {
-    padding: "$3",
+    py: "$3",
     fontSize: "$2",
     width: "100%",
     boxSizing: "border-box",
@@ -177,7 +187,7 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
   });
 
   const StyledAnimator = styled(KBarAnimator, {
-    maxWidth: "600px",
+    maxWidth: "$144",
     width: "$full",
     backgroundColor: "$slate1",
     boxShadow: "rgba(0, 0, 0, 0.5) 0px 16px 70px 0px",
@@ -188,12 +198,25 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
       <KBarPortal>
         <KBarPositioner className={kbarPosition()}>
           <StyledAnimator>
-            <StyledSearch placeholder="Type a command or search…" />
+            <Stack
+              css={{
+                px: "$3",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+              direction="row"
+            >
+              <MagnifyingGlassIcon className={iconStyle()} />
+              <StyledSearch placeholder="Type a command or search…" />
+              <Kbd css={{ color: "$slate10" }} size="1">
+                esc
+              </Kbd>
+            </Stack>
             <RenderResults />
-            {children}
           </StyledAnimator>
         </KBarPositioner>
       </KBarPortal>
+      {children}
     </KBarProvider>
   );
 }

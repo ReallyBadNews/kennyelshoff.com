@@ -18,7 +18,7 @@ export const Kbd = styled("kbd", {
     0px 2px 1px -1px $colors$slate8,
     0 1px $colors$slate8`,
   textShadow: "0 0 1px rgba(255, 255, 255, 0.5)",
-  fontFamily: "inherit",
+  fontFamily: "$jet",
   fontWeight: 400,
   lineHeight: "1.5",
   mx: "2px",
@@ -27,19 +27,19 @@ export const Kbd = styled("kbd", {
     size: {
       "1": {
         borderRadius: "$sm",
-        px: "0.3em",
-        height: "$3",
+        px: "$1",
+        height: "$4",
         minWidth: "1.6em",
         fontSize: "$1",
-        lineHeight: "$spaces$3",
+        lineHeight: "$spaces$4",
       },
       "2": {
         borderRadius: "$rg",
-        px: "0.5em",
+        px: "$1",
         height: "$5",
         minWidth: "2em",
         fontSize: "$2",
-        lineHeight: "$spaces$5",
+        lineHeight: "$spaces$6",
       },
     },
     width: {

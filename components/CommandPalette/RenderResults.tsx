@@ -1,7 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 
 import { Box } from "@components/Box";
-import { Separator } from "@components/Separator";
 import { Text } from "@components/Text";
 import { KBarResults, useMatches } from "kbar";
 import { ResultItem } from "./ResultItem";
@@ -14,17 +13,20 @@ export function RenderResults() {
       items={results}
       onRender={({ item, active }) => {
         return typeof item === "string" ? (
-          <Box css={{ padding: "$2 $3" }}>
+          <Box css={{ paddingTop: "$3" }}>
             <Text
               as="h2"
-              css={{ borderLeft: "2px solid transparent" }}
+              css={{
+                borderLeft: "2px solid transparent",
+                borderTop: "1px solid $slate5",
+                padding: "$3 $3 $2 $3",
+              }}
               fontFamily="mono"
               size="1"
               variant="subtle"
             >
               {item}
             </Text>
-            <Separator css={{ mt: "$2" }} size="full" />
           </Box>
         ) : (
           <ResultItem action={item} active={active} />

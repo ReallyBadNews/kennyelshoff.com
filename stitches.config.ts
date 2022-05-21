@@ -277,6 +277,7 @@ export const {
       72: "18rem",
       80: "20rem",
       128: "32rem",
+      144: "36rem",
       max: "78rem",
       auto: "auto",
       px: "1px",
