@@ -1,4 +1,3 @@
-import { CommandPalette } from "@components/CommandPalette";
 import { Container } from "@components/Container";
 import Footer from "@components/Footer";
 import { Header } from "@components/Header";
@@ -7,6 +6,7 @@ import { useAnalytics } from "@lib/analytics";
 import { ThemeProvider } from "next-themes";
 import type { AppProps } from "next/app";
 import { darkTheme, globalCss } from "stitches.config";
+import dynamic from "next/dynamic";
 
 const globalStyles = globalCss({
   /**
@@ -71,6 +71,21 @@ const globalStyles = globalCss({
     zIndex: 0,
   },
 });
+
+const CommandPalette = dynamic(
+  async () => {
+    const commandPallette = await import(
+      "../components/CommandPalette/CommandPalette"
+    ).then((module) => {
+      return module.CommandPalette;
+    });
+
+    return commandPallette;
+  },
+  {
+    ssr: false,
+  }
+);
 
 function BabaBooey({ Component, pageProps }: AppProps): JSX.Element {
   globalStyles();

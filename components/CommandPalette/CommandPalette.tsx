@@ -7,6 +7,7 @@ import {
   KBarPositioner,
   KBarProvider,
   KBarSearch,
+  Priority,
 } from "kbar";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/router";
@@ -24,7 +25,11 @@ const iconStyle = css({
 
 const kbarPosition = css({ position: "absolute" });
 
-export function CommandPalette({ children }: { children?: React.ReactNode }) {
+export const CommandPalette = ({
+  children,
+}: {
+  children?: React.ReactNode;
+}) => {
   const router = useRouter();
   const { setTheme } = useTheme();
   const actions: Action[] = [
@@ -33,10 +38,11 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
       name: "Copy URL",
       shortcut: ["u"],
       keywords: "copy-url",
-      section: "General",
+      // section: "General",
       perform: () => {
         return navigator.clipboard.writeText(window.location.href);
       },
+      priority: Priority.NORMAL,
     },
     {
       id: "theme",
@@ -50,7 +56,6 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
       name: "Dark",
       keywords: "dark theme",
       section: "",
-      shortcut: ["d"],
       perform: () => {
         return setTheme("dark");
       },
@@ -61,7 +66,6 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
       name: "Light",
       keywords: "light theme",
       section: "",
-      shortcut: ["l"],
       perform: () => {
         return setTheme("light");
       },
@@ -72,7 +76,6 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
       name: "System",
       keywords: "system theme",
       section: "",
-      shortcut: ["s"],
       perform: () => {
         return setTheme("system");
       },
@@ -219,7 +222,7 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
       {children}
     </KBarProvider>
   );
-}
+};
 
 CommandPalette.defaultProps = {
   children: undefined,

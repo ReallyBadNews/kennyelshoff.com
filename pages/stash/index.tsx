@@ -28,6 +28,7 @@ const Stash: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
       priority: Priority.HIGH,
     },
   ];
+
   // Map through stashes and add them to kbar actions
   sortByDate(allStashes).forEach((stash) => {
     actions.push({
@@ -41,6 +42,7 @@ const Stash: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
       },
     });
   });
+
   useRegisterActions(actions);
 
   return (
