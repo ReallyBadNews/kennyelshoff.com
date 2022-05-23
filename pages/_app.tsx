@@ -83,20 +83,21 @@ function BabaBooey({ Component, pageProps }: AppProps): JSX.Element {
       disableTransitionOnChange
     >
       <TooltipProvider>
-        <CommandPalette />
-        <Container
-          css={{
-            display: "flex",
-            flexDirection: "column",
-            minHeight: "100vh",
-            py: "$6",
-          }}
-          size="2"
-        >
-          <Header />
-          <Component {...pageProps} />
-          <Footer />
-        </Container>
+        <CommandPalette>
+          <Container
+            css={{
+              display: "flex",
+              flexDirection: "column",
+              minHeight: "100vh",
+              py: "$6",
+            }}
+            size="2"
+          >
+            <Header />
+            <Component {...pageProps} />
+            <Footer />
+          </Container>
+        </CommandPalette>
       </TooltipProvider>
     </ThemeProvider>
   );

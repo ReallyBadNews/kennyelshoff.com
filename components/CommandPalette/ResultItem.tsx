@@ -36,7 +36,7 @@ export const ResultItem = React.forwardRef<
           {action.shortcut.map((shortcut, index) => {
             return (
               <Fragment key={shortcut}>
-                <Kbd size="2">{shortcut}</Kbd>
+                <Kbd size="1">{shortcut}</Kbd>
                 {action.shortcut?.length
                   ? action.shortcut.length - 1 !== index && (
                       <Text size="2" variant="subtle">
