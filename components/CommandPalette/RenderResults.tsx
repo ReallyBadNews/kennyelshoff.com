@@ -19,13 +19,14 @@ export function RenderResults() {
               css={{
                 borderLeft: "2px solid transparent",
                 borderTop: "1px solid $slate5",
-                padding: "$3 $3 $2 $3",
+                borderBottom: "1px solid $slate5",
+                padding: "$3",
               }}
               fontFamily="mono"
               size="1"
               variant="subtle"
             >
-              {item}
+              {item.toUpperCase()}
             </Text>
           </Box>
         ) : (

@@ -34,6 +34,7 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
       shortcut: ["u"],
       keywords: "copy-url",
       section: "General",
+      icon: <MagnifyingGlassIcon />,
       perform: () => {
         return navigator.clipboard.writeText(window.location.href);
       },
@@ -178,6 +179,7 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
   const StyledSearch = styled(KBarSearch, {
     py: "$3",
     fontSize: "$2",
+    fontFamily: "$jet",
     width: "100%",
     boxSizing: "border-box",
     outline: "none",
@@ -201,6 +203,7 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
             <Stack
               css={{
                 px: "$3",
+                marginBottom: "-$3",
                 alignItems: "center",
                 justifyContent: "space-between",
               }}
