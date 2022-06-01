@@ -2,8 +2,11 @@
 import {
   ClipboardCopyIcon,
   CodeIcon,
+  GitHubLogoIcon,
+  LinkedInLogoIcon,
   MagnifyingGlassIcon,
   SunIcon,
+  TwitterLogoIcon,
 } from "@radix-ui/react-icons";
 import {
   Action,
@@ -49,8 +52,8 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
       name: "Change theme",
       keywords: "interface color dark light",
       shortcut: ["t"],
-      icon: <SunIcon />,
       section: "General",
+      icon: <SunIcon />,
     },
     {
       id: "darkTheme",
@@ -89,8 +92,8 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
       id: "source",
       name: "View Source",
       keywords: "view-source",
-      icon: <CodeIcon />,
       section: "General",
+      icon: <CodeIcon />,
       perform: () => {
         return window.open(
           "https://github.com/ReallyBadNews/kennyelshoff.com",
@@ -154,6 +157,7 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
       shortcut: ["c", "g"],
       keywords: "go-github",
       section: "Connect",
+      icon: <GitHubLogoIcon />,
       perform: () => {
         return window.open("https://github.com/reallybadnews", "_blank");
       },
@@ -164,6 +168,7 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
       shortcut: ["c", "t"],
       keywords: "go-twitter",
       section: "Connect",
+      icon: <TwitterLogoIcon />,
       perform: () => {
         return window.open("https://twitter.com/kennyelshoff", "_blank");
       },
@@ -174,6 +179,7 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
       shortcut: ["c", "l"],
       keywords: "go-linkedin",
       section: "Connect",
+      icon: <LinkedInLogoIcon />,
       perform: () => {
         return window.open(
           "https://www.linkedin.com/in/kennyelshoff/",
@@ -210,7 +216,6 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
             <Stack
               css={{
                 px: "$3",
-                marginBottom: "-$3",
                 alignItems: "center",
                 justifyContent: "space-between",
               }}
