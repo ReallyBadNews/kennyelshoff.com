@@ -28,9 +28,18 @@ export const ResultItem = React.forwardRef<
         }),
       }}
     >
-      <Text fontFamily="mono" size="2">
-        {action.name}
-      </Text>
+      {action.icon ? (
+        <Stack css={{ stackGap: "$3" }} direction="row">
+          {action.icon}
+          <Text fontFamily="mono" size="2">
+            {action.name}
+          </Text>
+        </Stack>
+      ) : (
+        <Text fontFamily="mono" size="2">
+          {action.name}
+        </Text>
+      )}
       {action.shortcut ? (
         <Stack css={{ stackGap: "$2", alignItems: "center" }} direction="row">
           {action.shortcut.map((shortcut) => {

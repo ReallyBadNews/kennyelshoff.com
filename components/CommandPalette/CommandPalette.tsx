@@ -1,5 +1,10 @@
 /* eslint-disable react/no-unstable-nested-components */
-import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import {
+  ClipboardCopyIcon,
+  CodeIcon,
+  MagnifyingGlassIcon,
+  SunIcon,
+} from "@radix-ui/react-icons";
 import {
   Action,
   KBarAnimator,
@@ -34,7 +39,7 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
       shortcut: ["u"],
       keywords: "copy-url",
       section: "General",
-      icon: <MagnifyingGlassIcon />,
+      icon: <ClipboardCopyIcon />,
       perform: () => {
         return navigator.clipboard.writeText(window.location.href);
       },
@@ -44,6 +49,7 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
       name: "Change theme",
       keywords: "interface color dark light",
       shortcut: ["t"],
+      icon: <SunIcon />,
       section: "General",
     },
     {
@@ -83,6 +89,7 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
       id: "source",
       name: "View Source",
       keywords: "view-source",
+      icon: <CodeIcon />,
       section: "General",
       perform: () => {
         return window.open(
