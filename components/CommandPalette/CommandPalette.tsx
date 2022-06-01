@@ -1,5 +1,13 @@
 /* eslint-disable react/no-unstable-nested-components */
-import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import {
+  ClipboardCopyIcon,
+  CodeIcon,
+  GitHubLogoIcon,
+  LinkedInLogoIcon,
+  MagnifyingGlassIcon,
+  SunIcon,
+  TwitterLogoIcon,
+} from "@radix-ui/react-icons";
 import {
   Action,
   KBarAnimator,
@@ -34,6 +42,7 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
       shortcut: ["u"],
       keywords: "copy-url",
       section: "General",
+      icon: <ClipboardCopyIcon />,
       perform: () => {
         return navigator.clipboard.writeText(window.location.href);
       },
@@ -44,6 +53,7 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
       keywords: "interface color dark light",
       shortcut: ["t"],
       section: "General",
+      icon: <SunIcon />,
     },
     {
       id: "darkTheme",
@@ -83,6 +93,7 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
       name: "View Source",
       keywords: "view-source",
       section: "General",
+      icon: <CodeIcon />,
       perform: () => {
         return window.open(
           "https://github.com/ReallyBadNews/kennyelshoff.com",
@@ -146,6 +157,7 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
       shortcut: ["c", "g"],
       keywords: "go-github",
       section: "Connect",
+      icon: <GitHubLogoIcon />,
       perform: () => {
         return window.open("https://github.com/reallybadnews", "_blank");
       },
@@ -156,6 +168,7 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
       shortcut: ["c", "t"],
       keywords: "go-twitter",
       section: "Connect",
+      icon: <TwitterLogoIcon />,
       perform: () => {
         return window.open("https://twitter.com/kennyelshoff", "_blank");
       },
@@ -166,6 +179,7 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
       shortcut: ["c", "l"],
       keywords: "go-linkedin",
       section: "Connect",
+      icon: <LinkedInLogoIcon />,
       perform: () => {
         return window.open(
           "https://www.linkedin.com/in/kennyelshoff/",
@@ -178,6 +192,7 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
   const StyledSearch = styled(KBarSearch, {
     py: "$3",
     fontSize: "$2",
+    fontFamily: "$jet",
     width: "100%",
     boxSizing: "border-box",
     outline: "none",

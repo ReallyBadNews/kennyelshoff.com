@@ -3,7 +3,7 @@ import { Kbd } from "@components/Kbd";
 import { Stack } from "@components/Stack";
 import { Text } from "@components/Text";
 import { Action } from "kbar";
-import React, { Fragment } from "react";
+import React from "react";
 
 export const ResultItem = React.forwardRef<
   HTMLDivElement,
@@ -28,23 +28,25 @@ export const ResultItem = React.forwardRef<
         }),
       }}
     >
-      <Text fontFamily="mono" size="2">
-        {action.name}
-      </Text>
-      {action.shortcut?.length ? (
+      {action.icon ? (
+        <Stack css={{ stackGap: "$3" }} direction="row">
+          {action.icon}
+          <Text fontFamily="mono" size="2">
+            {action.name}
+          </Text>
+        </Stack>
+      ) : (
+        <Text fontFamily="mono" size="2">
+          {action.name}
+        </Text>
+      )}
+      {action.shortcut ? (
         <Stack css={{ stackGap: "$2", alignItems: "center" }} direction="row">
-          {action.shortcut.map((shortcut, index) => {
+          {action.shortcut.map((shortcut) => {
             return (
-              <Fragment key={shortcut}>
-                <Kbd size="1">{shortcut}</Kbd>
-                {action.shortcut?.length
-                  ? action.shortcut.length - 1 !== index && (
-                      <Text size="2" variant="subtle">
-                        +
-                      </Text>
-                    )
-                  : null}
-              </Fragment>
+              <Kbd key={shortcut} size="1">
+                {shortcut}
+              </Kbd>
             );
           })}
         </Stack>
