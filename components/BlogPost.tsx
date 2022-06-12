@@ -42,7 +42,7 @@ export function BlogPost({
         </Text>
         <Text size="0" variant="subtle">
           <Text size="0">
-            {isLoading ? "–––" : views?.total.toLocaleString()}
+            {isLoading ? "–––" : views?.total.toLocaleString("en-us")}
           </Text>
           {` views`}
         </Text>

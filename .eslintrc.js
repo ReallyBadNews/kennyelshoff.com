@@ -32,10 +32,11 @@ module.exports = {
     // "react/no-unstable-nested-components": ["error", { allowAsProps: true }],
     "arrow-body-style": ["error", "always"],
     "react/react-in-jsx-scope": "off",
-    "no-console": ["error", { allow: ["warn", "error"] }],
+    "no-console": ["warn", { allow: ["warn", "error"] }],
     "no-underscore-dangle": "off",
     "import/prefer-default-export": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-explicit-any": "off",
     "react/jsx-sort-props": [
       "error",
       { callbacksLast: true, shorthandLast: true, reservedFirst: true },

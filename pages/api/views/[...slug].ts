@@ -3,11 +3,11 @@ import { prisma } from "@lib/prisma";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse<{ total: number } | { message: string }>
 ) {
   try {
-    const { slug } = req.query as { slug: string[] };
-    const pagePath = `/${slug.join("/")}`;
+    const { slug } = req.query;
+    const pagePath = typeof slug === "string" ? slug : `/${slug.join("/")}`;
 
     if (req.method === "POST") {
       const newOrUpdatedViews = await prisma.views.upsert({
@@ -23,7 +23,7 @@ export default async function handler(
       });
 
       return res.status(200).json({
-        total: newOrUpdatedViews.count.toString(),
+        total: Number(newOrUpdatedViews.count),
       });
     }
 
@@ -34,11 +34,10 @@ export default async function handler(
         },
       });
 
-      return res.status(200).json({ total: views?.count.toString() });
+      return res.status(200).json({ total: Number(views?.count) || 0 });
     }
 
     return res.status(500).json({ message: "Invalid method" });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (e: any) {
     return res.status(500).json({ message: e.message });
   }
