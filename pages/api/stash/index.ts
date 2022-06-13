@@ -1,6 +1,6 @@
 import { prisma } from "@lib/prisma";
 import { getHostname } from "@lib/utils";
-import { Prisma, Stash } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import type { NextApiHandler } from "next";
 
 const handler: NextApiHandler = async (req, res) => {
@@ -16,10 +16,9 @@ const handler: NextApiHandler = async (req, res) => {
     }
 
     if (req.method === "POST") {
-      const reqBody = req.body as
-        | Stash & {
-            tags?: string[];
-          };
+      const reqBody: Prisma.StashCreateWithoutTagsInput & {
+        tags?: string[];
+      } = req.body;
 
       if (!reqBody.url) {
         return res.status(400).json({ message: "Missing url" });
@@ -48,7 +47,7 @@ const handler: NextApiHandler = async (req, res) => {
       requestBody.host = getHostname(reqBody.url);
 
       const newStash = await prisma.stash.create({
-        data: { ...requestBody },
+        data: requestBody,
         include: {
           tags: true,
         },
