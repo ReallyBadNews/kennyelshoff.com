@@ -27,22 +27,15 @@ export default async function handler(
 
     if (req.method === "PATCH") {
       const id = req.query.id as string;
-      const reqBody: Prisma.StashUpdateWithoutTagsInput & {
+      const reqBody = req.body as Prisma.StashCreateWithoutTagsInput & {
         tags?: string[];
-      } = req.body;
-
-      console.log("[PATCH] reqBody", reqBody);
-
-      if (!id) {
-        return res.status(400).json({ message: "Missing Id" });
-      }
+      };
 
       const requestBody: Prisma.StashUpdateInput = {
         ...reqBody,
         tags: undefined,
       };
 
-      // TODO: doesn't work
       if (reqBody.tags) {
         requestBody.tags = {
           connectOrCreate: reqBody.tags.map((tag) => {
@@ -58,25 +51,53 @@ export default async function handler(
         };
       }
 
-      console.log("[PATCH] requestBody", requestBody);
-
       const stash = await prisma.stash.update({
         where: {
           id: Number(id),
         },
         data: {
-          ...reqBody,
+          ...requestBody,
         },
         include: {
           tags: true,
         },
       });
 
+      if (!stash) {
+        return res.status(404).json({ message: "Stash not found" });
+      }
+
+      return res.status(200).json(stash);
+    }
+
+    if (req.method === "DELETE") {
+      const id = req.query.id as string;
+
+      const stash = await prisma.stash.delete({
+        where: {
+          id: Number(id),
+        },
+        include: {
+          tags: true,
+        },
+      });
+
+      if (!stash) {
+        return res.status(404).json({ message: "Stash not found" });
+      }
+
       return res.status(200).json(stash);
     }
 
     return res.status(500).json({ message: "Invalid method" });
   } catch (e: any) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      // The .code property can be accessed in a type-safe manner
+      if (e.code === "P2002") {
+        return res.status(400).json(e);
+      }
+      return res.status(500).json(e);
+    }
     return res.status(500).json({ message: e.message });
   }
 }

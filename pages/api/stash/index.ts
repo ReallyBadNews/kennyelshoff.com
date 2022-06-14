@@ -16,9 +16,9 @@ const handler: NextApiHandler = async (req, res) => {
     }
 
     if (req.method === "POST") {
-      const reqBody: Prisma.StashCreateWithoutTagsInput & {
+      const reqBody = req.body as Prisma.StashCreateWithoutTagsInput & {
         tags?: string[];
-      } = req.body;
+      };
 
       if (!reqBody.url) {
         return res.status(400).json({ message: "Missing url" });
@@ -60,6 +60,13 @@ const handler: NextApiHandler = async (req, res) => {
 
     return res.status(500).json({ message: "Invalid method" });
   } catch (e: any) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      // The .code property can be accessed in a type-safe manner
+      if (e.code === "P2002") {
+        return res.status(400).json(e);
+      }
+      return res.status(500).json(e);
+    }
     return res.status(500).json({ message: e.message });
   }
 };
