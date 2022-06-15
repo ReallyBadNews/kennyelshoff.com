@@ -2,15 +2,13 @@ import { Heading } from "@components/Heading";
 import NextLink from "@components/NextLink";
 import Page from "@components/Page";
 import { Paragraph } from "@components/Paragraph";
-import { Stack } from "@components/Stack";
 import { Separator } from "@components/Separator";
-import LoginButton from "@components/LoginButton";
+import { Stack } from "@components/Stack";
 
 export default function Home() {
   return (
     <Page>
       <Stack css={{ stackGap: "$3" }}>
-        <LoginButton />
         <Heading size="4" variant="contrast" weight="9" gradient>
           Hello! I&apos;m Kenny Elshoff.
         </Heading>

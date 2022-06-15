@@ -1,3 +1,4 @@
+import { LoginButton } from "@components/LoginButton";
 import Page from "@components/Page";
 import { Separator } from "@components/Separator";
 import { Stack } from "@components/Stack";
@@ -49,6 +50,7 @@ const Stash: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
       stackGap="$9"
       title="Stash"
     >
+      <LoginButton />
       <Stack css={{ stackGap: "$5", "@bp1": { stackGap: "$7" } }}>
         {stashes.map((stash, index) => {
           return (

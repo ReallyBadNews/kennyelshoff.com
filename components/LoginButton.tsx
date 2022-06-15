@@ -1,35 +1,56 @@
-import { useSession, signIn, signOut } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { Button } from "./Button";
+import { Paragraph } from "./Paragraph";
+import { Stack } from "./Stack";
 
-export default function LoginButton() {
+export function LoginButton() {
   const { data: session } = useSession();
-  if (session) {
+  if (session?.user?.email) {
     return (
-      <>
-        <p>{`Signed in as ${session.user.email}`}</p>
-        <button
-          type="button"
-          onClick={() => {
-            return signOut();
-          }}
-        >
-          Sign out
-        </button>
-      </>
+      <Stack
+        css={{
+          stackGap: "$2",
+          p: "$3",
+          border: "1px solid $slate5",
+          borderRadius: "$lg",
+        }}
+      >
+        <Paragraph>{`Signed in as ${session.user.email}`}</Paragraph>
+        <div>
+          <Button
+            size="3"
+            variant="red"
+            onClick={() => {
+              return signOut();
+            }}
+          >
+            Sign out
+          </Button>
+        </div>
+      </Stack>
     );
   }
   return (
-    <>
-      Not signed in
-      <br />
-      <a
-        href="/api/auth/signin/github"
-        onClick={(e) => {
-          e.preventDefault();
-          return signIn();
-        }}
-      >
-        Sign in
-      </a>
-    </>
+    <Stack
+      css={{
+        stackGap: "$2",
+        p: "$3",
+        border: "1px solid $slate5",
+        borderRadius: "$lg",
+      }}
+    >
+      <Paragraph>Not signed in</Paragraph>
+      <div>
+        <Button
+          size="3"
+          variant="green"
+          onClick={() => {
+            return signIn("github");
+          }}
+        >
+          Sign In
+        </Button>
+      </div>
+    </Stack>
   );
 }
