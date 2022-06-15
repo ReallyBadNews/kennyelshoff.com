@@ -1,12 +1,17 @@
 import { prisma } from "@lib/prisma";
 import { Prisma, Stash } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { getSession } from "next-auth/react";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Stash | null | { message: string }>
 ) {
   try {
+    const session = await getSession({ req });
+
+    console.log("[api/stash] session", session);
+
     if (req.method === "GET") {
       const id = req.query.id as string;
       const stash = await prisma.stash.findUnique({
@@ -19,10 +24,14 @@ export default async function handler(
       });
 
       if (!stash) {
-        return res.status(404).json({ message: "Stash not found" });
+        return res.status(404).send({ message: "Stash not found" });
       }
 
       return res.status(200).json(stash);
+    }
+
+    if (session?.user?.email !== "kelshoff@grahamdigital.com") {
+      return res.status(401).send({ message: "Unauthorized" });
     }
 
     if (req.method === "PATCH") {
@@ -89,7 +98,8 @@ export default async function handler(
       return res.status(200).json(stash);
     }
 
-    return res.status(500).json({ message: "Invalid method" });
+    res.setHeader("Allow", "GET, PATCH, DELETE");
+    return res.status(405).json({ message: "Method not allowed" });
   } catch (e: any) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       // The .code property can be accessed in a type-safe manner

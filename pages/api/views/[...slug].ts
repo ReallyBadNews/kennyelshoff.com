@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "@lib/prisma";
+import { Prisma } from "@prisma/client";
 
 export default async function handler(
   req: NextApiRequest,
@@ -37,8 +38,16 @@ export default async function handler(
       return res.status(200).json({ total: Number(views?.count) || 0 });
     }
 
-    return res.status(500).json({ message: "Invalid method" });
+    res.setHeader("Allow", "POST, GET");
+    return res.status(405).json({ message: "Method not Allowed" });
   } catch (e: any) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      // The .code property can be accessed in a type-safe manner
+      if (e.code === "P2002") {
+        return res.status(400).json(e);
+      }
+      return res.status(500).json(e);
+    }
     return res.status(500).json({ message: e.message });
   }
 }
