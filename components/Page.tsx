@@ -1,6 +1,5 @@
 import { Helmet } from "@components/Helmet";
 import { formatDate } from "@lib/utils";
-import { motion, useReducedMotion } from "framer-motion";
 import { ReactNode } from "react";
 import { ReadTimeResults } from "reading-time";
 import { CSS } from "stitches.config";
@@ -38,7 +37,6 @@ const Page = ({
   showHeader = true,
   children,
 }: PageProps & PageType) => {
-  const shouldReduceMotion = useReducedMotion();
   const hasMeta = !!(title || description);
 
   return (
@@ -56,8 +54,6 @@ const Page = ({
           />
         )}
         <Stack
-          animate={{ y: 0, opacity: 1 }}
-          as={motion.section}
           css={{
             stackGap,
             display: "block",
@@ -65,9 +61,6 @@ const Page = ({
               ? { my: "$6", "@bp1": { my: "$9" } }
               : { my: "$0" }),
           }}
-          initial={
-            shouldReduceMotion ? { y: 0, opacity: 1 } : { y: -10, opacity: 0 }
-          }
         >
           {type === "post" && slug ? (
             <Stack
