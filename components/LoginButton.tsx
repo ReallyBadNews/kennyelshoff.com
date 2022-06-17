@@ -1,10 +1,12 @@
 import { signIn, signOut, useSession } from "next-auth/react";
+import { Badge } from "./Badge";
 import { Button } from "./Button";
 import { Paragraph } from "./Paragraph";
 import { Stack } from "./Stack";
 
 export function LoginButton() {
   const { data: session } = useSession();
+
   if (session?.user?.email) {
     return (
       <Stack
@@ -30,6 +32,7 @@ export function LoginButton() {
       </Stack>
     );
   }
+
   return (
     <Stack
       css={{

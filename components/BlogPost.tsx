@@ -13,7 +13,7 @@ export function BlogPost({
   date,
   slug,
 }: Pick<Post, "title" | "description" | "date" | "slug">) {
-  const { views, isLoading } = useViews(slug);
+  const { views, isLoading } = useViews({ slug });
 
   return (
     <Stack as="article" css={{ position: "relative", stackGap: "$1" }}>
@@ -42,7 +42,7 @@ export function BlogPost({
         </Text>
         <Text size="0" variant="subtle">
           <Text size="0">
-            {isLoading ? "–––" : views?.total.toLocaleString("en-us")}
+            {isLoading ? "——" : views?.total.toLocaleString("en-us")}
           </Text>
           {` views`}
         </Text>
