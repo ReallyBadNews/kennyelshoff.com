@@ -7,7 +7,7 @@ interface UseViewsProps extends SWRConfiguration {
 }
 
 export const useViews = ({ slug, ...config }: UseViewsProps) => {
-  const { data, error, isLoading, isValidating } = useSWR<Views>(
+  const { data, mutate, error, isLoading, isValidating } = useSWR<Views>(
     `/api/views${slug}`,
     fetcher,
     config
@@ -15,6 +15,7 @@ export const useViews = ({ slug, ...config }: UseViewsProps) => {
 
   return {
     views: data,
+    mutate,
     isLoading,
     isValidating,
     error,

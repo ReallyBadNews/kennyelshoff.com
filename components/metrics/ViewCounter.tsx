@@ -1,27 +1,36 @@
 import { Text } from "@components/Text";
 import { useViews } from "@hooks/use-views";
-import { useEffect } from "react";
+import { Views } from "@lib/types";
 import { Post } from "contentlayer/generated";
-import useSWRMutation from "swr/mutation";
+import { useEffect } from "react";
 
-async function sendRequest(url: RequestInfo | URL, { arg }: any) {
-  return fetch(url, {
+async function sendRequest(url: RequestInfo | URL, arg?: any) {
+  const response = await fetch(url, {
     method: "POST",
     body: JSON.stringify(arg),
   });
+
+  const views: Views = await response.json();
+
+  return views;
 }
 
 export default function ViewCounter({ slug }: Pick<Post, "slug">) {
-  const { views, isLoading } = useViews({ slug });
-  const { trigger } = useSWRMutation(`/api/views${slug}`, sendRequest);
+  const { views, mutate, isLoading } = useViews({ slug });
 
   useEffect(() => {
-    trigger();
-  }, [trigger]);
+    const updateView = async () => {
+      await mutate(sendRequest(`/api/views${slug}`), { revalidate: false });
+    };
+
+    updateView();
+  }, [mutate, slug]);
 
   return (
     <Text size="0" variant="subtle">
-      <Text size="0">{isLoading ? "——" : views?.total.toLocaleString()}</Text>
+      <Text size="0">
+        {isLoading || !views ? "——" : views.total.toLocaleString("en-US")}
+      </Text>
       {` views`}
     </Text>
   );
