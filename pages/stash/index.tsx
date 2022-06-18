@@ -1,24 +1,60 @@
+import { prisma } from "@lib/prisma";
 import { LoginButton } from "@components/LoginButton";
 import Page from "@components/Page";
 import { Separator } from "@components/Separator";
 import { Stack } from "@components/Stack";
-import { StashPost } from "@components/StashPost";
-import { sortByDate } from "@lib/utils";
+// import { StashPost } from "@components/StashPost";
+// import { useAllStashes } from "@hooks/use-stash";
+import { formatDate, sortByDate } from "@lib/utils";
 import { allStashes } from "contentlayer/generated";
 import { Action, Priority, useRegisterActions } from "kbar";
-import { InferGetStaticPropsType } from "next";
+import { InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
+import { Heading } from "@components/Heading";
+import NextLink from "@components/NextLink";
+import { Paragraph } from "@components/Paragraph";
+import { bundleMDX } from "mdx-bundler";
+import { getMDXComponent } from "mdx-bundler/client";
+import { MDXComponents } from "@components/MDXComponents";
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
+  const stashes = await prisma.stash.findMany({
+    include: {
+      tags: true,
+    },
+  });
+
+  const stashMdxBodys = await Promise.all(
+    stashes.map(async (stash) => {
+      if (!stash.body) return null;
+      const mdxBody = await bundleMDX({ source: stash.body });
+      return mdxBody;
+    })
+  );
+
+  const serializedStashes = stashes.map((stash, index) => {
+    return {
+      ...stash,
+      createdAt: stash.createdAt.toISOString(),
+      updatedAt: stash.updatedAt.toISOString(),
+      ...(stash.body ? { body: stashMdxBodys[index]?.code } : undefined),
+    };
+  });
+
+  console.log("serializedStashes", serializedStashes);
+
   return {
-    props: { stashes: sortByDate(allStashes) },
+    props: {
+      stashes: sortByDate(allStashes),
+      api: serializedStashes,
+    },
   };
 };
 
-const Stash: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
-  stashes,
-}) => {
+const Stash: React.FC<
+  InferGetServerSidePropsType<typeof getServerSideProps>
+> = ({ stashes, api }) => {
   const router = useRouter();
   const actions: Action[] = [
     {
@@ -42,6 +78,7 @@ const Stash: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
       },
     });
   });
+
   useRegisterActions(actions);
 
   return (
@@ -52,14 +89,50 @@ const Stash: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     >
       <LoginButton />
       <Stack css={{ stackGap: "$5", "@bp1": { stackGap: "$7" } }}>
-        {stashes.map((stash, index) => {
+        {api.map((stash, index) => {
+          const MDXContent = stash.body ? getMDXComponent(stash.body) : null;
+          return (
+            <Fragment key={stash.id}>
+              <Stack
+                as="article"
+                css={{ position: "relative", stackGap: "$4" }}
+              >
+                <Heading as="h4" size="2">
+                  {stash.url ? (
+                    <NextLink
+                      css={{ fontWeight: "inherit" }}
+                      href={stash.url}
+                      showCitation
+                    >
+                      {stash.title}
+                    </NextLink>
+                  ) : (
+                    stash.title
+                  )}
+                </Heading>
+                {MDXContent ? (
+                  <MDXContent components={MDXComponents()} />
+                ) : null}
+                <Paragraph size="0" variant="subtle">
+                  <NextLink href={stash.createdAt}>
+                    <time dateTime={stash.createdAt}>
+                      {`— ${formatDate(stash.createdAt, "full")}`}
+                    </time>
+                  </NextLink>
+                </Paragraph>
+              </Stack>
+              {index !== api.length - 1 && <Separator size="2" />}
+            </Fragment>
+          );
+        })}
+        {/* {stashes.map((stash, index) => {
           return (
             <Fragment key={stash.slug}>
               <StashPost {...stash} />
               {index !== stashes.length - 1 && <Separator size="2" />}
             </Fragment>
           );
-        })}
+        })} */}
       </Stack>
     </Page>
   );

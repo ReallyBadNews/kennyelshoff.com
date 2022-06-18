@@ -30,9 +30,9 @@ export default async function handler(
       return res.status(200).json(stash);
     }
 
-    if (session?.user?.email !== "kelshoff@grahamdigital.com") {
-      return res.status(401).send({ message: "Unauthorized" });
-    }
+    // if (session?.user?.email !== "kelshoff@grahamdigital.com") {
+    //   return res.status(401).send({ message: "Unauthorized" });
+    // }
 
     if (req.method === "PATCH") {
       const id = req.query.id as string;
@@ -47,14 +47,9 @@ export default async function handler(
 
       if (reqBody.tags) {
         requestBody.tags = {
-          connectOrCreate: reqBody.tags.map((tag) => {
+          set: reqBody.tags.map((tag) => {
             return {
-              where: {
-                tag,
-              },
-              create: {
-                tag,
-              },
+              tag,
             };
           }),
         };

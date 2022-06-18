@@ -53,9 +53,7 @@ export default async function handler(
         },
       });
 
-      return res.status(200).json({
-        ...newStash,
-      });
+      return res.status(200).json(newStash);
     }
 
     res.setHeader("Allow", "POST");
