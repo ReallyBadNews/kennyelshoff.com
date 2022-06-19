@@ -7,7 +7,7 @@ interface UseStashProps extends SWRConfiguration {
 }
 
 export const useStash = ({ id, ...config }: UseStashProps) => {
-  const { data, error, isLoading, isValidating } = useSWR<Stash>(
+  const { data, mutate, error, isLoading, isValidating } = useSWR<Stash>(
     `/api/stash/${id}`,
     fetcher,
     config
@@ -15,6 +15,7 @@ export const useStash = ({ id, ...config }: UseStashProps) => {
 
   return {
     stash: data,
+    mutate,
     isLoading,
     isValidating,
     error,

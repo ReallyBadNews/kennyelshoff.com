@@ -17,7 +17,15 @@ import { Paragraph } from "@components/Paragraph";
 import { bundleMDX } from "mdx-bundler";
 import { getMDXComponent } from "mdx-bundler/client";
 import { MDXComponents } from "@components/MDXComponents";
+import { useStashes } from "@hooks/use-stash";
 
+/**
+ * TODO:
+ * fetch `stashes` from Prisma via the same function used
+ * to populate the `api/stashes` endpoint.
+ * serialize the dates and generate mdx on the server
+ * and consume via the endpoint
+ */
 export const getServerSideProps = async () => {
   const stashes = await prisma.stash.findMany({
     include: {
