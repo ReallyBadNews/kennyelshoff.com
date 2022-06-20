@@ -1,61 +1,35 @@
-import { prisma } from "@lib/prisma";
 import { LoginButton } from "@components/LoginButton";
 import Page from "@components/Page";
 import { Separator } from "@components/Separator";
 import { Stack } from "@components/Stack";
 // import { StashPost } from "@components/StashPost";
 // import { useAllStashes } from "@hooks/use-stash";
+import { Heading } from "@components/Heading";
+import { MDXComponents } from "@components/MDXComponents";
+import NextLink from "@components/NextLink";
+import { Paragraph } from "@components/Paragraph";
+import { getAllStashes } from "@lib/stash";
 import { formatDate, sortByDate } from "@lib/utils";
 import { allStashes } from "contentlayer/generated";
 import { Action, Priority, useRegisterActions } from "kbar";
+import { getMDXComponent } from "mdx-bundler/client";
 import { InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
-import { Heading } from "@components/Heading";
-import NextLink from "@components/NextLink";
-import { Paragraph } from "@components/Paragraph";
-import { bundleMDX } from "mdx-bundler";
-import { getMDXComponent } from "mdx-bundler/client";
-import { MDXComponents } from "@components/MDXComponents";
-import { useStashes } from "@hooks/use-stash";
 
 /**
  * TODO:
- * fetch `stashes` from Prisma via the same function used
- * to populate the `api/stashes` endpoint.
- * serialize the dates and generate mdx on the server
- * and consume via the endpoint
+ [ ] - SSR data fetching should use same function as api endpoint
+ [ ] - Serialize the dates to ISO strings
+ [ ] - Add mdx to the api response as `mdxBody`
  */
 export const getServerSideProps = async () => {
-  const stashes = await prisma.stash.findMany({
-    include: {
-      tags: true,
-    },
-  });
-
-  const stashMdxBodys = await Promise.all(
-    stashes.map(async (stash) => {
-      if (!stash.body) return null;
-      const mdxBody = await bundleMDX({ source: stash.body });
-      return mdxBody;
-    })
-  );
-
-  const serializedStashes = stashes.map((stash, index) => {
-    return {
-      ...stash,
-      createdAt: stash.createdAt.toISOString(),
-      updatedAt: stash.updatedAt.toISOString(),
-      ...(stash.body ? { body: stashMdxBodys[index]?.code } : undefined),
-    };
-  });
-
-  console.log("serializedStashes", serializedStashes);
+  const stashes = await getAllStashes();
 
   return {
     props: {
       stashes: sortByDate(allStashes),
-      api: serializedStashes,
+      api: stashes,
     },
   };
 };
@@ -98,7 +72,9 @@ const Stash: React.FC<
       <LoginButton />
       <Stack css={{ stackGap: "$5", "@bp1": { stackGap: "$7" } }}>
         {api.map((stash, index) => {
-          const MDXContent = stash.body ? getMDXComponent(stash.body) : null;
+          const MDXContent = stash.mdxBody
+            ? getMDXComponent(stash.mdxBody)
+            : null;
           return (
             <Fragment key={stash.id}>
               <Stack

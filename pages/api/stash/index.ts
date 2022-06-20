@@ -1,22 +1,11 @@
-import { prisma } from "@lib/prisma";
+import { getAllStashes } from "@lib/stash";
 import { Prisma } from "@prisma/client";
 import type { NextApiHandler } from "next";
 
 const handler: NextApiHandler = async (req, res) => {
   try {
     if (req.method === "GET") {
-      /**
-       * TODO:
-       * - Add pagination
-       * - Abstract fetch and tranform into function
-       * - Convert `createdAt` and `updatedAt` with `.toISOString()`
-       * - Transform `body` to mdxBody
-       */
-      const stashes = await prisma.stash.findMany({
-        include: {
-          tags: true,
-        },
-      });
+      const stashes = await getAllStashes();
 
       return res.status(200).json({ stashes, total: stashes.length });
     }
