@@ -7,7 +7,7 @@ const handler: NextApiHandler = async (req, res) => {
     if (req.method === "GET") {
       const stashes = await getAllStashes();
 
-      return res.status(200).json({ stashes, total: stashes.length });
+      return res.status(200).json(stashes);
     }
 
     res.setHeader("Allow", "GET");

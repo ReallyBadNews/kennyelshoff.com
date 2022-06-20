@@ -1,3 +1,5 @@
+import { Prisma } from "@prisma/client";
+
 export type Views = {
   total: number;
 };
@@ -63,3 +65,7 @@ export interface UnsplashViews {
   total: number;
   historical: Historical;
 }
+
+export type CreateOrUpdateStashInput = Prisma.StashCreateWithoutTagsInput & {
+  tags?: string[];
+};

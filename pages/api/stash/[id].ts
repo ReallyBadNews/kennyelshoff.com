@@ -1,11 +1,11 @@
-import { prisma } from "@lib/prisma";
-import { Prisma, Stash } from "@prisma/client";
+import { deleteStashById, getStashById, updateStashById } from "@lib/stash";
+import { Prisma } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Stash | null | { message: string }>
+  res: NextApiResponse
 ) {
   try {
     const session = await getSession({ req });
@@ -14,14 +14,7 @@ export default async function handler(
 
     if (req.method === "GET") {
       const id = req.query.id as string;
-      const stash = await prisma.stash.findUnique({
-        where: {
-          id: Number(id),
-        },
-        include: {
-          tags: true,
-        },
-      });
+      const stash = await getStashById(id);
 
       if (!stash) {
         return res.status(404).send({ message: "Stash not found" });
@@ -30,9 +23,9 @@ export default async function handler(
       return res.status(200).json(stash);
     }
 
-    // if (session?.user?.email !== "kelshoff@grahamdigital.com") {
-    //   return res.status(401).send({ message: "Unauthorized" });
-    // }
+    if (session?.user?.email !== "kelshoff@grahamdigital.com") {
+      return res.status(401).send({ message: "Unauthorized" });
+    }
 
     if (req.method === "PATCH") {
       const id = req.query.id as string;
@@ -40,32 +33,7 @@ export default async function handler(
         tags?: string[];
       };
 
-      const requestBody: Prisma.StashUpdateInput = {
-        ...reqBody,
-        tags: undefined,
-      };
-
-      if (reqBody.tags) {
-        requestBody.tags = {
-          set: reqBody.tags.map((tag) => {
-            return {
-              tag,
-            };
-          }),
-        };
-      }
-
-      const stash = await prisma.stash.update({
-        where: {
-          id: Number(id),
-        },
-        data: {
-          ...requestBody,
-        },
-        include: {
-          tags: true,
-        },
-      });
+      const stash = await updateStashById(id, reqBody);
 
       if (!stash) {
         return res.status(404).json({ message: "Stash not found" });
@@ -77,14 +45,7 @@ export default async function handler(
     if (req.method === "DELETE") {
       const id = req.query.id as string;
 
-      const stash = await prisma.stash.delete({
-        where: {
-          id: Number(id),
-        },
-        include: {
-          tags: true,
-        },
-      });
+      const stash = await deleteStashById(id);
 
       if (!stash) {
         return res.status(404).json({ message: "Stash not found" });

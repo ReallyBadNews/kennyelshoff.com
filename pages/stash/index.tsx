@@ -10,17 +10,18 @@ import NextLink from "@components/NextLink";
 import { Paragraph } from "@components/Paragraph";
 import { getAllStashes } from "@lib/stash";
 import { formatDate, sortByDate } from "@lib/utils";
-import { allStashes } from "contentlayer/generated";
+// import { allStashes } from "contentlayer/generated";
 import { Action, Priority, useRegisterActions } from "kbar";
 import { getMDXComponent } from "mdx-bundler/client";
 import { InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
+import { useStashes } from "@hooks/use-stash";
 
 /**
  * TODO:
- [ ] - SSR data fetching should use same function as api endpoint
- [ ] - Serialize the dates to ISO strings
+ [x] - SSR data fetching should use same function as api endpoint
+ [x] - Serialize the dates to ISO strings
  [ ] - Add mdx to the api response as `mdxBody`
  */
 export const getServerSideProps = async () => {
@@ -28,15 +29,21 @@ export const getServerSideProps = async () => {
 
   return {
     props: {
-      stashes: sortByDate(allStashes),
-      api: stashes,
+      fallbackData: stashes,
     },
   };
 };
 
 const Stash: React.FC<
   InferGetServerSidePropsType<typeof getServerSideProps>
-> = ({ stashes, api }) => {
+> = ({ fallbackData }) => {
+  const { data, isLoading, isValidating } = useStashes({
+    fallbackData,
+    revalidateOnMount: false,
+  });
+
+  console.log("[stash swr]", { isLoading, isValidating, data });
+
   const router = useRouter();
   const actions: Action[] = [
     {
@@ -48,15 +55,15 @@ const Stash: React.FC<
     },
   ];
   // Map through stashes and add them to kbar actions
-  sortByDate(allStashes).forEach((stash) => {
+  sortByDate(data?.stashes || fallbackData.stashes).forEach((stash) => {
     actions.push({
-      id: `stash-${stash._id}`,
-      name: stash.title,
+      id: `stash-${stash.id}`,
+      name: stash.title || "fix me",
       keywords: stash?.tags?.join(" "),
       section: "",
       parent: "search-stashes",
       perform: () => {
-        return router.push(`/${stash.slug}`);
+        return router.push(`/${stash.id}`);
       },
     });
   });
@@ -71,7 +78,7 @@ const Stash: React.FC<
     >
       <LoginButton />
       <Stack css={{ stackGap: "$5", "@bp1": { stackGap: "$7" } }}>
-        {api.map((stash, index) => {
+        {data?.stashes.map((stash, index) => {
           const MDXContent = stash.mdxBody
             ? getMDXComponent(stash.mdxBody)
             : null;
@@ -105,7 +112,7 @@ const Stash: React.FC<
                   </NextLink>
                 </Paragraph>
               </Stack>
-              {index !== api.length - 1 && <Separator size="2" />}
+              {index !== data.stashes.length - 1 && <Separator size="2" />}
             </Fragment>
           );
         })}

@@ -1,5 +1,5 @@
-import { prisma } from "@lib/prisma";
-import { getHostname } from "@lib/utils";
+import { createStash } from "@lib/stash";
+import { CreateOrUpdateStashInput } from "@lib/types";
 import { Prisma } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
@@ -16,42 +16,13 @@ export default async function handler(
     }
 
     if (req.method === "POST") {
-      const reqBody = req.body as Prisma.StashCreateWithoutTagsInput & {
-        tags?: string[];
-      };
+      const reqBody = req.body as CreateOrUpdateStashInput;
 
       if (!reqBody.url) {
         return res.status(400).json({ message: "Missing url" });
       }
 
-      const requestBody: Prisma.StashCreateInput = {
-        ...reqBody,
-        tags: undefined,
-      };
-
-      if (reqBody.tags) {
-        requestBody.tags = {
-          connectOrCreate: reqBody.tags.map((tag) => {
-            return {
-              where: {
-                tag,
-              },
-              create: {
-                tag,
-              },
-            };
-          }),
-        };
-      }
-
-      requestBody.host = getHostname(reqBody.url);
-
-      const newStash = await prisma.stash.create({
-        data: requestBody,
-        include: {
-          tags: true,
-        },
-      });
+      const newStash = await createStash(reqBody);
 
       return res.status(200).json(newStash);
     }

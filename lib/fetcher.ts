@@ -8,7 +8,7 @@ export default async function fetcher<JSON>(
 
 export async function sendRequest<T>(
   url: RequestInfo | URL,
-  arg?: Record<string, any>
+  { arg }: { arg: any }
 ): Promise<T> {
   const response = await fetch(url, {
     method: "POST",
