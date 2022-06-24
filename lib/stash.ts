@@ -4,6 +4,9 @@ import { CreateOrUpdateStashInput } from "./types";
 import { getHostname } from "./utils";
 import { generateMDX } from "./mdx";
 
+export type Stashes = Awaited<ReturnType<typeof getAllStashes>>["stashes"];
+export type Stash = Stashes[number];
+
 /**
  * TODO:
 [ ] - Add pagination - https://www.prisma.io/docs/concepts/components/prisma-client/pagination

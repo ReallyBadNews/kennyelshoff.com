@@ -1,14 +1,21 @@
+import type { Stash } from "@lib/stash";
 import { formatDate } from "@lib/utils";
-import { Stash } from "contentlayer/generated";
-import { useMDXComponent } from "next-contentlayer/hooks";
+import { getMDXComponent } from "mdx-bundler/client";
+import { useMemo } from "react";
 import { Heading } from "./Heading";
 import { MDXComponents } from "./MDXComponents";
 import NextLink from "./NextLink";
 import { Paragraph } from "./Paragraph";
 import { Stack } from "./Stack";
 
-export function StashPost({ title, date, url, slug, body }: Stash) {
-  const MDXContent = useMDXComponent(body.code);
+// TODO: Add slug to the `Stash` model and generate it on creation
+export function StashPost({ title, date, url, slug, mdxBody }: Stash) {
+  const MDXContent = useMemo(() => {
+    if (mdxBody) {
+      return getMDXComponent(mdxBody);
+    }
+    return null;
+  }, [mdxBody]);
 
   return (
     <Stack as="article" css={{ position: "relative", stackGap: "$4" }}>
@@ -21,7 +28,7 @@ export function StashPost({ title, date, url, slug, body }: Stash) {
           title
         )}
       </Heading>
-      <MDXContent components={MDXComponents()} />
+      {MDXContent ? <MDXContent components={MDXComponents()} /> : null}
       <Paragraph size="0" variant="subtle">
         <NextLink href={slug}>
           <time dateTime={date}>{`— ${formatDate(date, "full")}`}</time>

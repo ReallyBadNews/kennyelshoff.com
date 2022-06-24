@@ -17,12 +17,14 @@ import { InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
 import { useStashes } from "@hooks/use-stash";
+import { LinkButton } from "@components/Button";
+import Link from "next/link";
 
 /**
  * TODO:
  [x] - SSR data fetching should use same function as api endpoint
  [x] - Serialize the dates to ISO strings
- [ ] - Add mdx to the api response as `mdxBody`
+ [x] - Add mdx to the api response as `mdxBody`
  */
 export const getServerSideProps = async () => {
   const stashes = await getAllStashes();
@@ -39,6 +41,7 @@ const Stash: React.FC<
 > = ({ fallbackData }) => {
   const { data, isLoading, isValidating } = useStashes({
     fallbackData,
+    revalidateIfStale: true,
     revalidateOnMount: false,
   });
 
@@ -77,6 +80,11 @@ const Stash: React.FC<
       title="Stash"
     >
       <LoginButton />
+      <Link href="/stash/new">
+        <LinkButton size="2" variant="gray">
+          Create new stash
+        </LinkButton>
+      </Link>
       <Stack css={{ stackGap: "$5", "@bp1": { stackGap: "$7" } }}>
         {data?.stashes.map((stash, index) => {
           const MDXContent = stash.mdxBody

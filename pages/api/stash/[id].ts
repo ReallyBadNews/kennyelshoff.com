@@ -9,7 +9,6 @@ export default async function handler(
 ) {
   try {
     const session = await getSession({ req });
-
     console.log("[api/stash] session", session);
 
     if (req.method === "GET") {
@@ -23,9 +22,9 @@ export default async function handler(
       return res.status(200).json(stash);
     }
 
-    if (session?.user?.email !== "kelshoff@grahamdigital.com") {
-      return res.status(401).send({ message: "Unauthorized" });
-    }
+    // if (session?.user?.email !== "kelshoff@grahamdigital.com") {
+    //   return res.status(401).send({ message: "Unauthorized" });
+    // }
 
     if (req.method === "PATCH") {
       const id = req.query.id as string;
