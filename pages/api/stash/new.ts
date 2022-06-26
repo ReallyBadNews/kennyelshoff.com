@@ -18,18 +18,15 @@ export default async function handler(
     }
 
     if (req.method === "POST") {
-      // TODO: this is JSON, need to parse it
-      // const reqBody = req.body as CreateOrUpdateStashInput;
-      // get request body and parse json
       const reqBody = JSON.parse(req.body) as CreateOrUpdateStashInput;
 
-      console.log("[api/stash] reqBody", reqBody.url);
+      console.log("[api/stash] reqBody", JSON.stringify(reqBody, null, 2));
 
       if (!reqBody.url) {
         return res.status(400).json({ message: "Missing url" });
       }
 
-      const newStash = await createStash(reqBody);
+      const newStash = await createStash({ ...reqBody, author: session.user });
 
       return res.status(200).json(newStash);
     }
@@ -46,6 +43,7 @@ export default async function handler(
         });
       }
     }
+    console.error("[api/stash] error", e);
     return res.status(500).send({ message: e.message });
   }
 }

@@ -1,4 +1,5 @@
-import { Prisma } from "@prisma/client";
+import { Prisma, Stash } from "@prisma/client";
+import { Session } from "next-auth";
 
 export type Views = {
   total: number;
@@ -66,6 +67,25 @@ export interface UnsplashViews {
   historical: Historical;
 }
 
-export type CreateOrUpdateStashInput = Prisma.StashCreateWithoutTagsInput & {
+// export type CreateOrUpdateStashInput = Prisma.StashCreateWithoutTagsInput & {
+//   tags?: string[];
+// };
+
+export type CreateOrUpdateStashInput = Stash & {
   tags?: string[];
+  author?: Session["user"];
 };
+
+const stashWithTags = Prisma.validator<Prisma.StashArgs>()({
+  include: { tags: true },
+});
+
+const stashWithAuthor = Prisma.validator<Prisma.StashArgs>()({
+  include: { author: true },
+});
+
+export type StashWithTags = Prisma.StashGetPayload<typeof stashWithTags>;
+export type StashWithAuthor = Prisma.StashGetPayload<typeof stashWithAuthor>;
+export type StashWithTagsAndAuthor = Prisma.StashGetPayload<
+  typeof stashWithTags & typeof stashWithAuthor
+>;

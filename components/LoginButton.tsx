@@ -1,13 +1,14 @@
 import { signIn, signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 import { Badge } from "./Badge";
-import { Button } from "./Button";
+import { Button, LinkButton } from "./Button";
 import { Paragraph } from "./Paragraph";
 import { Stack } from "./Stack";
 
 export function LoginButton() {
   const { data: session } = useSession();
 
-  if (session?.user?.email) {
+  if (session?.user) {
     return (
       <Stack
         css={{
@@ -43,17 +44,17 @@ export function LoginButton() {
       }}
     >
       <Paragraph>Not signed in</Paragraph>
-      <div>
-        <Button
-          size="3"
-          variant="green"
-          onClick={() => {
-            return signIn("github");
-          }}
-        >
-          Sign In
-        </Button>
-      </div>
+      <LinkButton
+        href="/api/auth/signin/github"
+        size="3"
+        variant="green"
+        onClick={(e) => {
+          e.preventDefault();
+          signIn("github");
+        }}
+      >
+        Sign In
+      </LinkButton>
     </Stack>
   );
 }

@@ -1,7 +1,8 @@
 import { Prisma } from "@prisma/client";
 import { prisma } from "@lib/prisma";
+import { Session } from "next-auth";
 import { CreateOrUpdateStashInput } from "./types";
-import { getHostname } from "./utils";
+import { getHostname, slugify } from "./utils";
 import { generateMDX } from "./mdx";
 
 export type Stashes = Awaited<ReturnType<typeof getAllStashes>>["stashes"];
@@ -21,6 +22,7 @@ export const getAllStashes = async () => {
     },
     include: {
       tags: true,
+      author: true,
     },
   });
 
@@ -30,6 +32,15 @@ export const getAllStashes = async () => {
       date: stash.createdAt.toISOString(),
       createdAt: stash.createdAt.toISOString(),
       updatedAt: stash.updatedAt.toISOString(),
+      ...(stash.author
+        ? {
+            author: {
+              ...stash.author,
+              createdAt: stash.author.createdAt.toISOString(),
+              updatedAt: stash.author.updatedAt.toISOString(),
+            },
+          }
+        : {}),
     };
   });
 
@@ -64,6 +75,7 @@ export const getStashById = async (id: string | number) => {
 export const createStash = async (payload: CreateOrUpdateStashInput) => {
   const requestBody: Prisma.StashCreateInput = {
     ...payload,
+    author: undefined,
     tags: undefined,
   };
 
@@ -87,11 +99,20 @@ export const createStash = async (payload: CreateOrUpdateStashInput) => {
     : null;
   requestBody.mdxBody = mdxBody?.code ?? null;
   requestBody.host = getHostname(payload.url);
+  requestBody.slug = slugify(payload.title);
+  requestBody.author = payload.author?.email
+    ? { connect: { email: payload.author.email } }
+    : undefined;
+
+  console.log("[lib/createStash] requestBody", requestBody);
 
   const newStash = await prisma.stash.create({
-    data: requestBody,
+    data: {
+      ...requestBody,
+    },
     include: {
       tags: true,
+      author: true,
     },
   });
 
@@ -116,6 +137,7 @@ export const updateStashById = async (
 
   const requestBody: Prisma.StashUpdateInput = {
     ...payload,
+    author: undefined,
     tags: undefined,
   };
 

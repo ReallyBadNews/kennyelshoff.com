@@ -21,9 +21,12 @@ model Stash {
   id          String   @id @default(cuid())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  author      User?    @relation(fields: [authorEmail], references: [id])
+  authorEmail String?
   url         String   @unique @db.VarChar(512)
   host        String?
-  title       String?  @db.VarChar(280)
+  title       String   @db.VarChar(280)
+  slug        String   @db.VarChar(280)
   image       String?  @db.VarChar(512)
   description String?  @db.VarChar(2048)
   body        String?  @db.Text
@@ -79,9 +82,15 @@ model User {
   password      String?
   emailVerified DateTime?
   image         String?
-  role          String?   @default("user")
+  role          Role      @default(USER)
   accounts      Account[]
   sessions      Session[]
+  Stash         Stash[]
+}
+
+enum Role {
+  USER
+  ADMIN
 }
 
 model VerificationToken {
