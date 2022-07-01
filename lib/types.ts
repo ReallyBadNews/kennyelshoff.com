@@ -67,10 +67,6 @@ export interface UnsplashViews {
   historical: Historical;
 }
 
-// export type CreateOrUpdateStashInput = Prisma.StashCreateWithoutTagsInput & {
-//   tags?: string[];
-// };
-
 export type CreateOrUpdateStashInput = Stash & {
   tags?: string[];
   author?: Session["user"];

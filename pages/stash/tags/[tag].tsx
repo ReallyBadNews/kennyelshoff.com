@@ -4,56 +4,52 @@ import Page from "@components/Page";
 import { Separator } from "@components/Separator";
 import { Stack } from "@components/Stack";
 import { StashPost } from "@components/StashPost";
-import { slugify, sortByDate } from "@lib/utils";
-import { allStashes } from "contentlayer/generated";
+import { getAllStashes, getStashesByTag } from "@lib/stash";
 import { GetStaticPaths, InferGetStaticPropsType } from "next";
 import { FC, Fragment } from "react";
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: Array.from(
-      new Set(
-        allStashes
-          .map((stash) => {
-            return stash.tags;
-          })
-          .flat()
-      )
+  const { stashes: allStashes } = await getAllStashes();
+
+  // Get the slugs for all tags
+  const paths = Array.from(
+    new Set(
+      allStashes.map(({ tags }) => {
+        return tags.map(({ slug }) => {
+          return slug;
+        });
+      })
     )
-      .filter(Boolean)
-      .map((tag) => {
-        return {
-          params: {
-            tag: slugify(tag ?? ""),
-          },
-        };
-      }),
-    fallback: true,
+  )
+    .filter(Boolean)
+    .flat()
+    .map((slug) => {
+      return { params: { tag: slug } };
+    });
+
+  return {
+    paths,
+    fallback: "blocking",
   };
 };
 
 export const getStaticProps = async ({ params: { tag = "" } = {} }) => {
-  // Filter the stashes so that only the ones with the tag are returned
-  const filteredItems = allStashes.filter((item) => {
-    const slugifiedTags = item.tags?.map((stashTag) => {
-      return slugify(stashTag ?? "");
-    });
+  const { stashes: allStashes } = await getStashesByTag(tag);
+  let nonSlugifiedTag: string = tag;
 
-    return slugifiedTags?.includes(tag) ? item.tags : undefined;
-  });
+  if (allStashes.length > 0) {
+    const matchedTag = allStashes[0].tags.find((t) => {
+      return t.slug === tag;
+    })?.name;
 
-  // Get the non slugified tag from the array index
-  const tagIndex = filteredItems[0].tags
-    ?.map((stashTag) => {
-      return slugify(stashTag ?? "");
-    })
-    .indexOf(tag) as number;
-
-  const nonSlugifiedTag = filteredItems[0]?.tags?.[tagIndex];
+    if (matchedTag) {
+      nonSlugifiedTag = matchedTag;
+    }
+  }
 
   return {
     props: {
-      items: sortByDate(filteredItems),
+      items: allStashes,
       title: nonSlugifiedTag,
     },
   };
@@ -66,7 +62,12 @@ const StashTags: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   if (!items?.length) {
     return (
       <Page showHeader={false} title={`Stashes tagged with "${title}"`}>
-        <p>{`No stashes found with the tag '${title}'.`}</p>
+        {title ? (
+          <Heading size="4">
+            {`No stashes found with the tag `}
+            <InlineCode>{title}</InlineCode>
+          </Heading>
+        ) : null}
       </Page>
     );
   }

@@ -1,11 +1,17 @@
 import { Prisma } from "@prisma/client";
 import { prisma } from "@lib/prisma";
-import { Session } from "next-auth";
 import { CreateOrUpdateStashInput } from "./types";
 import { getHostname, slugify } from "./utils";
 import { generateMDX } from "./mdx";
 
-export type Stashes = Awaited<ReturnType<typeof getAllStashes>>["stashes"];
+// TODO: https://www.prisma.io/docs/concepts/components/prisma-client/advanced-type-safety/operating-against-partial-structures-of-model-types#problem-getting-access-to-the-return-type-of-a-function
+// export type Stashes = Awaited<ReturnType<typeof getAllStashes>>["stashes"];
+// export type Stash = Stashes[number];
+// type ThenArg<T> = T extends Promise<infer U> ? U : T;
+// export type TagsWithPosts = ThenArg<ReturnType<typeof getStashesByTag>>;
+export type Stashes = Prisma.PromiseReturnType<
+  typeof getStashesByTag
+>["stashes"];
 export type Stash = Stashes[number];
 
 /**
@@ -60,6 +66,29 @@ export const getStashById = async (id: string | number) => {
 
   const stash = await prisma.stash.findUnique({
     where: { id: queryId },
+    include: {
+      tags: true,
+      author: true,
+    },
+  });
+
+  if (!stash) return null;
+
+  return {
+    ...stash,
+    date: stash.createdAt.toISOString(),
+    createdAt: stash.createdAt.toISOString(),
+    updatedAt: stash.updatedAt.toISOString(),
+  };
+};
+
+export const getStashBySlug = async (slug: string) => {
+  const stash = await prisma.stash.findUnique({
+    where: { slug },
+    include: {
+      tags: true,
+      author: true,
+    },
   });
 
   if (!stash) return null;
@@ -84,10 +113,11 @@ export const createStash = async (payload: CreateOrUpdateStashInput) => {
       connectOrCreate: payload.tags.map((tag) => {
         return {
           where: {
-            tag,
+            name: tag,
           },
           create: {
-            tag,
+            name: tag,
+            slug: slugify(tag),
           },
         };
       }),
@@ -97,6 +127,7 @@ export const createStash = async (payload: CreateOrUpdateStashInput) => {
   const mdxBody = payload.body
     ? await generateMDX({ source: payload.body })
     : null;
+
   requestBody.mdxBody = mdxBody?.code ?? null;
   requestBody.host = getHostname(payload.url);
   requestBody.slug = slugify(payload.title);
@@ -143,9 +174,20 @@ export const updateStashById = async (
 
   if (payload.tags) {
     requestBody.tags = {
+      connectOrCreate: payload.tags.map((tag) => {
+        return {
+          where: {
+            name: tag,
+          },
+          create: {
+            name: tag,
+            slug: slugify(tag),
+          },
+        };
+      }),
       set: payload.tags.map((tag) => {
         return {
-          tag,
+          name: tag,
         };
       }),
     };
@@ -156,13 +198,16 @@ export const updateStashById = async (
     : null;
   requestBody.mdxBody = mdxBody?.code || undefined;
 
+  console.log(
+    "[lib/updateStashById] requestBody",
+    JSON.stringify(requestBody, null, 2)
+  );
+
   const stash = await prisma.stash.update({
     where: {
       id: queryId,
     },
-    data: {
-      ...requestBody,
-    },
+    data: requestBody,
     include: {
       tags: true,
     },
@@ -196,4 +241,43 @@ export const deleteStashById = async (id: string | number) => {
   });
 
   return stash;
+};
+
+export const getStashesByTag = async (tag: string) => {
+  const stashes = await prisma.stash.findMany({
+    where: {
+      tags: {
+        some: {
+          slug: tag,
+        },
+      },
+    },
+    include: {
+      tags: true,
+      author: true,
+    },
+  });
+
+  const serializedStashes = stashes.map((stash) => {
+    return {
+      ...stash,
+      date: stash.createdAt.toISOString(),
+      createdAt: stash.createdAt.toISOString(),
+      updatedAt: stash.updatedAt.toISOString(),
+      ...(stash.author
+        ? {
+            author: {
+              ...stash.author,
+              createdAt: stash.author.createdAt.toISOString(),
+              updatedAt: stash.author.updatedAt.toISOString(),
+            },
+          }
+        : {}),
+    };
+  });
+
+  return {
+    stashes: serializedStashes,
+    total: serializedStashes.length,
+  };
 };

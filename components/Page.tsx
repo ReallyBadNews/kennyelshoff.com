@@ -11,7 +11,7 @@ import { Text } from "./Text";
 
 export interface PageProps {
   title?: string;
-  description?: string;
+  description?: string | NULL;
   date?: string;
   showDivider?: boolean;
   showHeader?: boolean;

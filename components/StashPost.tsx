@@ -30,7 +30,7 @@ export function StashPost({ title, date, url, slug, mdxBody }: Stash) {
       </Heading>
       {MDXContent ? <MDXContent components={MDXComponents()} /> : null}
       <Paragraph size="0" variant="subtle">
-        <NextLink href={slug}>
+        <NextLink href={`/stash/${slug}`}>
           <time dateTime={date}>{`— ${formatDate(date, "full")}`}</time>
         </NextLink>
       </Paragraph>

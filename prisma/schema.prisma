@@ -26,7 +26,7 @@ model Stash {
   url         String   @unique @db.VarChar(512)
   host        String?
   title       String   @db.VarChar(280)
-  slug        String   @db.VarChar(280)
+  slug        String   @unique @db.VarChar(280)
   image       String?  @db.VarChar(512)
   description String?  @db.VarChar(2048)
   body        String?  @db.Text
@@ -38,7 +38,8 @@ model Stash {
 
 model Tag {
   id      String  @id @default(cuid())
-  tag     String  @unique
+  name    String  @unique
+  slug    String  @unique
   stashes Stash[]
 }
 

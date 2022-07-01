@@ -22,16 +22,28 @@ const seedStashes: Prisma.StashCreateInput[] = [
     url: "https://www.prisma.io/docs/concepts/components/prisma-schema/data-model",
     host: "www.prisma.io",
     title: "Stash 1",
+    slug: "stash-1",
     description: "Stash 1 description",
     body: "Stash 1 body",
+    author: {
+      connectOrCreate: {
+        where: {
+          email: "kelshoff@grahamdigital.com",
+        },
+        create: {
+          email: "kelshoff@grahamdigital.com",
+        },
+      },
+    },
     tags: {
       connectOrCreate: [
         {
           where: {
-            tag: "tag-1",
+            name: "prisma",
           },
           create: {
-            tag: "tag-1",
+            name: "prisma",
+            slug: "prisma",
           },
         },
       ],
@@ -43,24 +55,28 @@ const seedStashes: Prisma.StashCreateInput[] = [
     url: "https://www.clickondetroit.com/",
     host: "www.clickondetroit.com",
     title: "Stash 2",
+    slug: "stash-2",
     description: "Stash 2 description",
     body: "Stash 2 body",
+    author: {
+      connectOrCreate: {
+        where: {
+          email: "kelshoff@grahamdigital.com",
+        },
+        create: {
+          email: "kelshoff@grahamdigital.com",
+        },
+      },
+    },
     tags: {
       connectOrCreate: [
         {
           where: {
-            tag: "tag-2",
+            name: "prisma",
           },
           create: {
-            tag: "tag-2",
-          },
-        },
-        {
-          where: {
-            tag: "tag-3",
-          },
-          create: {
-            tag: "tag-3",
+            name: "prisma",
+            slug: "prisma",
           },
         },
       ],
@@ -71,24 +87,28 @@ const seedStashes: Prisma.StashCreateInput[] = [
     url: "https://kennyelshoff.com/",
     host: "kennyelshoff.com",
     title: "Stash 3",
+    slug: "stash-3",
     description: "Stash 3 description",
     body: "Stash 3 body",
+    author: {
+      connectOrCreate: {
+        where: {
+          email: "kelshoff@grahamdigital.com",
+        },
+        create: {
+          email: "kelshoff@grahamdigital.com",
+        },
+      },
+    },
     tags: {
       connectOrCreate: [
         {
           where: {
-            tag: "tag-1",
+            name: "prisma",
           },
           create: {
-            tag: "tag-1",
-          },
-        },
-        {
-          where: {
-            tag: "tag-4",
-          },
-          create: {
-            tag: "tag-4",
+            name: "prisma",
+            slug: "prisma",
           },
         },
       ],

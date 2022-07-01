@@ -7,21 +7,22 @@ import { Paragraph } from "@components/Paragraph";
 import { Stack } from "@components/Stack";
 import { Text } from "@components/Text";
 import { getAllImagePathsFromDir } from "@lib/images";
+import { getAllStashes, getStashBySlug } from "@lib/stash";
 import { formatDate, slugify } from "@lib/utils";
-import { allStashes, Stash } from "contentlayer/generated";
+import { getMDXComponent } from "mdx-bundler/client";
 import { GetStaticPaths, InferGetStaticPropsType } from "next";
-import { useMDXComponent } from "next-contentlayer/hooks";
 import Link from "next/link";
 import { getPlaiceholder } from "plaiceholder";
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { MDXImages } from "types";
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  const { stashes: allStashes } = await getAllStashes();
   return {
     paths: allStashes.map((stash) => {
       return {
         params: {
-          slug: stash.path,
+          slug: stash.slug,
         },
       };
     }),
@@ -30,9 +31,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params: { slug = "" } = {} }) => {
-  const stash = allStashes.find((s) => {
-    return s.path === slug;
-  }) as Stash;
+  const stash = await getStashBySlug(slug);
+
+  // if (!stash) {
+  //   return {
+  //     notFound: true,
+  //   };
+  // }
 
   const imagePaths = getAllImagePathsFromDir("stash");
 
@@ -56,14 +61,37 @@ export const getStaticProps = async ({ params: { slug = "" } = {} }) => {
     return result;
   });
 
-  return { props: { stash, images } };
+  return {
+    props: {
+      stash: {
+        ...stash,
+        ...(stash?.author
+          ? {
+              author: {
+                ...stash.author,
+                createdAt: stash.author.createdAt.toISOString(),
+                updatedAt: stash.author.updatedAt.toISOString(),
+              },
+            }
+          : undefined),
+      },
+      images,
+    },
+  };
 };
 
 const Layout: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   stash,
   images,
 }) => {
-  const Component = useMDXComponent(stash.body.code);
+  const MDXContent = useMemo(() => {
+    if (stash?.mdxBody) {
+      return getMDXComponent(stash.mdxBody);
+    }
+    return null;
+  }, [stash?.mdxBody]);
+
+  if (!stash) return null;
 
   return (
     <Page
@@ -87,8 +115,8 @@ const Layout: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
           <Text size="0" variant="subtle">
             {`Saved: `}
           </Text>
-          <time dateTime={stash.date}>
-            {`${formatDate(stash.date, "full")}`}
+          <time dateTime={stash.createdAt}>
+            {`${formatDate(stash.createdAt, "full")}`}
           </time>
         </Paragraph>
         {stash.tags && (
@@ -98,9 +126,9 @@ const Layout: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
             </Text>
             {stash.tags.map((tag) => {
               return (
-                <Link key={tag} href={`/stash/tags/${slugify(tag)}`} passHref>
+                <Link key={tag.id} href={`/stash/tags/${tag.slug}`} passHref>
                   <Badge as="a" size="1" variant="gray">
-                    {tag}
+                    {tag.name}
                   </Badge>
                 </Link>
               );
@@ -108,7 +136,7 @@ const Layout: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
           </Stack>
         )}
       </Stack>
-      <Component components={MDXComponents(images)} />
+      {MDXContent ? <MDXContent components={MDXComponents(images)} /> : null}
     </Page>
   );
 };

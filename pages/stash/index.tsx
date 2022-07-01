@@ -19,6 +19,7 @@ import { Fragment } from "react";
 import { useStashes } from "@hooks/use-stash";
 import { LinkButton } from "@components/Button";
 import Link from "next/link";
+import { StashPost } from "@components/StashPost";
 
 /**
  * TODO:
@@ -86,7 +87,7 @@ const Stash: React.FC<
         </LinkButton>
       </Link>
       <Stack css={{ stackGap: "$5", "@bp1": { stackGap: "$7" } }}>
-        {data?.stashes.map((stash, index) => {
+        {/* {data?.stashes.map((stash, index) => {
           const MDXContent = stash.mdxBody
             ? getMDXComponent(stash.mdxBody)
             : null;
@@ -113,7 +114,7 @@ const Stash: React.FC<
                   <MDXContent components={MDXComponents()} />
                 ) : null}
                 <Paragraph size="0" variant="subtle">
-                  <NextLink href={stash.createdAt}>
+                  <NextLink href={`/stash/tags/${stash.slug}`}>
                     <time dateTime={stash.createdAt}>
                       {`— ${formatDate(stash.createdAt, "full")}`}
                     </time>
@@ -123,15 +124,15 @@ const Stash: React.FC<
               {index !== data.stashes.length - 1 && <Separator size="2" />}
             </Fragment>
           );
-        })}
-        {/* {stashes.map((stash, index) => {
+        })} */}
+        {data?.stashes.map((stash, index) => {
           return (
             <Fragment key={stash.slug}>
               <StashPost {...stash} />
-              {index !== stashes.length - 1 && <Separator size="2" />}
+              {index !== data.stashes.length - 1 && <Separator size="2" />}
             </Fragment>
           );
-        })} */}
+        })}
       </Stack>
     </Page>
   );

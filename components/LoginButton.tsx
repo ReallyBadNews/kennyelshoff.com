@@ -44,17 +44,17 @@ export function LoginButton() {
       }}
     >
       <Paragraph>Not signed in</Paragraph>
-      <LinkButton
-        href="/api/auth/signin/github"
-        size="3"
-        variant="green"
-        onClick={(e) => {
-          e.preventDefault();
-          signIn("github");
-        }}
-      >
-        Sign In
-      </LinkButton>
+      <div>
+        <Button
+          size="3"
+          variant="green"
+          onClick={() => {
+            return signIn("github");
+          }}
+        >
+          Sign In
+        </Button>
+      </div>
     </Stack>
   );
 }
