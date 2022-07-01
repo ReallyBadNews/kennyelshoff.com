@@ -107,7 +107,7 @@ export const Link = styled("a", {
         },
       },
       transparent: {
-        color: "inherit",
+        color: "$hiContrast",
         "&:hover": {
           textDecorationLine: "none",
         },
