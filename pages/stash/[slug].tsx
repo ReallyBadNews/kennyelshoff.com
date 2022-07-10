@@ -8,7 +8,7 @@ import { Stack } from "@components/Stack";
 import { Text } from "@components/Text";
 import { getAllImagePathsFromDir } from "@lib/images";
 import { getAllStashes, getStashBySlug } from "@lib/stash";
-import { formatDate, slugify } from "@lib/utils";
+import { formatDate } from "@lib/utils";
 import { getMDXComponent } from "mdx-bundler/client";
 import { GetStaticPaths, InferGetStaticPropsType } from "next";
 import Link from "next/link";
@@ -26,7 +26,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
         },
       };
     }),
-    fallback: false,
+    fallback: "blocking",
   };
 };
 
@@ -63,20 +63,10 @@ export const getStaticProps = async ({ params: { slug = "" } = {} }) => {
 
   return {
     props: {
-      stash: {
-        ...stash,
-        ...(stash?.author
-          ? {
-              author: {
-                ...stash.author,
-                createdAt: stash.author.createdAt.toISOString(),
-                updatedAt: stash.author.updatedAt.toISOString(),
-              },
-            }
-          : undefined),
-      },
+      stash,
       images,
     },
+    revalidate: 10,
   };
 };
 
@@ -111,15 +101,17 @@ const Layout: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
         </Heading>
       )}
       <Stack css={{ stackGap: "$2" }}>
-        <Paragraph size="0" variant="contrast">
-          <Text size="0" variant="subtle">
-            {`Saved: `}
-          </Text>
-          <time dateTime={stash.createdAt}>
-            {`${formatDate(stash.createdAt, "full")}`}
-          </time>
-        </Paragraph>
-        {stash.tags && (
+        {stash.createdAt ? (
+          <Paragraph size="0" variant="contrast">
+            <Text size="0" variant="subtle">
+              {`Saved: `}
+            </Text>
+            <time dateTime={stash.createdAt}>
+              {`${formatDate(stash.createdAt, "full")}`}
+            </time>
+          </Paragraph>
+        ) : null}
+        {stash.tags && stash.tags.length > 0 && (
           <Stack css={{ stackGap: "$1", alignItems: "center" }} direction="row">
             <Text size="0" variant="subtle">
               {`Tags: `}

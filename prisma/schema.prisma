@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["referentialIntegrity"]
@@ -28,12 +25,12 @@ model Stash {
   title       String   @db.VarChar(280)
   slug        String   @unique @db.VarChar(280)
   image       String?  @db.VarChar(512)
-  description String?  @db.VarChar(2048)
+  description String   @db.VarChar(2048)
   body        String?  @db.Text
   mdxBody     String?  @db.Text
   tags        Tag[]
 
-  @@index([host])
+  @@index([host, slug])
 }
 
 model Tag {
@@ -87,11 +84,8 @@ model User {
   accounts      Account[]
   sessions      Session[]
   Stash         Stash[]
-}
 
-enum Role {
-  USER
-  ADMIN
+  @@index([email])
 }
 
 model VerificationToken {
@@ -100,4 +94,18 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model StashToTag {
+  A String
+  B String
+
+  @@unique([A, B], map: "_StashToTag_AB_unique")
+  @@index([B], map: "_StashToTag_B_index")
+  @@map("_StashToTag")
+}
+
+enum Role {
+  USER
+  ADMIN
 }

@@ -8,7 +8,11 @@ export default async function handler(
 ) {
   try {
     const { slug } = req.query;
-    const pagePath = typeof slug === "string" ? slug : `/${slug.join("/")}`;
+    const pagePath = typeof slug === "object" ? `/${slug.join("/")}` : slug;
+
+    if (!pagePath) {
+      return res.status(400).json({ message: "Missing slug" });
+    }
 
     if (req.method === "POST") {
       const newOrUpdatedViews = await prisma.views.upsert({
@@ -44,7 +48,10 @@ export default async function handler(
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       // The .code property can be accessed in a type-safe manner
       if (e.code === "P2002") {
-        return res.status(400).json(e);
+        return res.status(400).json({
+          message:
+            "There is a unique constraint violation, a new stash cannot be created with this url",
+        });
       }
       return res.status(500).json(e);
     }

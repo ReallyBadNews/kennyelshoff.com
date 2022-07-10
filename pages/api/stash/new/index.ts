@@ -28,7 +28,7 @@ export default async function handler(
 
       const newStash = await createStash({ ...reqBody, author: session.user });
 
-      return res.status(200).json(newStash);
+      return res.status(201).json(newStash);
     }
 
     res.setHeader("Allow", "POST");

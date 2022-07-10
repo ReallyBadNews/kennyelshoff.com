@@ -2,24 +2,16 @@ import { LoginButton } from "@components/LoginButton";
 import Page from "@components/Page";
 import { Separator } from "@components/Separator";
 import { Stack } from "@components/Stack";
-// import { StashPost } from "@components/StashPost";
-// import { useAllStashes } from "@hooks/use-stash";
-import { Heading } from "@components/Heading";
-import { MDXComponents } from "@components/MDXComponents";
-import NextLink from "@components/NextLink";
-import { Paragraph } from "@components/Paragraph";
 import { getAllStashes } from "@lib/stash";
-import { formatDate, sortByDate } from "@lib/utils";
-// import { allStashes } from "contentlayer/generated";
+import { sortByDate } from "@lib/utils";
+import { LinkButton } from "@components/Button";
+import { StashPost } from "@components/StashPost";
+import { useStashes } from "@hooks/use-stash";
 import { Action, Priority, useRegisterActions } from "kbar";
-import { getMDXComponent } from "mdx-bundler/client";
 import { InferGetServerSidePropsType } from "next";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
-import { useStashes } from "@hooks/use-stash";
-import { LinkButton } from "@components/Button";
-import Link from "next/link";
-import { StashPost } from "@components/StashPost";
 
 /**
  * TODO:
@@ -87,44 +79,6 @@ const Stash: React.FC<
         </LinkButton>
       </Link>
       <Stack css={{ stackGap: "$5", "@bp1": { stackGap: "$7" } }}>
-        {/* {data?.stashes.map((stash, index) => {
-          const MDXContent = stash.mdxBody
-            ? getMDXComponent(stash.mdxBody)
-            : null;
-          return (
-            <Fragment key={stash.id}>
-              <Stack
-                as="article"
-                css={{ position: "relative", stackGap: "$4" }}
-              >
-                <Heading as="h4" size="2">
-                  {stash.url ? (
-                    <NextLink
-                      css={{ fontWeight: "inherit" }}
-                      href={stash.url}
-                      showCitation
-                    >
-                      {stash.title}
-                    </NextLink>
-                  ) : (
-                    stash.title
-                  )}
-                </Heading>
-                {MDXContent ? (
-                  <MDXContent components={MDXComponents()} />
-                ) : null}
-                <Paragraph size="0" variant="subtle">
-                  <NextLink href={`/stash/tags/${stash.slug}`}>
-                    <time dateTime={stash.createdAt}>
-                      {`— ${formatDate(stash.createdAt, "full")}`}
-                    </time>
-                  </NextLink>
-                </Paragraph>
-              </Stack>
-              {index !== data.stashes.length - 1 && <Separator size="2" />}
-            </Fragment>
-          );
-        })} */}
         {data?.stashes.map((stash, index) => {
           return (
             <Fragment key={stash.slug}>

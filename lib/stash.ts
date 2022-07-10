@@ -95,9 +95,18 @@ export const getStashBySlug = async (slug: string) => {
 
   return {
     ...stash,
-    date: stash.createdAt.toISOString(),
-    createdAt: stash.createdAt.toISOString(),
-    updatedAt: stash.updatedAt.toISOString(),
+    ...(stash?.author
+      ? {
+          author: {
+            ...stash.author,
+            createdAt: stash.author.createdAt.toISOString(),
+            updatedAt: stash.author.updatedAt.toISOString(),
+          },
+        }
+      : undefined),
+    date: stash?.createdAt.toISOString(),
+    createdAt: stash?.createdAt.toISOString(),
+    updatedAt: stash?.updatedAt.toISOString(),
   };
 };
 
