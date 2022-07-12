@@ -12,5 +12,12 @@ export default NextAuth({
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
     }),
   ],
+  callbacks: {
+    async session({ session, user }) {
+      // eslint-disable-next-line no-param-reassign
+      session.user.role = user.role; // Add role value to user object so it is passed along with session
+      return session;
+    },
+  },
   debug: process.env.NODE_ENV === "development",
 });

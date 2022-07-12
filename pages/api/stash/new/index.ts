@@ -13,7 +13,7 @@ export default async function handler(
     const session = await getSession({ req });
     console.log("[api/stash] session", session);
 
-    if (session?.user?.email !== "kelshoff@grahamdigital.com") {
+    if (session?.user?.role !== "ADMIN") {
       return res.status(401).send({ message: "Unauthorized" });
     }
 

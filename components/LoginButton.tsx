@@ -1,7 +1,5 @@
 import { signIn, signOut, useSession } from "next-auth/react";
-import Link from "next/link";
-import { Badge } from "./Badge";
-import { Button, LinkButton } from "./Button";
+import { Button } from "./Button";
 import { Paragraph } from "./Paragraph";
 import { Stack } from "./Stack";
 
@@ -22,9 +20,10 @@ export function LoginButton() {
         <div>
           <Button
             size="3"
+            type="button"
             variant="red"
             onClick={() => {
-              return signOut();
+              return signOut({ redirect: false });
             }}
           >
             Sign out

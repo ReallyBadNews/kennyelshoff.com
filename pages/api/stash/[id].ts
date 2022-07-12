@@ -23,9 +23,9 @@ export default async function handler(
       return res.status(200).json(stash);
     }
 
-    // if (session?.user?.email !== "kelshoff@grahamdigital.com") {
-    //   return res.status(401).send({ message: "Unauthorized" });
-    // }
+    if (session?.user.role !== "ADMIN") {
+      return res.status(401).send({ message: "Unauthorized" });
+    }
 
     if (req.method === "PATCH") {
       const id = req.query.id as string;

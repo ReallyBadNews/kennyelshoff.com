@@ -9,6 +9,7 @@
       "@hooks/*": ["hooks/*"],
       "contentlayer/generated": ["./.contentlayer/generated"]
     },
+    "typeRoots": ["./types"],
     "target": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,

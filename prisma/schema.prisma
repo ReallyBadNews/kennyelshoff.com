@@ -69,6 +69,7 @@ model Session {
   expires      DateTime
   user         User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String?
+  role         Role     @default(USER)
 }
 
 model User {
@@ -80,7 +81,7 @@ model User {
   password      String?
   emailVerified DateTime?
   image         String?
-  role          Role      @default(USER)
+  role          Role?     @default(USER)
   accounts      Account[]
   sessions      Session[]
   Stash         Stash[]

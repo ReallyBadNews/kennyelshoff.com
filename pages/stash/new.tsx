@@ -1,16 +1,15 @@
 import { Button } from "@components/Button";
 import { Input } from "@components/Input";
+import { Label } from "@components/Label";
 import Page from "@components/Page";
 import { Stack } from "@components/Stack";
+import { sendRequest } from "@lib/fetcher";
 import { CreateOrUpdateStashInput } from "@lib/types";
-import { Label } from "@components/Label";
+import { Stash, Tag } from "@prisma/client";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { createStash } from "@lib/stash";
-import { sendRequest } from "@lib/fetcher";
+import { useForm } from "react-hook-form";
 import useSWRMutation from "swr/mutation";
-import { Stash, Tag } from "@prisma/client";
 
 type NewStashResponse = Stash & {
   tags: Tag[];
@@ -22,30 +21,22 @@ type NewStashError = {
 
 const NewStash: NextPage = () => {
   const router = useRouter();
+
   const {
     register,
-    setValue,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm<CreateOrUpdateStashInput>();
 
-  const {
-    data: stashes,
-    trigger,
-    isMutating,
-  } = useSWRMutation<NewStashResponse | NewStashError>(
+  const { trigger } = useSWRMutation<NewStashResponse | NewStashError>(
     `/api/stash/new`,
     sendRequest
   );
 
-  console.log("[new useSWRMutation]", { isMutating, stashes });
-
   const onSubmit = handleSubmit(async (data) => {
-    console.log(data);
     await trigger(data, { revalidate: true, populateCache: true }).then(
       (response) => {
-        console.log("[new stash response]", response);
         if (!response) throw new Error("No response from server");
         if ("id" in response) {
           router.replace("/stash");
