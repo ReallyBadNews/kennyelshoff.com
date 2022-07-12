@@ -1,13 +1,23 @@
 import fetcher from "@lib/fetcher";
 import { Views } from "@lib/types";
-import useSWR from "swr";
+import useSWR, { SWRConfiguration } from "swr";
 
-export const useViews = (slug: string) => {
-  const { data, error } = useSWR<Views>(`/api/views${slug}`, fetcher);
+interface UseViewsProps extends SWRConfiguration {
+  slug: string;
+}
+
+export const useViews = ({ slug, ...config }: UseViewsProps) => {
+  const { data, mutate, error, isLoading, isValidating } = useSWR<Views>(
+    `/api/views${slug}`,
+    fetcher,
+    config
+  );
 
   return {
     views: data,
-    isLoading: !error && typeof data === "undefined",
-    isError: error,
+    mutate,
+    isLoading,
+    isValidating,
+    error,
   };
 };

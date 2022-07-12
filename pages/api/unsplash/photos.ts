@@ -13,7 +13,6 @@ export default async function handler(
 
     res.setHeader("Cache-Control", "s-maxage=10, stale-while-revalidate=59");
     res.status(200).json(photos);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     res.status(500).json(error);
   }

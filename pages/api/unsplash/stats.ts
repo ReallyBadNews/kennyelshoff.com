@@ -18,7 +18,6 @@ export default async function handler(
       "public, s-maxage=1200, stale-while-revalidate=600"
     );
     res.status(200).json(stats);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     res.status(500).json(error);
   }

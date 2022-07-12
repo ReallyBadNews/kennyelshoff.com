@@ -95,7 +95,7 @@ export const groupByYear = <
 };
 
 export const getHostname = (url: string) => {
-  let hostname;
+  let hostname: string;
   try {
     hostname = new URL(url).hostname;
   } catch (error) {
@@ -104,7 +104,6 @@ export const getHostname = (url: string) => {
   return hostname;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function shuffleArray<T extends any[]>(array: T): T {
   let currentIndex = array.length;
   let randomIndex;

@@ -1,24 +1,26 @@
 import { Text } from "@components/Text";
-import { useViews } from "@hooks/use-views";
-import { useEffect } from "react";
+import { sendRequest } from "@lib/fetcher";
+import { Views } from "@lib/types";
 import { Post } from "contentlayer/generated";
+import { useEffect } from "react";
+import useSWRMutation from "swr/mutation";
 
 export default function ViewCounter({ slug }: Pick<Post, "slug">) {
-  const { views, isLoading } = useViews(slug);
+  const {
+    data: views,
+    trigger,
+    isMutating,
+  } = useSWRMutation<Views>(`/api/views${slug}`, sendRequest);
 
   useEffect(() => {
-    const registerView = () => {
-      return fetch(`/api/views${slug}`, {
-        method: "POST",
-      });
-    };
-
-    registerView();
-  }, [slug]);
+    trigger();
+  }, [trigger]);
 
   return (
     <Text size="0" variant="subtle">
-      <Text size="0">{isLoading ? "–––" : views?.total.toLocaleString()}</Text>
+      <Text size="0">
+        {isMutating || !views ? "——" : views.total.toLocaleString("en-US")}
+      </Text>
       {` views`}
     </Text>
   );

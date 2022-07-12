@@ -63,20 +63,18 @@ export const Input = styled("input", {
   variants: {
     size: {
       "1": {
-        borderRadius: "$1",
-        height: "$5",
+        borderRadius: "$rg",
         fontSize: "$1",
-        px: "$1",
+        p: "$2",
         lineHeight: "$sizes$5",
         "&:-webkit-autofill::first-line": {
           fontSize: "$1",
         },
       },
       "2": {
-        borderRadius: "$2",
-        height: "$6",
-        fontSize: "$3",
-        px: "$2",
+        borderRadius: "$rg",
+        fontSize: "$2",
+        p: "$2",
         lineHeight: "$sizes$6",
         "&:-webkit-autofill::first-line": {
           fontSize: "$3",
@@ -134,6 +132,6 @@ export const Input = styled("input", {
     },
   },
   defaultVariants: {
-    size: "1",
+    size: "2",
   },
 });
