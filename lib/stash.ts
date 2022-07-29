@@ -118,8 +118,14 @@ export const createStash = async (payload: CreateOrUpdateStashInput) => {
   };
 
   if (payload.tags) {
+    // convert tags from string to array
+    const tagArray = Array.isArray(payload.tags)
+      ? payload.tags
+      : payload.tags.split(",").map((tag) => {
+          return tag.trim();
+        });
     requestBody.tags = {
-      connectOrCreate: payload.tags.map((tag) => {
+      connectOrCreate: tagArray.map((tag) => {
         return {
           where: {
             name: tag,
@@ -182,8 +188,14 @@ export const updateStashById = async (
   };
 
   if (payload.tags) {
+    // convert tags from string to array
+    const tagArray = Array.isArray(payload.tags)
+      ? payload.tags
+      : payload.tags.split(",").map((tag) => {
+          return tag.trim();
+        });
     requestBody.tags = {
-      connectOrCreate: payload.tags.map((tag) => {
+      connectOrCreate: tagArray.map((tag) => {
         return {
           where: {
             name: tag,
@@ -194,7 +206,7 @@ export const updateStashById = async (
           },
         };
       }),
-      set: payload.tags.map((tag) => {
+      set: tagArray.map((tag) => {
         return {
           name: tag,
         };

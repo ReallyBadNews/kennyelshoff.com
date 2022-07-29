@@ -48,6 +48,10 @@ export default async function handler(
     if (req.method === "DELETE") {
       const id = req.query.id as string;
 
+      if (!id) {
+        return res.status(400).send({ message: "Missing id" });
+      }
+
       const stash = await deleteStashById(id);
 
       if (!stash) {

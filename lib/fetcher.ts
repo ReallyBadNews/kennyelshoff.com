@@ -19,3 +19,17 @@ export async function sendRequest<T>(
 
   return data;
 }
+
+export async function sendDeleteRequest<T>(
+  url: RequestInfo | URL,
+  { arg }: { arg: any }
+): Promise<T> {
+  const response = await fetch(url, {
+    method: "DELETE",
+    body: JSON.stringify(arg),
+  });
+
+  const data: T = await response.json();
+
+  return data;
+}

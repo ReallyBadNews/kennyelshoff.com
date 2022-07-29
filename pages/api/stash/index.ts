@@ -7,6 +7,7 @@ const handler: NextApiHandler = async (req, res) => {
     if (req.method === "GET") {
       const stashes = await getAllStashes();
 
+      res.setHeader("Cache-Control", "s-maxage=10, stale-while-revalidate=59");
       return res.status(200).json(stashes);
     }
 

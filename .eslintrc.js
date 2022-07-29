@@ -37,6 +37,7 @@ module.exports = {
     "import/prefer-default-export": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-explicit-any": "off",
+    "react/require-default-props": "off",
     "react/jsx-sort-props": [
       "error",
       { callbacksLast: true, shorthandLast: true, reservedFirst: true },

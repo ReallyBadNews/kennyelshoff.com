@@ -12,7 +12,9 @@ export default async function handler(
   try {
     // this should be the actual path not a rewritten path
     // e.g. for "/blog/[slug]" this should be "/blog/post-1"
-    await res.revalidate("/path-to-revalidate");
+    const path = req.query.path as string;
+    console.log("[api/revalidate] path", path);
+    await res.revalidate(path);
     return res.json({ revalidated: true });
   } catch (err) {
     // If there was an error, Next.js will continue

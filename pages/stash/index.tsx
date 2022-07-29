@@ -1,15 +1,12 @@
-import { LoginButton } from "@components/LoginButton";
 import Page from "@components/Page";
 import { Separator } from "@components/Separator";
 import { Stack } from "@components/Stack";
-import { getAllStashes } from "@lib/stash";
-import { sortByDate } from "@lib/utils";
-import { LinkButton } from "@components/Button";
 import { StashPost } from "@components/StashPost";
 import { useStashes } from "@hooks/use-stash";
+import { getAllStashes } from "@lib/stash";
+import { sortByDate } from "@lib/utils";
 import { Action, Priority, useRegisterActions } from "kbar";
 import { InferGetServerSidePropsType } from "next";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
 
@@ -19,8 +16,13 @@ import { Fragment } from "react";
  [x] - Serialize the dates to ISO strings
  [x] - Add mdx to the api response as `mdxBody`
  */
-export const getServerSideProps = async () => {
+export const getServerSideProps = async ({ res }) => {
   const stashes = await getAllStashes();
+
+  res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=10, stale-while-revalidate=59"
+  );
 
   return {
     props: {
@@ -50,6 +52,7 @@ const Stash: React.FC<
       priority: Priority.HIGH,
     },
   ];
+
   // Map through stashes and add them to kbar actions
   sortByDate(data?.stashes || fallbackData.stashes).forEach((stash) => {
     actions.push({
@@ -72,12 +75,6 @@ const Stash: React.FC<
       stackGap="$9"
       title="Stash"
     >
-      <LoginButton />
-      <Link href="/stash/new">
-        <LinkButton size="2" variant="gray">
-          Create new stash
-        </LinkButton>
-      </Link>
       <Stack css={{ stackGap: "$5", "@bp1": { stackGap: "$7" } }}>
         {data?.stashes.map((stash, index) => {
           return (

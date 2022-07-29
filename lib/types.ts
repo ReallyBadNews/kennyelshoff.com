@@ -68,7 +68,7 @@ export interface UnsplashViews {
 }
 
 export type CreateOrUpdateStashInput = Stash & {
-  tags?: string[];
+  tags?: string[] | string;
   author?: Session["user"];
 };
 

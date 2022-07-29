@@ -651,7 +651,7 @@ export const darkTheme = createTheme("dark-theme", {
     loContrast: "$slate1",
     canvas: "hsl(0 0% 15%)",
     panel: "$slate3",
-    // panel: "linear-gradient(90deg, $slateA1 0%, $slateA2 100%)",
+    // panel: "linear-gradient(90deg, $slateA1 100%, $slateA2 100%)",
     transparentPanel: "hsl(0 100% 100% / 97%)",
     shadowLight: "hsl(206 22% 7% / 35%)",
     shadowDark: "hsl(206 22% 7% / 20%)",
