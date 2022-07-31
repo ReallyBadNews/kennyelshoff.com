@@ -16,13 +16,8 @@ import { Fragment } from "react";
  [x] - Serialize the dates to ISO strings
  [x] - Add mdx to the api response as `mdxBody`
  */
-export const getServerSideProps = async ({ res }) => {
+export const getServerSideProps = async () => {
   const stashes = await getAllStashes();
-
-  res.setHeader(
-    "Cache-Control",
-    "public, s-maxage=10, stale-while-revalidate=59"
-  );
 
   return {
     props: {

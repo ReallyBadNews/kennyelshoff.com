@@ -45,6 +45,7 @@ const NewStash: NextPage = () => {
           console.log("response", response);
           router.replace("/stash");
         } else {
+          // TODO: Handle unique contraint error
           console.error("[new stash error]", response);
           throw new Error(response.message);
         }

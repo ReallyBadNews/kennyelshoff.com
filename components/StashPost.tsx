@@ -22,23 +22,19 @@ export function StashPost({ id, title, date, url, slug, mdxBody }: Stash) {
     return null;
   }, [mdxBody]);
 
-  const { trigger, reset } = useSWRMutation<Stash | null>(
+  const { trigger } = useSWRMutation<Stash | null>(
     `/api/stash/${id}`,
     sendDeleteRequest
   );
 
+  // TODO: Fix optimistic UI
   const deleteHandler = async () => {
-    await trigger({ revalidate: true, populateCache: true }).then(
-      (response) => {
-        if (!response) throw new Error("No response from server");
-        if ("id" in response) {
-          console.log("response", response);
-          return reset();
-        }
-        console.error("[delete stash error]", response);
-        throw new Error(response.message);
-      }
-    );
+    await trigger(null, {
+      revalidate: true,
+      populateCache: true,
+    }).then((response) => {
+      if (!response) throw new Error("No response from server");
+    });
   };
 
   return (

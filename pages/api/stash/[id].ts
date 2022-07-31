@@ -58,7 +58,7 @@ export default async function handler(
         return res.status(404).json({ message: "Stash not found" });
       }
 
-      return res.status(200).json(stash);
+      return res.status(200).json({ message: "Stash deleted" });
     }
 
     res.setHeader("Allow", "GET, PATCH, DELETE");
