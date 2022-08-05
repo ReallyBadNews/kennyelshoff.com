@@ -11,10 +11,17 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
 
-const DynamicStashPost = dynamic(async () => {
-  const { StashPost } = await import("../../components/StashPost");
-  return StashPost;
-});
+const DynamicStashPost = dynamic(
+  async () => {
+    const { StashPost } = await import("../../components/StashPost");
+    return StashPost;
+  },
+  {
+    loading: () => {
+      return <div>Loading...</div>;
+    },
+  }
+);
 
 export const getStaticProps = async () => {
   const stashes = await getAllStashes();
