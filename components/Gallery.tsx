@@ -36,7 +36,7 @@ const swipePower = (offset: number, velocity: number) => {
   return Math.abs(offset) * velocity;
 };
 
-interface GalleryProps {
+export interface GalleryProps {
   children:
     | ReactElement<PropsWithChildren<ImageProps>>
     | ReactElement<PropsWithChildren<ImageProps>>[];

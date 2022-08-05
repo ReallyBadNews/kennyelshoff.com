@@ -1,20 +1,26 @@
-import { CSS, VariantProps } from "stitches.config";
+import dynamic from "next/dynamic";
 import { ImageProps } from "next/image";
+import { CSS, VariantProps } from "stitches.config";
 import { ComponentMap, MDXImages } from "types";
-import { Image } from "./Image";
+import { Badge } from "./Badge";
 import { Blockquote } from "./Blockquote";
 import { Box } from "./Box";
 import { Code, CodeProps } from "./Code";
+import type { GalleryProps } from "./Gallery";
 import { Heading } from "./Heading";
+import { Image } from "./Image";
 import { Kbd } from "./Kbd";
+import { List } from "./List";
 import NextLink from "./NextLink";
 import { Paragraph } from "./Paragraph";
 import { Pre } from "./Pre";
 import { Preview } from "./Preview";
 import { Separator } from "./Separator";
-import { Badge } from "./Badge";
-import { Gallery } from "./Gallery";
-import { List } from "./List";
+
+const DynamicGallery = dynamic(async () => {
+  const { Gallery } = await import("./Gallery");
+  return Gallery;
+});
 
 export const MDXComponents = (mdxImages?: MDXImages): ComponentMap => {
   return {
@@ -186,6 +192,8 @@ export const MDXComponents = (mdxImages?: MDXImages): ComponentMap => {
       );
     },
     Preview,
-    Gallery,
+    Gallery: ({ children, ...rest }: GalleryProps) => {
+      return <DynamicGallery {...rest}>{children}</DynamicGallery>;
+    },
   };
 };

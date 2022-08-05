@@ -1,19 +1,51 @@
-import { CommandPalette } from "@components/CommandPalette";
 import { Container } from "@components/Container";
-import Footer from "@components/Footer";
-import { Header } from "@components/Header";
-import { TooltipProvider } from "@components/Tooltip";
 import { useAnalytics } from "@lib/analytics";
+import { Session } from "next-auth";
+import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
 import type { AppProps as NextAppProps } from "next/app";
-import { darkTheme, globalCss } from "stitches.config";
-import { SessionProvider } from "next-auth/react";
-import { Session } from "next-auth";
+import dynamic from "next/dynamic";
+import React, { ReactNode } from "react";
+import { darkTheme, globalCss } from "../stitches.config";
 
 // modified version - allows for custom pageProps type, falling back to 'any'
 type AppProps<P = any> = {
   pageProps: P;
 } & Omit<NextAppProps<P>, "pageProps">;
+
+const DynamicHeader = dynamic(
+  async () => {
+    const { Header } = await import("../components/Header");
+    return Header;
+  },
+  {
+    loading: () => {
+      return <header />;
+    },
+  }
+);
+
+const DynamicFooter = dynamic(
+  async () => {
+    const { Footer } = await import("../components/Footer");
+    return Footer;
+  },
+  {
+    loading: () => {
+      return <footer />;
+    },
+  }
+);
+
+const DynamicTooltip = dynamic(async () => {
+  const { TooltipProvider } = await import("../components/Tooltip");
+  return TooltipProvider;
+});
+
+const DynamicCommandPalette = dynamic<{ children?: ReactNode }>(async () => {
+  const { CommandPalette } = await import("../components/CommandPalette");
+  return CommandPalette;
+});
 
 const globalStyles = globalCss({
   /**
@@ -93,8 +125,8 @@ function BabaBooey({
       disableTransitionOnChange
     >
       <SessionProvider session={session}>
-        <TooltipProvider>
-          <CommandPalette>
+        <DynamicTooltip>
+          <DynamicCommandPalette>
             <Container
               css={{
                 display: "flex",
@@ -104,12 +136,12 @@ function BabaBooey({
               }}
               size="2"
             >
-              <Header />
+              <DynamicHeader />
               <Component {...pageProps} />
-              <Footer />
+              <DynamicFooter />
             </Container>
-          </CommandPalette>
-        </TooltipProvider>
+          </DynamicCommandPalette>
+        </DynamicTooltip>
       </SessionProvider>
     </ThemeProvider>
   );

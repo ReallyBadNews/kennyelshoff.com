@@ -1,35 +1,35 @@
 import Page from "@components/Page";
 import { Separator } from "@components/Separator";
 import { Stack } from "@components/Stack";
-import { StashPost } from "@components/StashPost";
 import { useStashes } from "@hooks/use-stash";
 import type { Stash } from "@lib/stash";
 import { getAllStashes } from "@lib/stash";
 import { sortByDate } from "@lib/utils";
 import { Action, Priority, useRegisterActions } from "kbar";
-import { InferGetServerSidePropsType } from "next";
+import { InferGetStaticPropsType } from "next";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
 
-/**
- * TODO:
- [x] - SSR data fetching should use same function as api endpoint
- [x] - Serialize the dates to ISO strings
- [x] - Add mdx to the api response as `mdxBody`
- */
-export const getServerSideProps = async () => {
+const DynamicStashPost = dynamic(async () => {
+  const { StashPost } = await import("../../components/StashPost");
+  return StashPost;
+});
+
+export const getStaticProps = async () => {
   const stashes = await getAllStashes();
 
   return {
     props: {
       fallbackData: stashes,
     },
+    revalidate: 10,
   };
 };
 
-const StashPage: React.FC<
-  InferGetServerSidePropsType<typeof getServerSideProps>
-> = ({ fallbackData }) => {
+const StashPage: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
+  fallbackData,
+}) => {
   const { data, mutate, isLoading, isValidating } = useStashes({
     fallbackData,
     revalidateIfStale: true,
@@ -90,7 +90,7 @@ const StashPage: React.FC<
         {data?.stashes.map((stash, index) => {
           return (
             <Fragment key={stash.slug}>
-              <StashPost deleteHandler={deleteHandler} {...stash} />
+              <DynamicStashPost deleteHandler={deleteHandler} {...stash} />
               {index !== data.stashes.length - 1 && <Separator size="2" />}
             </Fragment>
           );
