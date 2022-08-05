@@ -29,12 +29,9 @@ export default async function handler(
 
     if (req.method === "PATCH") {
       const id = req.query.id as string;
-      const reqBody = req.body as CreateOrUpdateStashInput;
+      const reqBody: CreateOrUpdateStashInput = JSON.parse(req.body);
 
-      console.log(
-        "[api/stash] PATCH reqBody",
-        JSON.stringify(reqBody, null, 2)
-      );
+      console.log("[api/stash] PATCH reqBody", reqBody);
 
       const stash = await updateStashById(id, reqBody);
 

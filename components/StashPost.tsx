@@ -1,10 +1,9 @@
-import { sendDeleteRequest } from "@lib/fetcher";
 import type { Stash } from "@lib/stash";
 import { formatDate } from "@lib/utils";
 import { getMDXComponent } from "mdx-bundler/client";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { useMemo } from "react";
-import useSWRMutation from "swr/mutation";
 import { Button, LinkButton } from "./Button";
 import { Heading } from "./Heading";
 import { MDXComponents } from "./MDXComponents";
@@ -12,7 +11,19 @@ import NextLink from "./NextLink";
 import { Paragraph } from "./Paragraph";
 import { Stack } from "./Stack";
 
-export function StashPost({ id, title, date, url, slug, mdxBody }: Stash) {
+interface StashProps extends Stash {
+  deleteHandler?: (id: string) => void | Promise<void>;
+}
+
+export function StashPost({
+  id,
+  title,
+  date,
+  url,
+  slug,
+  mdxBody,
+  deleteHandler,
+}: StashProps) {
   const { data: session } = useSession();
 
   const MDXContent = useMemo(() => {
@@ -21,21 +32,6 @@ export function StashPost({ id, title, date, url, slug, mdxBody }: Stash) {
     }
     return null;
   }, [mdxBody]);
-
-  const { trigger } = useSWRMutation<Stash | null>(
-    `/api/stash/${id}`,
-    sendDeleteRequest
-  );
-
-  // TODO: Fix optimistic UI
-  const deleteHandler = async () => {
-    await trigger(null, {
-      revalidate: true,
-      populateCache: true,
-    }).then((response) => {
-      if (!response) throw new Error("No response from server");
-    });
-  };
 
   return (
     <Stack as="article" css={{ position: "relative", stackGap: "$4" }}>
@@ -55,12 +51,18 @@ export function StashPost({ id, title, date, url, slug, mdxBody }: Stash) {
             <time dateTime={date}>{`— ${formatDate(date, "full")}`}</time>
           </NextLink>
         </Paragraph>
-        {session?.user.role === "ADMIN" ? (
+        {session?.user.role === "ADMIN" &&
+        typeof deleteHandler === "function" ? (
           <Stack css={{ stackGap: "$2" }} direction="row">
-            <LinkButton href={`/stash/${slug}/edit`} variant="green">
-              Edit
-            </LinkButton>
-            <Button variant="red" onClick={deleteHandler}>
+            <Link href={`/stash/edit/${id}`}>
+              <LinkButton variant="green">Edit</LinkButton>
+            </Link>
+            <Button
+              variant="red"
+              onClick={() => {
+                return deleteHandler(id);
+              }}
+            >
               Delete
             </Button>
           </Stack>

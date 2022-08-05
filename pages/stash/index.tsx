@@ -3,6 +3,7 @@ import { Separator } from "@components/Separator";
 import { Stack } from "@components/Stack";
 import { StashPost } from "@components/StashPost";
 import { useStashes } from "@hooks/use-stash";
+import type { Stash } from "@lib/stash";
 import { getAllStashes } from "@lib/stash";
 import { sortByDate } from "@lib/utils";
 import { Action, Priority, useRegisterActions } from "kbar";
@@ -26,10 +27,10 @@ export const getServerSideProps = async () => {
   };
 };
 
-const Stash: React.FC<
+const StashPage: React.FC<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ fallbackData }) => {
-  const { data, isLoading, isValidating } = useStashes({
+  const { data, mutate, isLoading, isValidating } = useStashes({
     fallbackData,
     revalidateIfStale: true,
     revalidateOnMount: false,
@@ -64,6 +65,21 @@ const Stash: React.FC<
 
   useRegisterActions(actions);
 
+  const deleteHandler = async (id: string) => {
+    await mutate(async (prevData) => {
+      await fetch(`/api/stash/${id}`, {
+        method: "DELETE",
+      });
+
+      // filter the list, and return it with the updated item
+      const filteredStashes = prevData?.stashes.filter((stash) => {
+        return stash.id !== id;
+      }) as Stash[];
+
+      return { stashes: filteredStashes, total: filteredStashes.length };
+    });
+  };
+
   return (
     <Page
       description="Bookmarks, articles, tweets, notes and other miscellaneous tidbits I feel the need to enumerate. Maybe I can remember where I saved it this time."
@@ -74,7 +90,7 @@ const Stash: React.FC<
         {data?.stashes.map((stash, index) => {
           return (
             <Fragment key={stash.slug}>
-              <StashPost {...stash} />
+              <StashPost deleteHandler={deleteHandler} {...stash} />
               {index !== data.stashes.length - 1 && <Separator size="2" />}
             </Fragment>
           );
@@ -84,4 +100,4 @@ const Stash: React.FC<
   );
 };
 
-export default Stash;
+export default StashPage;

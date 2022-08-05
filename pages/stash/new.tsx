@@ -1,29 +1,20 @@
 import { Button } from "@components/Button";
 import { Input } from "@components/Input";
 import { Label } from "@components/Label";
-import { LoginButton } from "@components/LoginButton";
 import Page from "@components/Page";
 import { Stack } from "@components/Stack";
-import { sendRequest } from "@lib/fetcher";
+import { useStashes } from "@hooks/use-stash";
+import { NewStash } from "@lib/stash";
 import { CreateOrUpdateStashInput } from "@lib/types";
-import { Stash, Tag } from "@prisma/client";
 import { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-import useSWRMutation from "swr/mutation";
 
-type NewStashResponse = Stash & {
-  tags: Tag[];
-};
-
-type NewStashError = {
-  message: string;
-};
-
-const NewStash: NextPage = () => {
+const NewStashPage: NextPage = () => {
   const router = useRouter();
   const { data: session } = useSession();
+  const { mutate } = useStashes({});
 
   const {
     register,
@@ -32,25 +23,28 @@ const NewStash: NextPage = () => {
     formState: { errors },
   } = useForm<CreateOrUpdateStashInput>();
 
-  const { trigger } = useSWRMutation<NewStashResponse | NewStashError>(
-    `/api/stash/new`,
-    sendRequest
-  );
-
   const onSubmit = handleSubmit(async (data) => {
-    await trigger(data, { revalidate: true, populateCache: true }).then(
-      (response) => {
-        if (!response) throw new Error("No response from server");
-        if ("id" in response) {
-          console.log("response", response);
-          router.replace("/stash");
-        } else {
-          // TODO: Handle unique contraint error
-          console.error("[new stash error]", response);
-          throw new Error(response.message);
-        }
-      }
-    );
+    await mutate(async (prevData) => {
+      const newStash = await fetch(`/api/stash/new`, {
+        method: "POST",
+        body: JSON.stringify(data),
+      }).then(async (res) => {
+        const json: NewStash = await res.json();
+
+        return json;
+      });
+
+      console.log("[new stash]", { newStash });
+
+      return {
+        stashes: prevData?.stashes
+          ? [...prevData.stashes, newStash]
+          : [newStash],
+        total: (prevData?.total && prevData.total + 1) || 1,
+      };
+    });
+
+    router.replace("/stash");
   });
 
   return (
@@ -58,7 +52,7 @@ const NewStash: NextPage = () => {
       description="Optional fields may be left blank. Bookmarks, articles, tweets, notes and other miscellaneous tidbits I feel the need to enumerate. Maybe I can remember where I saved it this time."
       title="Create new stash"
     >
-      <LoginButton />
+      {/* <LoginButton /> */}
       {session?.user.role === "ADMIN" ? (
         <form onSubmit={onSubmit}>
           <Stack css={{ stackGap: "$4" }}>
@@ -117,4 +111,4 @@ const NewStash: NextPage = () => {
   );
 };
 
-export default NewStash;
+export default NewStashPage;

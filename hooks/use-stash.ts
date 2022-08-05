@@ -1,15 +1,15 @@
 import fetcher from "@lib/fetcher";
-import { getAllStashes } from "@lib/stash";
-import { Stash } from "@prisma/client";
+import { AllStashes, Stash } from "@lib/stash";
+
 import useSWR, { SWRConfiguration } from "swr";
 
 interface UseStashProps extends SWRConfiguration {
-  id: string;
+  id?: string;
 }
 
 export const useStash = ({ id, ...config }: UseStashProps) => {
   const { data, mutate, error, isLoading, isValidating } = useSWR<Stash>(
-    `/api/stash/${id}`,
+    id ? `/api/stash/${id}` : null,
     fetcher,
     config
   );
@@ -24,12 +24,15 @@ export const useStash = ({ id, ...config }: UseStashProps) => {
 };
 
 export const useStashes = ({ ...config }: SWRConfiguration) => {
-  const { data, error, isLoading, isValidating } = useSWR<
-    Awaited<ReturnType<typeof getAllStashes>>
-  >(`/api/stash`, fetcher, config);
+  const { data, mutate, error, isLoading, isValidating } = useSWR<AllStashes>(
+    `/api/stash`,
+    fetcher,
+    config
+  );
 
   return {
     data,
+    mutate,
     isLoading,
     isValidating,
     error,

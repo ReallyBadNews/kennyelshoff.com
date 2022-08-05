@@ -14,6 +14,9 @@ export type Stashes = Prisma.PromiseReturnType<
 >["stashes"];
 export type Stash = Stashes[number];
 
+export type AllStashes = Prisma.PromiseReturnType<typeof getAllStashes>;
+export type NewStash = Prisma.PromiseReturnType<typeof createStash>;
+
 /**
  * TODO:
 [ ] - Add pagination - https://www.prisma.io/docs/concepts/components/prisma-client/pagination
@@ -79,6 +82,15 @@ export const getStashById = async (id: string | number) => {
     date: stash.createdAt.toISOString(),
     createdAt: stash.createdAt.toISOString(),
     updatedAt: stash.updatedAt.toISOString(),
+    ...(stash.author
+      ? {
+          author: {
+            ...stash.author,
+            createdAt: stash.author.createdAt.toISOString(),
+            updatedAt: stash.author.updatedAt.toISOString(),
+          },
+        }
+      : {}),
   };
 };
 

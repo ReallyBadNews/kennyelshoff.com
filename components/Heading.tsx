@@ -1,7 +1,7 @@
 import { ComponentProps, ElementType, ElementRef, forwardRef } from "react";
 import merge from "just-merge";
+import { VariantProps, CSS } from "stitches.config";
 import { Text } from "./Text";
-import { VariantProps, CSS } from "../stitches.config";
 
 const DEFAULT_TAG = "h1";
 

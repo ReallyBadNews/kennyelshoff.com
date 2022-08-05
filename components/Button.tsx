@@ -1,4 +1,4 @@
-import { styled } from "../stitches.config";
+import { styled } from "stitches.config";
 
 const sharedStyles = {
   // Reset
@@ -339,6 +339,3 @@ const sharedStyles = {
 
 export const Button = styled("button", sharedStyles);
 export const LinkButton = styled("a", sharedStyles);
-
-Button.displayName = "Button";
-LinkButton.displayName = "LinkButton";
