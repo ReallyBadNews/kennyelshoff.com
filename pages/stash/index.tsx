@@ -7,29 +7,24 @@ import type { Stash } from "@lib/stash";
 import { getAllStashes } from "@lib/stash";
 import { sortByDate } from "@lib/utils";
 import { Action, Priority, useRegisterActions } from "kbar";
-import { InferGetServerSidePropsType } from "next";
+import { InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
 
-/**
- * TODO:
- [x] - SSR data fetching should use same function as api endpoint
- [x] - Serialize the dates to ISO strings
- [x] - Add mdx to the api response as `mdxBody`
- */
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
   const stashes = await getAllStashes();
 
   return {
     props: {
       fallbackData: stashes,
     },
+    revalidate: 10,
   };
 };
 
-const StashPage: React.FC<
-  InferGetServerSidePropsType<typeof getServerSideProps>
-> = ({ fallbackData }) => {
+const StashPage: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
+  fallbackData,
+}) => {
   const { data, mutate, isLoading, isValidating } = useStashes({
     fallbackData,
     revalidateIfStale: true,

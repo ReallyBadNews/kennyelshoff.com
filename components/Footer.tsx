@@ -44,7 +44,7 @@ const iconStyle = css({
   color: "$slateA8",
 });
 
-export default function Footer() {
+export function Footer() {
   return (
     <Stack
       as="footer"

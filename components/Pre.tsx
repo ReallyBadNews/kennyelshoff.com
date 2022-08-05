@@ -1,4 +1,6 @@
-import { styled } from "stitches.config";
+import { styled, VariantProps } from "stitches.config";
+
+export type PreProps = VariantProps<typeof Pre>;
 
 export const Pre = styled("pre", {
   $$background: "$colors$slate2",
