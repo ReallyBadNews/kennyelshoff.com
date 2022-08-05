@@ -1,27 +1,15 @@
 import Page from "@components/Page";
 import { Separator } from "@components/Separator";
 import { Stack } from "@components/Stack";
+import { StashPost } from "@components/StashPost";
 import { useStashes } from "@hooks/use-stash";
 import type { Stash } from "@lib/stash";
 import { getAllStashes } from "@lib/stash";
 import { sortByDate } from "@lib/utils";
 import { Action, Priority, useRegisterActions } from "kbar";
 import { InferGetStaticPropsType } from "next";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
-
-const DynamicStashPost = dynamic(
-  async () => {
-    const { StashPost } = await import("../../components/StashPost");
-    return StashPost;
-  },
-  {
-    loading: () => {
-      return <div>Loading...</div>;
-    },
-  }
-);
 
 export const getStaticProps = async () => {
   const stashes = await getAllStashes();
@@ -97,7 +85,7 @@ const StashPage: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
         {data?.stashes.map((stash, index) => {
           return (
             <Fragment key={stash.slug}>
-              <DynamicStashPost deleteHandler={deleteHandler} {...stash} />
+              <StashPost deleteHandler={deleteHandler} {...stash} />
               {index !== data.stashes.length - 1 && <Separator size="2" />}
             </Fragment>
           );
