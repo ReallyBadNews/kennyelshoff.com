@@ -1,6 +1,6 @@
-import { styled } from "../stitches.config";
+import { styled } from "stitches.config";
 
-export const Button = styled("button", {
+const sharedStyles = {
   // Reset
   all: "unset",
   alignItems: "center",
@@ -335,6 +335,7 @@ export const Button = styled("button", {
     size: "1",
     variant: "gray",
   },
-});
+};
 
-Button.displayName = "Button";
+export const Button = styled("button", sharedStyles);
+export const LinkButton = styled("a", sharedStyles);

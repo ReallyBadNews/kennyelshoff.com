@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["referentialIntegrity"]
@@ -12,7 +9,109 @@ datasource db {
   referentialIntegrity = "prisma"
 }
 
+model Views {
+  slug  String @id @db.VarChar(128)
+  count BigInt @default(1)
+}
+
 model views {
   slug  String @id @db.VarChar(128)
   count BigInt @default(1)
+}
+
+model Stash {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  author      User?    @relation(fields: [authorEmail], references: [id])
+  authorEmail String?
+  url         String   @unique @db.VarChar(512)
+  host        String?
+  title       String   @db.VarChar(280)
+  slug        String   @unique @db.VarChar(280)
+  image       String?  @db.VarChar(512)
+  description String   @db.VarChar(2048)
+  body        String?  @db.Text
+  mdxBody     String?  @db.Text
+  tags        Tag[]
+
+  @@index([host, slug])
+}
+
+model Tag {
+  id      String  @id @default(cuid())
+  name    String  @unique
+  slug    String  @unique
+  stashes Stash[]
+}
+
+model Account {
+  id                       String   @id @default(cuid())
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+  userId                   String
+  type                     String
+  provider                 String
+  providerAccountId        String
+  refresh_token            String?  @db.VarChar(500)
+  access_token             String?  @db.VarChar(500)
+  refresh_token_expires_in Int?
+  expires_at               Int?
+  token_type               String?
+  scope                    String?
+  id_token                 String?  @db.Text
+  session_state            String?
+  oauth_token_secret       String?
+  oauth_token              String?
+  user                     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  expires      DateTime
+  user         User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String?
+  role         Role     @default(USER)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  name          String?
+  email         String?   @unique
+  password      String?
+  emailVerified DateTime?
+  image         String?
+  role          Role?     @default(USER)
+  accounts      Account[]
+  sessions      Session[]
+  Stash         Stash[]
+
+  @@index([email])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model StashToTag {
+  A String
+  B String
+
+  @@unique([A, B], map: "_StashToTag_AB_unique")
+  @@index([B], map: "_StashToTag_B_index")
+  @@map("_StashToTag")
+}
+
+enum Role {
+  USER
+  ADMIN
 }

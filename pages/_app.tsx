@@ -5,8 +5,15 @@ import { Header } from "@components/Header";
 import { TooltipProvider } from "@components/Tooltip";
 import { useAnalytics } from "@lib/analytics";
 import { ThemeProvider } from "next-themes";
-import type { AppProps } from "next/app";
+import type { AppProps as NextAppProps } from "next/app";
 import { darkTheme, globalCss } from "stitches.config";
+import { SessionProvider } from "next-auth/react";
+import { Session } from "next-auth";
+
+// modified version - allows for custom pageProps type, falling back to 'any'
+type AppProps<P = any> = {
+  pageProps: P;
+} & Omit<NextAppProps<P>, "pageProps">;
 
 const globalStyles = globalCss({
   /**
@@ -72,7 +79,10 @@ const globalStyles = globalCss({
   },
 });
 
-function BabaBooey({ Component, pageProps }: AppProps): JSX.Element {
+function BabaBooey({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppProps<{ session?: Session }>): JSX.Element {
   globalStyles();
   useAnalytics();
 
@@ -82,23 +92,25 @@ function BabaBooey({ Component, pageProps }: AppProps): JSX.Element {
       value={{ light: "light-theme", dark: darkTheme.className }}
       disableTransitionOnChange
     >
-      <TooltipProvider>
-        <CommandPalette>
-          <Container
-            css={{
-              display: "flex",
-              flexDirection: "column",
-              minHeight: "100vh",
-              py: "$6",
-            }}
-            size="2"
-          >
-            <Header />
-            <Component {...pageProps} />
-            <Footer />
-          </Container>
-        </CommandPalette>
-      </TooltipProvider>
+      <SessionProvider session={session}>
+        <TooltipProvider>
+          <CommandPalette>
+            <Container
+              css={{
+                display: "flex",
+                flexDirection: "column",
+                minHeight: "100vh",
+                py: "$6",
+              }}
+              size="2"
+            >
+              <Header />
+              <Component {...pageProps} />
+              <Footer />
+            </Container>
+          </CommandPalette>
+        </TooltipProvider>
+      </SessionProvider>
     </ThemeProvider>
   );
 }

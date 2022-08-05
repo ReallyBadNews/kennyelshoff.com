@@ -3,7 +3,7 @@ import { UnsplashPhotosAPIResp, UnsplashStats } from "@lib/types";
 import useSWR, { SWRConfiguration } from "swr";
 
 export const useUnsplashStats = (config?: SWRConfiguration) => {
-  const { data, error } = useSWR<UnsplashStats>(
+  const { data, error, isLoading } = useSWR<UnsplashStats>(
     `/api/unsplash/stats`,
     fetcher,
     config
@@ -11,13 +11,13 @@ export const useUnsplashStats = (config?: SWRConfiguration) => {
 
   return {
     data,
-    isLoading: !error && typeof data === "undefined",
+    isLoading,
     isError: error,
   };
 };
 
 export const useUnsplashPhotos = (config?: SWRConfiguration) => {
-  const { data, error } = useSWR<UnsplashPhotosAPIResp>(
+  const { data, error, isLoading } = useSWR<UnsplashPhotosAPIResp>(
     `/api/unsplash/photos`,
     fetcher,
     config
@@ -25,7 +25,7 @@ export const useUnsplashPhotos = (config?: SWRConfiguration) => {
 
   return {
     data,
-    isLoading: !error && typeof data === "undefined",
+    isLoading,
     isError: error,
   };
 };

@@ -115,6 +115,16 @@ export const Link = styled("a", {
           outline: "none",
         },
       },
+      passthru: {
+        color: "inherit",
+        textDecoration: "none",
+        "&:hover": {
+          textDecorationLine: "none",
+        },
+        "&:focus": {
+          outline: "none",
+        },
+      },
     },
   },
   defaultVariants: {

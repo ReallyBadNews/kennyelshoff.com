@@ -1,4 +1,5 @@
 import { Badge } from "@components/Badge";
+import { Button, LinkButton } from "@components/Button";
 import { Heading } from "@components/Heading";
 import { MDXComponents } from "@components/MDXComponents";
 import NextLink from "@components/NextLink";
@@ -6,33 +7,41 @@ import Page from "@components/Page";
 import { Paragraph } from "@components/Paragraph";
 import { Stack } from "@components/Stack";
 import { Text } from "@components/Text";
+import { useStash, useStashes } from "@hooks/use-stash";
 import { getAllImagePathsFromDir } from "@lib/images";
-import { formatDate, slugify } from "@lib/utils";
-import { allStashes, Stash } from "contentlayer/generated";
+import { getAllStashes, getStashBySlug, Stash } from "@lib/stash";
+import { formatDate } from "@lib/utils";
+import { getMDXComponent } from "mdx-bundler/client";
 import { GetStaticPaths, InferGetStaticPropsType } from "next";
-import { useMDXComponent } from "next-contentlayer/hooks";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { getPlaiceholder } from "plaiceholder";
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { MDXImages } from "types";
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  const { stashes: allStashes } = await getAllStashes();
   return {
     paths: allStashes.map((stash) => {
       return {
         params: {
-          slug: stash.path,
+          slug: stash.slug,
         },
       };
     }),
-    fallback: false,
+    fallback: "blocking",
   };
 };
 
 export const getStaticProps = async ({ params: { slug = "" } = {} }) => {
-  const stash = allStashes.find((s) => {
-    return s.path === slug;
-  }) as Stash;
+  const stash = await getStashBySlug(slug);
+
+  // if (!stash) {
+  //   return {
+  //     notFound: true,
+  //   };
+  // }
 
   const imagePaths = getAllImagePathsFromDir("stash");
 
@@ -56,14 +65,59 @@ export const getStaticProps = async ({ params: { slug = "" } = {} }) => {
     return result;
   });
 
-  return { props: { stash, images } };
+  return {
+    props: {
+      stash,
+      images,
+    },
+    revalidate: 10,
+  };
 };
 
-const Layout: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
-  stash,
+const StashDetailPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
+  stash: fallbackData,
   images,
 }) => {
-  const Component = useMDXComponent(stash.body.code);
+  const { data: session } = useSession();
+  const router = useRouter();
+  const { data: allStashes, mutate: mutateAllStashes } = useStashes({});
+  const { stash, mutate } = useStash({
+    id: fallbackData?.id,
+    fallbackData,
+    revalidateOnMount: false,
+  });
+
+  const MDXContent = useMemo(() => {
+    if (stash?.mdxBody) {
+      return getMDXComponent(stash.mdxBody);
+    }
+    return null;
+  }, [stash?.mdxBody]);
+
+  const deleteHandler = async (id: string) => {
+    await mutate(async () => {
+      return undefined;
+    });
+
+    await mutateAllStashes(async () => {
+      // let's update the todo with ID `1` to be completed,
+      // this API returns the updated data
+      await fetch(`/api/stash/${id}`, {
+        method: "DELETE",
+      });
+
+      // filter the list, and return it with the updated item
+      const filteredStashes = allStashes?.stashes.filter((post) => {
+        return post.id !== id;
+      }) as Stash[];
+
+      return { stashes: filteredStashes, total: filteredStashes?.length || 0 };
+    });
+
+    router.replace("/stash");
+  };
+
+  if (!stash) return null;
 
   return (
     <Page
@@ -82,35 +136,64 @@ const Layout: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
           {stash.title}
         </Heading>
       )}
-      <Stack css={{ stackGap: "$2" }}>
-        <Paragraph size="0" variant="contrast">
-          <Text size="0" variant="subtle">
-            {`Saved: `}
-          </Text>
-          <time dateTime={stash.date}>
-            {`${formatDate(stash.date, "full")}`}
-          </time>
-        </Paragraph>
-        {stash.tags && (
-          <Stack css={{ stackGap: "$1", alignItems: "center" }} direction="row">
-            <Text size="0" variant="subtle">
-              {`Tags: `}
-            </Text>
-            {stash.tags.map((tag) => {
-              return (
-                <Link key={tag} href={`/stash/tags/${slugify(tag)}`} passHref>
-                  <Badge as="a" size="1" variant="gray">
-                    {tag}
-                  </Badge>
-                </Link>
-              );
-            })}
+      <Stack
+        css={{
+          stackGap: "$3",
+          alignItems: "flex-end",
+          justifyContent: "space-between",
+        }}
+        direction="row"
+      >
+        <Stack css={{ stackGap: "$2" }}>
+          {stash.createdAt ? (
+            <Paragraph size="0" variant="contrast">
+              <Text size="0" variant="subtle">
+                {`Saved: `}
+              </Text>
+              <time dateTime={stash.createdAt}>
+                {`${formatDate(stash.createdAt, "full")}`}
+              </time>
+            </Paragraph>
+          ) : null}
+          {stash.tags && stash.tags.length > 0 && (
+            <Stack
+              css={{ stackGap: "$1", alignItems: "center" }}
+              direction="row"
+            >
+              <Text size="0" variant="subtle">
+                {`Tags: `}
+              </Text>
+              {stash.tags.map((tag) => {
+                return (
+                  <Link key={tag.id} href={`/stash/tags/${tag.slug}`} passHref>
+                    <Badge as="a" size="1" variant="gray">
+                      {tag.name}
+                    </Badge>
+                  </Link>
+                );
+              })}
+            </Stack>
+          )}
+        </Stack>
+        {session?.user.role === "ADMIN" ? (
+          <Stack css={{ stackGap: "$2" }} direction="row">
+            <Link href={`/stash/edit/${stash.id}`}>
+              <LinkButton variant="green">Edit</LinkButton>
+            </Link>
+            <Button
+              variant="red"
+              onClick={() => {
+                return deleteHandler(stash.id);
+              }}
+            >
+              Delete
+            </Button>
           </Stack>
-        )}
+        ) : null}
       </Stack>
-      <Component components={MDXComponents(images)} />
+      {MDXContent ? <MDXContent components={MDXComponents(images)} /> : null}
     </Page>
   );
 };
 
-export default Layout;
+export default StashDetailPage;

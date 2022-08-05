@@ -40,6 +40,7 @@ export const Paragraph = forwardRef<
     2: { lineHeight: "$normal", "@bp1": { lineHeight: "$relaxed" } },
     3: { lineHeight: "$snug", "@bp1": { lineHeight: "$snug" } },
   };
+
   return (
     <Text
       as={DEFAULT_TAG}

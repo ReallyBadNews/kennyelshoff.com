@@ -2,8 +2,8 @@ import { Heading } from "@components/Heading";
 import NextLink from "@components/NextLink";
 import Page from "@components/Page";
 import { Paragraph } from "@components/Paragraph";
-import { Stack } from "@components/Stack";
 import { Separator } from "@components/Separator";
+import { Stack } from "@components/Stack";
 
 export default function Home() {
   return (
