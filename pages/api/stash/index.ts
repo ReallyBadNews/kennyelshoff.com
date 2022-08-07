@@ -23,7 +23,7 @@ const handler: NextApiHandler = async (req, res) => {
         });
       }
     }
-    console.error("[api/stash] error", e);
+    console.error("[api/stash/index] error", e);
     return res.status(500).send({ message: e.message });
   }
 };

@@ -42,10 +42,13 @@ const DynamicTooltip = dynamic(async () => {
   return TooltipProvider;
 });
 
-const DynamicCommandPalette = dynamic<{ children?: ReactNode }>(async () => {
-  const { CommandPalette } = await import("../components/CommandPalette");
-  return CommandPalette;
-});
+const DynamicCommandPalette = dynamic<{ children?: ReactNode }>(
+  async () => {
+    const { CommandPalette } = await import("../components/CommandPalette");
+    return CommandPalette;
+  },
+  { ssr: false }
+);
 
 const globalStyles = globalCss({
   /**

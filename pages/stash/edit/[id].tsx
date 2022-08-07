@@ -21,7 +21,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     });
   });
 
-  return { paths, fallback: false };
+  return { paths, fallback: "blocking" };
 };
 
 export const getStaticProps = async ({ params: { id = "" } = {} }) => {
@@ -88,9 +88,10 @@ const StashEditPage = ({
       }) as Stash[];
 
       return { stashes: filteredStashes, total: filteredStashes.length };
+    }).then(() => {
+      // TODO: this is undefined
+      router.replace(`/stash/${newStash.slug}`);
     });
-
-    router.replace(`/stash/${newStash.slug}`);
   });
 
   return (
