@@ -43,7 +43,7 @@ export default async function handler(
         });
       }
     }
-    console.error("[api/stash] error", e);
+    console.error("[api/stash/new] error", e);
     return res.status(500).send({ message: e.message });
   }
 }

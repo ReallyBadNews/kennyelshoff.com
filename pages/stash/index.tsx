@@ -18,7 +18,6 @@ export const getStaticProps = async () => {
     props: {
       fallbackData: stashes,
     },
-    revalidate: 10,
   };
 };
 

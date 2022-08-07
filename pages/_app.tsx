@@ -1,3 +1,4 @@
+import { Box } from "@components/Box";
 import { Container } from "@components/Container";
 import { useAnalytics } from "@lib/analytics";
 import { Session } from "next-auth";
@@ -20,7 +21,7 @@ const DynamicHeader = dynamic(
   },
   {
     loading: () => {
-      return <header />;
+      return <Box as="header" css={{ height: "$12" }} />;
     },
   }
 );
@@ -42,10 +43,13 @@ const DynamicTooltip = dynamic(async () => {
   return TooltipProvider;
 });
 
-const DynamicCommandPalette = dynamic<{ children?: ReactNode }>(async () => {
-  const { CommandPalette } = await import("../components/CommandPalette");
-  return CommandPalette;
-});
+const DynamicCommandPalette = dynamic<{ children?: ReactNode }>(
+  async () => {
+    const { CommandPalette } = await import("../components/CommandPalette");
+    return CommandPalette;
+  },
+  { ssr: false }
+);
 
 const globalStyles = globalCss({
   /**

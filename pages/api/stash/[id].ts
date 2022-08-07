@@ -30,6 +30,8 @@ export default async function handler(
     if (req.method === "PATCH") {
       const id = req.query.id as string;
       const reqBody: CreateOrUpdateStashInput = JSON.parse(req.body);
+      const protocol = req.headers["x-forwarded-proto"] || "http";
+      const baseUrl = req ? `${protocol}://${req.headers.host}` : "";
 
       console.log("[api/stash] PATCH reqBody", reqBody);
 
@@ -38,6 +40,19 @@ export default async function handler(
       if (!stash) {
         return res.status(404).json({ message: "Stash not found" });
       }
+
+      const urlToRevalidate = req.url?.replace("/api", "") || "/";
+
+      console.log("[api/stash] PATCH req.url", urlToRevalidate);
+
+      await fetch(
+        `${baseUrl}/api/revalidate?secret=${
+          process.env.NEXT_REVALIDATE_SECERT
+        }&path=${encodeURIComponent(urlToRevalidate)}`
+      ).catch((err) => {
+        console.error("[api/stash] PATCH err", err);
+        throw new Error(err);
+      });
 
       return res.status(200).json(stash);
     }
@@ -70,7 +85,7 @@ export default async function handler(
         });
       }
     }
-    console.error("[api/stash] error", e);
+    console.error("[api/stash[id]] error", e);
     return res.status(500).send({ message: e.message });
   }
 }
