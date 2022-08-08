@@ -26,7 +26,6 @@ const StashPage: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 }) => {
   const { data, mutate, isLoading, isValidating } = useStashes({
     fallbackData,
-    revalidateIfStale: true,
     revalidateOnMount: false,
   });
 
