@@ -33,7 +33,6 @@ export const getStaticProps = async ({ params: { id = "" } = {} }) => {
       id: stash?.id,
       stash,
     },
-    revalidate: 1,
   };
 };
 

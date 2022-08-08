@@ -41,18 +41,15 @@ export default async function handler(
         return res.status(404).json({ message: "Stash not found" });
       }
 
-      const urlToRevalidate = req.url?.replace("/api", "") || "/";
+      // const urlToRevalidate = req.url?.replace("/api", "") || "/";
 
-      console.log("[api/stash] PATCH req.url", urlToRevalidate);
+      console.log("[api/stash] PATCH req.url", id);
 
       await fetch(
-        `${baseUrl}/api/revalidate?secret=${
-          process.env.NEXT_REVALIDATE_SECERT
-        }&path=${encodeURIComponent(urlToRevalidate)}`
-      ).catch((err) => {
-        console.error("[api/stash] PATCH err", err);
-        throw new Error(err);
-      });
+        `${baseUrl}/api/revalidate?secret=${encodeURIComponent(
+          process.env.NEXT_REVALIDATE_SECERT as string
+        )}&path=${encodeURIComponent(`/stash/edit/${id}`)}`
+      );
 
       return res.status(200).json(stash);
     }
