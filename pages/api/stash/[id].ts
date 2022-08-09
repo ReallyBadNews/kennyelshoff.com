@@ -10,7 +10,9 @@ export default async function handler(
 ) {
   try {
     const session = await getSession({ req });
-    console.log("[api/stash] session", session);
+
+    const protocol = req.headers["x-forwarded-proto"] || "http";
+    const baseUrl = req ? `${protocol}://${req.headers.host}` : "";
 
     if (req.method === "GET") {
       const id = req.query.id as string;
@@ -19,6 +21,12 @@ export default async function handler(
       if (!stash) {
         return res.status(404).send({ message: "Stash not found" });
       }
+
+      // TOOD: Make sure caching values are correct
+      res.setHeader(
+        "Cache-Control",
+        "public, s-maxage=1200, stale-while-revalidate=600"
+      );
 
       return res.status(200).json(stash);
     }
@@ -30,10 +38,6 @@ export default async function handler(
     if (req.method === "PATCH") {
       const id = req.query.id as string;
       const reqBody: CreateOrUpdateStashInput = JSON.parse(req.body);
-      const protocol = req.headers["x-forwarded-proto"] || "http";
-      const baseUrl = req ? `${protocol}://${req.headers.host}` : "";
-
-      console.log("[api/stash] PATCH reqBody", reqBody);
 
       const stash = await updateStashById(id, reqBody);
 
@@ -41,14 +45,22 @@ export default async function handler(
         return res.status(404).json({ message: "Stash not found" });
       }
 
-      // const urlToRevalidate = req.url?.replace("/api", "") || "/";
+      // TODO: implement revalidate for all pages that use this stash
+      const pathsToRevalidate = [
+        `/stash`,
+        `/stash/${stash.slug}`,
+        `/stash/edit/${id}`,
+        ...stash.tags.map((tag) => {
+          return `/stash/tags/${tag.slug}`;
+        }),
+      ];
 
-      console.log("[api/stash] PATCH req.url", id);
+      console.log("[api/stash] pathsToRevalidate", pathsToRevalidate);
 
       await fetch(
         `${baseUrl}/api/revalidate?secret=${encodeURIComponent(
           process.env.NEXT_REVALIDATE_SECERT as string
-        )}&path=${encodeURIComponent(`/stash/edit/${id}`)}`
+        )}&paths=${encodeURIComponent(JSON.stringify(pathsToRevalidate))}`
       );
 
       return res.status(200).json(stash);
@@ -66,6 +78,12 @@ export default async function handler(
       if (!stash) {
         return res.status(404).json({ message: "Stash not found" });
       }
+
+      await fetch(
+        `${baseUrl}/api/revalidate?secret=${encodeURIComponent(
+          process.env.NEXT_REVALIDATE_SECERT as string
+        )}&path=${encodeURIComponent(`/stash/edit/${id}`)}`
+      );
 
       return res.status(200).json({ message: "Stash deleted" });
     }
