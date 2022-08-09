@@ -70,7 +70,6 @@ export const getStaticProps = async ({ params: { slug = "" } = {} }) => {
       stash,
       images,
     },
-    revalidate: 10,
   };
 };
 
@@ -80,7 +79,12 @@ const StashDetailPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 }) => {
   const { data: session } = useSession();
   const router = useRouter();
-  const { data: allStashes, mutate: mutateAllStashes } = useStashes({});
+  const { data: allStashes, mutate: mutateAllStashes } = useStashes({
+    revalidateOnFocus: false,
+    revalidateOnMount: false,
+    revalidateOnReconnect: false,
+    revalidateIfStale: false,
+  });
   const { stash, mutate } = useStash({
     id: fallbackData?.id,
     fallbackData,
@@ -100,7 +104,6 @@ const StashDetailPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     });
 
     await mutateAllStashes(async () => {
-      // let's update the todo with ID `1` to be completed,
       // this API returns the updated data
       await fetch(`/api/stash/${id}`, {
         method: "DELETE",
