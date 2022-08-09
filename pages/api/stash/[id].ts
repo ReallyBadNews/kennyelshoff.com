@@ -3,11 +3,9 @@ import { CreateOrUpdateStashInput } from "@lib/types";
 import { Prisma } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
+import { withSentry } from "@sentry/nextjs";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const session = await getSession({ req });
     console.log("[api/stash] session", session);
@@ -45,6 +43,7 @@ export default async function handler(
 
       console.log("[api/stash] PATCH req.url", id);
 
+      // TODO: pass `path` as a csv string to revalidate
       await fetch(
         `${baseUrl}/api/revalidate?secret=${encodeURIComponent(
           process.env.NEXT_REVALIDATE_SECERT as string
@@ -85,4 +84,12 @@ export default async function handler(
     console.error("[api/stash[id]] error", e);
     return res.status(500).send({ message: e.message });
   }
-}
+};
+
+export default withSentry(handler);
+
+export const config = {
+  api: {
+    externalResolver: true,
+  },
+};
