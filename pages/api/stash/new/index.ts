@@ -11,7 +11,9 @@ export default async function handler(
 ) {
   try {
     const session = await getSession({ req });
-    console.log("[api/stash] session", session);
+
+    const protocol = req.headers["x-forwarded-proto"] || "http";
+    const baseUrl = req ? `${protocol}://${req.headers.host}` : "";
 
     if (session?.user?.role !== "ADMIN") {
       return res.status(401).send({ message: "Unauthorized" });
@@ -27,6 +29,21 @@ export default async function handler(
       }
 
       const newStash = await createStash({ ...reqBody, author: session.user });
+
+      const pathsToRevalidate = [
+        `/stash`,
+        `/stash/${newStash.slug}`,
+        `/stash/edit/${newStash.id}`,
+        ...newStash.tags.map((tag) => {
+          return `/stash/tags/${tag.slug}`;
+        }),
+      ];
+
+      await fetch(
+        `${baseUrl}/api/revalidate?secret=${encodeURIComponent(
+          process.env.NEXT_REVALIDATE_SECRET as string
+        )}&paths=${encodeURIComponent(JSON.stringify(pathsToRevalidate))}`
+      );
 
       return res.status(201).json(newStash);
     }
