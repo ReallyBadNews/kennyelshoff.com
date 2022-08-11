@@ -6,7 +6,7 @@ export default async function handler(
 ) {
   console.log("[api/revalidate] req.query", req.query);
   // Check for secret to confirm this is a valid request
-  if (req.query.secret !== process.env.NEXT_REVALIDATE_SECERT) {
+  if (req.query.secret !== process.env.NEXT_REVALIDATE_SECRET) {
     console.error("[api/revalidate] invalid secret");
     return res.status(401).json({ message: "Invalid token" });
   }
