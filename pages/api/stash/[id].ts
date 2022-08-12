@@ -22,12 +22,6 @@ export default async function handler(
         return res.status(404).send({ message: "Stash not found" });
       }
 
-      // TOOD: Make sure caching values are correct
-      res.setHeader(
-        "Cache-Control",
-        "public, s-maxage=1200, stale-while-revalidate=600"
-      );
-
       return res.status(200).json(stash);
     }
 
