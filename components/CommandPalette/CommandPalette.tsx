@@ -60,7 +60,7 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
       name: "Dark",
       keywords: "dark theme",
       section: "",
-      shortcut: ["d"],
+      shortcut: ["t", "d"],
       perform: () => {
         return setTheme("dark");
       },
@@ -71,7 +71,7 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
       name: "Light",
       keywords: "light theme",
       section: "",
-      shortcut: ["l"],
+      shortcut: ["t", "l"],
       perform: () => {
         return setTheme("light");
       },
@@ -82,7 +82,6 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
       name: "System",
       keywords: "system theme",
       section: "",
-      shortcut: ["s"],
       perform: () => {
         return setTheme("system");
       },
