@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { prisma } from "@lib/prisma";
+import { getPlaiceholder } from "plaiceholder";
 import { CreateOrUpdateStashInput } from "./types";
 import { getHostname, slugify } from "./utils";
 import { generateMDX } from "./mdx";
@@ -72,8 +73,11 @@ export const getStashById = async (id: string | number) => {
     include: {
       tags: true,
       author: true,
+      image: true,
     },
   });
+
+  console.log("[getStashById] stash", stash);
 
   if (!stash) return null;
 
@@ -82,6 +86,15 @@ export const getStashById = async (id: string | number) => {
     date: stash.createdAt.toISOString(),
     createdAt: stash.createdAt.toISOString(),
     updatedAt: stash.updatedAt.toISOString(),
+    ...(stash.image
+      ? {
+          image: {
+            ...stash.image,
+            createdAt: stash.image.createdAt.toISOString(),
+            updatedAt: stash.image.updatedAt.toISOString(),
+          },
+        }
+      : {}),
     ...(stash.author
       ? {
           author: {
@@ -100,6 +113,7 @@ export const getStashBySlug = async (slug: string) => {
     include: {
       tags: true,
       author: true,
+      image: true,
     },
   });
 
@@ -107,6 +121,15 @@ export const getStashBySlug = async (slug: string) => {
 
   return {
     ...stash,
+    ...(stash.image
+      ? {
+          image: {
+            ...stash.image,
+            createdAt: stash.image.createdAt.toISOString(),
+            updatedAt: stash.image.updatedAt.toISOString(),
+          },
+        }
+      : {}),
     ...(stash?.author
       ? {
           author: {
@@ -127,6 +150,7 @@ export const createStash = async (payload: CreateOrUpdateStashInput) => {
     ...payload,
     author: undefined,
     tags: undefined,
+    image: undefined,
   };
 
   if (payload.tags) {
@@ -136,6 +160,7 @@ export const createStash = async (payload: CreateOrUpdateStashInput) => {
       : payload.tags.split(",").map((tag) => {
           return tag.trim();
         });
+
     requestBody.tags = {
       connectOrCreate: tagArray.map((tag) => {
         return {
@@ -148,6 +173,26 @@ export const createStash = async (payload: CreateOrUpdateStashInput) => {
           },
         };
       }),
+    };
+  }
+
+  // Get plaiceholder data for the image
+  if (payload.image) {
+    const { base64, img } = await getPlaiceholder(payload.image);
+
+    requestBody.image = {
+      connectOrCreate: {
+        where: {
+          src: img.src,
+        },
+        create: {
+          src: img.src,
+          height: img.height,
+          width: img.width,
+          blurDataURL: base64,
+          alt: payload.imageAlt || "Header image",
+        },
+      },
     };
   }
 
@@ -171,6 +216,7 @@ export const createStash = async (payload: CreateOrUpdateStashInput) => {
     include: {
       tags: true,
       author: true,
+      image: true,
     },
   });
 
@@ -197,6 +243,7 @@ export const updateStashById = async (
     ...payload,
     author: undefined,
     tags: undefined,
+    image: undefined,
   };
 
   if (payload.tags) {
@@ -206,6 +253,7 @@ export const updateStashById = async (
       : payload.tags.split(",").map((tag) => {
           return tag.trim();
         });
+
     requestBody.tags = {
       connectOrCreate: tagArray.map((tag) => {
         return {
@@ -223,6 +271,25 @@ export const updateStashById = async (
           name: tag,
         };
       }),
+    };
+  }
+
+  // Get plaiceholder data for the image
+  if (payload.image) {
+    const { base64, img } = await getPlaiceholder(payload.image);
+    requestBody.image = {
+      connectOrCreate: {
+        where: {
+          src: img.src,
+        },
+        create: {
+          src: img.src,
+          height: img.height,
+          width: img.width,
+          blurDataURL: base64,
+          alt: payload.imageAlt || "Header image",
+        },
+      },
     };
   }
 
@@ -270,6 +337,7 @@ export const deleteStashById = async (id: string | number) => {
     },
     include: {
       tags: true,
+      image: true,
     },
   });
 
@@ -288,6 +356,7 @@ export const getStashesByTag = async (tag: string) => {
     include: {
       tags: true,
       author: true,
+      image: true,
     },
   });
 

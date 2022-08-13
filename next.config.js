@@ -18,7 +18,11 @@ module.exports = withBundleAnalyzer(
         browsersListForSwc: true,
       },
       images: {
-        domains: ["images.unsplash.com", "avatars.githubusercontent.com"],
+        domains: [
+          "images.unsplash.com",
+          "avatars.githubusercontent.com",
+          "code.visualstudio.com",
+        ],
       },
     })
   )

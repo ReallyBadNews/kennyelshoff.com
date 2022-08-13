@@ -70,6 +70,8 @@ export interface UnsplashViews {
 export type CreateOrUpdateStashInput = Stash & {
   tags?: string[] | string;
   author?: Session["user"];
+  image?: string;
+  imageAlt?: string;
 };
 
 const stashWithTags = Prisma.validator<Prisma.StashArgs>()({

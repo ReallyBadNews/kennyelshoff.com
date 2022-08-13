@@ -58,7 +58,7 @@ const NewStashPage: NextPage = () => {
           <Stack css={{ stackGap: "$4" }}>
             <Stack css={{ stackGap: "$2" }}>
               <Label htmlFor="title">Title:</Label>
-              <Input id="title" placeholder="title" {...register("title")} />
+              <Input id="title" placeholder="Title" {...register("title")} />
               {errors.title?.type === "required" && "Title is required"}
             </Stack>
             <Stack css={{ stackGap: "$2" }}>
@@ -77,6 +77,10 @@ const NewStashPage: NextPage = () => {
             <Stack css={{ stackGap: "$2" }}>
               <Label htmlFor="tags">Tags:</Label>
               <Input id="tags" placeholder="Tags" {...register("tags")} />
+            </Stack>
+            <Stack css={{ stackGap: "$2" }}>
+              <Label htmlFor="image">Image:</Label>
+              <Input id="image" placeholder="Image" {...register("image")} />
             </Stack>
             <Stack css={{ stackGap: "$2" }}>
               <Label htmlFor="body">Body:</Label>

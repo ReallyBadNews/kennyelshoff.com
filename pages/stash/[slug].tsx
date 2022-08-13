@@ -1,6 +1,8 @@
 import { Badge } from "@components/Badge";
+import { Box } from "@components/Box";
 import { Button, LinkButton } from "@components/Button";
 import { Heading } from "@components/Heading";
+import { Image } from "@components/Image";
 import { MDXComponents } from "@components/MDXComponents";
 import NextLink from "@components/NextLink";
 import Page from "@components/Page";
@@ -8,7 +10,6 @@ import { Paragraph } from "@components/Paragraph";
 import { Stack } from "@components/Stack";
 import { Text } from "@components/Text";
 import { useStash, useStashes } from "@hooks/use-stash";
-import { getAllImagePathsFromDir } from "@lib/images";
 import { getAllStashes, getStashBySlug, Stash } from "@lib/stash";
 import { formatDate } from "@lib/utils";
 import { getMDXComponent } from "mdx-bundler/client";
@@ -16,9 +17,7 @@ import { GetStaticPaths, InferGetStaticPropsType } from "next";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { getPlaiceholder } from "plaiceholder";
 import { FC, useMemo } from "react";
-import { MDXImages } from "types";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const { stashes: allStashes } = await getAllStashes();
@@ -43,39 +42,17 @@ export const getStaticProps = async ({ params: { slug = "" } = {} }) => {
   //   };
   // }
 
-  const imagePaths = getAllImagePathsFromDir("stash");
-
-  const images = await Promise.all(
-    imagePaths.map(async (src) => {
-      const { base64, img } = await getPlaiceholder(src);
-
-      return {
-        ...img,
-        blurDataURL: base64,
-      };
-    })
-  ).then((values) => {
-    const result = values.reduce<MDXImages>((acc, curr) => {
-      return {
-        ...acc,
-        [curr.src]: curr,
-      };
-    }, {});
-
-    return result;
-  });
+  console.log("[STASH]", { stash });
 
   return {
     props: {
       stash,
-      images,
     },
   };
 };
 
 const StashDetailPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   stash: fallbackData,
-  images,
 }) => {
   const { data: session } = useSession();
   const router = useRouter();
@@ -139,6 +116,15 @@ const StashDetailPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
           {stash.title}
         </Heading>
       )}
+      {stash?.image ? (
+        <Box css={{ my: "$5" }}>
+          <Image
+            css={{ borderRadius: "$md", overflow: "hidden" }}
+            placeholder="blur"
+            {...stash.image}
+          />
+        </Box>
+      ) : null}
       <Stack
         css={{
           stackGap: "$3",
@@ -194,7 +180,7 @@ const StashDetailPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
           </Stack>
         ) : null}
       </Stack>
-      {MDXContent ? <MDXContent components={MDXComponents(images)} /> : null}
+      {MDXContent ? <MDXContent components={MDXComponents()} /> : null}
     </Page>
   );
 };
