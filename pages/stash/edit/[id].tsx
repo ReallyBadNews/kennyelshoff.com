@@ -25,7 +25,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params: { id = "" } = {} }) => {
-  console.log("[STASH EDIT]", { id });
   const stash = await getStashById(id);
 
   return {

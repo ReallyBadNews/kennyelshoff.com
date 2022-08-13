@@ -42,8 +42,6 @@ export const getStaticProps = async ({ params: { slug = "" } = {} }) => {
   //   };
   // }
 
-  console.log("[STASH]", { stash });
-
   return {
     props: {
       stash,
