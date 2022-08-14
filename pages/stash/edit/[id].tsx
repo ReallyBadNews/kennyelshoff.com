@@ -58,6 +58,8 @@ const StashEditPage = ({
           return tag.name;
         })
         .join(", "),
+      image: fallbackData?.image?.src,
+      imageAlt: fallbackData?.image?.alt,
       body: fallbackData?.body,
     },
   });
@@ -117,6 +119,14 @@ const StashEditPage = ({
           <Stack css={{ stackGap: "$2" }}>
             <Label htmlFor="tags">Tags:</Label>
             <Input id="tags" placeholder="Tags" {...register("tags")} />
+          </Stack>
+          <Stack css={{ stackGap: "$2" }}>
+            <Label htmlFor="image-alt">Image Alt Text:</Label>
+            <Input
+              id="image-alt"
+              placeholder="Image Alt Text"
+              {...register("imageAlt")}
+            />
           </Stack>
           <Stack css={{ stackGap: "$2" }}>
             <Label htmlFor="image">Image:</Label>

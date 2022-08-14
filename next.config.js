@@ -22,6 +22,7 @@ module.exports = withBundleAnalyzer(
           "images.unsplash.com",
           "avatars.githubusercontent.com",
           "code.visualstudio.com",
+          "elshoff.s3-us-east-2.amazonaws.com",
         ],
       },
     })
