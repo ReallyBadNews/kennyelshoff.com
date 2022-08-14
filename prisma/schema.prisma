@@ -24,13 +24,29 @@ model Stash {
   host        String?
   title       String   @db.VarChar(280)
   slug        String   @unique @db.VarChar(280)
-  image       String?  @db.VarChar(512)
+  image       Image?
   description String   @db.VarChar(2048)
   body        String?  @db.Text
   mdxBody     String?  @db.Text
   tags        Tag[]
 
   @@index([host, slug])
+}
+
+model Image {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  height      Int      @db.Int
+  width       Int      @db.Int
+  type        String?  @db.VarChar(128)
+  src         String   @db.VarChar(512)
+  alt         String   @db.VarChar(512)
+  blurDataURL String   @db.VarChar(512)
+  stash       Stash    @relation(fields: [id], references: [id])
+
+  @@unique([src])
+  @@index([src])
 }
 
 model Tag {

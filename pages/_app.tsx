@@ -1,30 +1,18 @@
-import { Box } from "@components/Box";
 import { Container } from "@components/Container";
+import { Header } from "@components/Header";
 import { useAnalytics } from "@lib/analytics";
 import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
 import type { AppProps as NextAppProps } from "next/app";
 import dynamic from "next/dynamic";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { darkTheme, globalCss } from "../stitches.config";
 
 // modified version - allows for custom pageProps type, falling back to 'any'
 type AppProps<P = any> = {
   pageProps: P;
 } & Omit<NextAppProps<P>, "pageProps">;
-
-const DynamicHeader = dynamic(
-  async () => {
-    const { Header } = await import("../components/Header");
-    return Header;
-  },
-  {
-    loading: () => {
-      return <Box as="header" css={{ height: "$12" }} />;
-    },
-  }
-);
 
 const DynamicFooter = dynamic(
   async () => {
@@ -140,7 +128,7 @@ function BabaBooey({
               }}
               size="2"
             >
-              <DynamicHeader />
+              <Header />
               <Component {...pageProps} />
               <DynamicFooter />
             </Container>

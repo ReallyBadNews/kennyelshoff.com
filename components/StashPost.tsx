@@ -11,7 +11,7 @@ import NextLink from "./NextLink";
 import { Paragraph } from "./Paragraph";
 import { Stack } from "./Stack";
 
-interface StashProps extends Stash {
+interface StashProps extends Omit<Stash, "image"> {
   deleteHandler?: (id: string) => void | Promise<void>;
 }
 
