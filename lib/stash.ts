@@ -239,18 +239,20 @@ export const updateStashById = async (
     queryId = id;
   }
 
+  const { imageAlt, ...updatePayload } = payload;
+
   const requestBody: Prisma.StashUpdateInput = {
-    ...payload,
+    ...updatePayload,
     author: undefined,
     tags: undefined,
     image: undefined,
   };
 
-  if (payload.tags) {
+  if (updatePayload.tags) {
     // convert tags from string to array
-    const tagArray = Array.isArray(payload.tags)
-      ? payload.tags
-      : payload.tags.split(",").map((tag) => {
+    const tagArray = Array.isArray(updatePayload.tags)
+      ? updatePayload.tags
+      : updatePayload.tags.split(",").map((tag) => {
           return tag.trim();
         });
 
@@ -275,8 +277,8 @@ export const updateStashById = async (
   }
 
   // Get plaiceholder data for the image
-  if (payload.image) {
-    const { base64, img } = await getPlaiceholder(payload.image);
+  if (updatePayload.image) {
+    const { base64, img } = await getPlaiceholder(updatePayload.image);
     requestBody.image = {
       connectOrCreate: {
         where: {
@@ -287,14 +289,14 @@ export const updateStashById = async (
           height: img.height,
           width: img.width,
           blurDataURL: base64,
-          alt: payload.imageAlt || "Header image",
+          alt: imageAlt || "Header image",
         },
       },
     };
   }
 
-  const mdxBody = payload.body
-    ? await generateMDX({ source: payload.body })
+  const mdxBody = updatePayload.body
+    ? await generateMDX({ source: updatePayload.body })
     : null;
   requestBody.mdxBody = mdxBody?.code || undefined;
 
@@ -310,6 +312,7 @@ export const updateStashById = async (
     data: requestBody,
     include: {
       tags: true,
+      image: true,
     },
   });
 

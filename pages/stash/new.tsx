@@ -83,6 +83,14 @@ const NewStashPage: NextPage = () => {
               <Input id="image" placeholder="Image" {...register("image")} />
             </Stack>
             <Stack css={{ stackGap: "$2" }}>
+              <Label htmlFor="image-alt">Image Alt Text:</Label>
+              <Input
+                id="image-alt"
+                placeholder="Image Alt Text"
+                {...register("imageAlt")}
+              />
+            </Stack>
+            <Stack css={{ stackGap: "$2" }}>
               <Label htmlFor="body">Body:</Label>
               <Input
                 as="textarea"
