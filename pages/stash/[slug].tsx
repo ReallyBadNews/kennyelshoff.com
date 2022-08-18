@@ -117,9 +117,13 @@ const StashDetailPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
       {stash?.image ? (
         <Box css={{ my: "$5" }}>
           <Image
+            alt={stash.image.alt}
+            blurDataURL={stash.image.blurDataURL}
             css={{ borderRadius: "$md", overflow: "hidden" }}
+            height={stash.image.height}
             placeholder="blur"
-            {...stash.image}
+            src={stash.image.src}
+            width={stash.image.width}
           />
         </Box>
       ) : null}
