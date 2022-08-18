@@ -77,8 +77,6 @@ export const getStashById = async (id: string | number) => {
     },
   });
 
-  console.log("[getStashById] stash", stash);
-
   if (!stash) return null;
 
   return {
