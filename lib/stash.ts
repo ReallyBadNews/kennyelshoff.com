@@ -361,6 +361,9 @@ export const getStashesByTag = async (tag: string) => {
       author: true,
       image: true,
     },
+    orderBy: {
+      updatedAt: "desc",
+    },
   });
 
   const serializedStashes = stashes.map((stash) => {
