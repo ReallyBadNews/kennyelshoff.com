@@ -8,6 +8,7 @@ import { getAllStashes, getStashById, NewStash, Stash } from "@lib/stash";
 import { CreateOrUpdateStashInput } from "@lib/types";
 import { useRouter } from "next/router";
 import { GetStaticPaths, InferGetStaticPropsType } from "next/types";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -42,6 +43,7 @@ const StashEditPage = ({
   const router = useRouter();
   const { stash, mutate } = useStash({ id, fallbackData });
   const { mutate: mutateAllStashes } = useStashes({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -65,6 +67,7 @@ const StashEditPage = ({
   });
 
   const onSubmit = handleSubmit(async (data) => {
+    setIsLoading(true);
     const updatedStash = {
       ...stash,
       ...data,
@@ -89,6 +92,7 @@ const StashEditPage = ({
 
       return { stashes: filteredStashes, total: filteredStashes.length };
     }).then(() => {
+      setIsLoading(false);
       // TODO: this is undefined
       router.replace(`/stash/${newStash.slug}`);
     });
@@ -155,7 +159,7 @@ const StashEditPage = ({
               Cancel
             </Button>
             <Button size="2" type="submit">
-              Save
+              {isLoading ? "Saving..." : "Save"}
             </Button>
           </Stack>
         </Stack>
