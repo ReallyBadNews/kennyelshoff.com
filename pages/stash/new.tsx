@@ -9,12 +9,14 @@ import { CreateOrUpdateStashInput } from "@lib/types";
 import { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 const NewStashPage: NextPage = () => {
   const router = useRouter();
   const { data: session } = useSession();
   const { mutate } = useStashes({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -24,6 +26,7 @@ const NewStashPage: NextPage = () => {
   } = useForm<CreateOrUpdateStashInput>();
 
   const onSubmit = handleSubmit(async (data) => {
+    setIsLoading(true);
     await mutate(async (prevData) => {
       const newStash = await fetch(`/api/stash/new`, {
         method: "POST",
@@ -44,6 +47,7 @@ const NewStashPage: NextPage = () => {
       };
     });
 
+    setIsLoading(false);
     router.replace("/stash");
   });
 
@@ -113,7 +117,7 @@ const NewStashPage: NextPage = () => {
                 Cancel
               </Button>
               <Button size="2" type="submit">
-                Create stash
+                {isLoading ? "Saving..." : "Create stash"}
               </Button>
             </Stack>
           </Stack>
