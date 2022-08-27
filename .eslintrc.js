@@ -13,13 +13,11 @@ module.exports = {
     node: true,
   },
   extends: [
-    "next",
     "next/core-web-vitals",
     "airbnb",
     "airbnb-typescript",
     "plugin:react/recommended",
     "plugin:import/typescript",
-    "plugin:@next/next/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
   ],

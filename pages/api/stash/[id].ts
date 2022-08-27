@@ -48,6 +48,7 @@ export default async function handler(
         }),
       ];
 
+      // TODO: Do not revalidate within this api route, it will timeout at scale
       await fetch(
         `${baseUrl}/api/revalidate?secret=${encodeURIComponent(
           process.env.NEXT_REVALIDATE_SECRET as string

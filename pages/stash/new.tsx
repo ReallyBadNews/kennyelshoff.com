@@ -47,8 +47,8 @@ const NewStashPage: NextPage = () => {
       };
     });
 
-    setIsLoading(false);
     router.replace("/stash");
+    setIsLoading(false);
   });
 
   return (
