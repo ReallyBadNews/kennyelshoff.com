@@ -85,17 +85,18 @@ const StashEditPage = ({
     console.log("[STASH EDIT]", { newStash });
 
     await mutate(newStash);
+
     await mutateAllStashes(async (prevData) => {
       const filteredStashes = prevData?.stashes.filter((post) => {
         return post.id !== id;
       }) as Stash[];
 
       return { stashes: filteredStashes, total: filteredStashes.length };
-    }).then(() => {
-      setIsLoading(false);
-      // TODO: this is undefined
-      router.replace(`/stash/${newStash.slug}`);
     });
+
+    router.replace(`/stash/${newStash.slug}`);
+    console.log("[STASH EDIT COMPLETE]");
+    setIsLoading(false);
   });
 
   return (

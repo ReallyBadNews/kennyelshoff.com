@@ -298,7 +298,7 @@ export const updateStashById = async (
   const mdxBody = updatePayload.body
     ? await generateMDX({ source: updatePayload.body })
     : null;
-  requestBody.mdxBody = mdxBody?.code || undefined;
+  requestBody.mdxBody = mdxBody?.code || null;
 
   console.log(
     "[lib/updateStashById] requestBody",
