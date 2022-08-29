@@ -21,12 +21,12 @@ export type NewStash = Prisma.PromiseReturnType<typeof createStash>;
 /**
  * TODO:
 [ ] - Add pagination - https://www.prisma.io/docs/concepts/components/prisma-client/pagination
-[x] - Abstract fetch and tranform into function
-[x] - Convert `createdAt` and `updatedAt` with `.toISOString()`
-[x] - Transform `body` to mdxBody
 */
-export const getAllStashes = async () => {
+
+export const getAllStashes = async ({ take = 25, skip = 0 } = {}) => {
   const stashes = await prisma.stash.findMany({
+    take,
+    skip,
     orderBy: {
       createdAt: "desc",
     },

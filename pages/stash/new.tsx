@@ -116,7 +116,7 @@ const NewStashPage: NextPage = () => {
               >
                 Cancel
               </Button>
-              <Button size="2" type="submit">
+              <Button disabled={isLoading} size="2" type="submit">
                 {isLoading ? "Saving..." : "Create stash"}
               </Button>
             </Stack>
