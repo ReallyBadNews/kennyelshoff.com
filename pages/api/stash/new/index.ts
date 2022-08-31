@@ -21,7 +21,7 @@ export default async function handler(
     if (req.method === "POST") {
       const reqBody = JSON.parse(req.body) as CreateOrUpdateStashInput;
 
-      console.log("[api/stash] reqBody", JSON.stringify(reqBody, null, 2));
+      console.log("[api/stash/new] reqBody", JSON.stringify(reqBody, null, 2));
 
       if (!reqBody.url) {
         return res.status(400).json({ message: "Missing url" });
