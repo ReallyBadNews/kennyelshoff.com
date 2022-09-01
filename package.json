@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.4",
-    "@plaiceholder/next": "^2.4.0",
+    "@plaiceholder/next": "^2.5.0",
     "@prisma/client": "^4.2.1",
     "@radix-ui/colors": "^0.1.8",
     "@radix-ui/react-aspect-ratio": "^0.1.4",
@@ -45,7 +45,7 @@
     "next-auth": "^4.10.3",
     "next-contentlayer": "^0.2.7",
     "next-themes": "^0.2.0",
-    "plaiceholder": "^2.4.0",
+    "plaiceholder": "^2.5.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-hook-form": "^7.34.2",
@@ -84,7 +84,7 @@
     "remark-slug": "^7.0.1",
     "remark-unwrap-images": "^3.0.1",
     "ts-node": "^10.9.1",
-    "typescript": "4.7.4"
+    "typescript": "4.8.2"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
