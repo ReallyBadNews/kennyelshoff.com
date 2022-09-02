@@ -34,6 +34,8 @@ export const getAllStashes = async ({ take = 5, skip = 0 } = {}) => {
     },
   });
 
+  const totalStashes = await prisma.stash.count();
+
   const serializedStashes = stashes.map((stash) => {
     return {
       ...stash,
@@ -54,7 +56,7 @@ export const getAllStashes = async ({ take = 5, skip = 0 } = {}) => {
 
   return {
     stashes: serializedStashes,
-    total: serializedStashes.length,
+    total: totalStashes,
     // derive `page` from `skip` and `take`
     page: skip / take + 1,
   };

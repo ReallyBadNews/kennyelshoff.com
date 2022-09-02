@@ -44,6 +44,7 @@ const NewStashPage: NextPage = () => {
           ? [...prevData.stashes, newStash]
           : [newStash],
         total: (prevData?.total && prevData.total + 1) || 1,
+        page: prevData?.page || 1,
       };
     });
 

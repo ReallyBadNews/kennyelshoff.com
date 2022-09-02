@@ -78,7 +78,8 @@ const StashDetailPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
       return undefined;
     });
 
-    await mutateAllStashes(async () => {
+    // TODO: Return `page`
+    await mutateAllStashes(async (prevData) => {
       // this API returns the updated data
       await fetch(`/api/stash/${id}`, {
         method: "DELETE",
@@ -89,7 +90,11 @@ const StashDetailPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
         return post.id !== id;
       }) as Stash[];
 
-      return { stashes: filteredStashes, total: filteredStashes?.length || 0 };
+      return {
+        stashes: filteredStashes,
+        total: filteredStashes?.length || 0,
+        page: prevData?.page || 1,
+      };
     });
 
     router.replace("/stash");

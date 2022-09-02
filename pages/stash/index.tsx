@@ -69,7 +69,11 @@ const StashPage: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
         return stash.id !== id;
       }) as Stash[];
 
-      return { stashes: filteredStashes, total: filteredStashes.length };
+      return {
+        stashes: filteredStashes,
+        total: filteredStashes.length,
+        page: prevData?.page || 1,
+      };
     });
   };
 
