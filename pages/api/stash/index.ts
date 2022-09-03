@@ -4,8 +4,8 @@ import type { NextApiHandler } from "next";
 import { z } from "zod";
 
 const PaginationSchema = z.object({
-  take: z.number().min(1).max(100).optional(),
-  skip: z.number().min(0).optional(),
+  page: z.number().min(0).optional(),
+  limit: z.number().min(1).max(100).optional(),
 });
 
 const validatePagination = (values: unknown) => {
@@ -20,16 +20,16 @@ const handler: NextApiHandler = async (req, res) => {
       const page = (req.query.page as string) || "1";
       const limit = (req.query.limit as string) || "5";
 
-      console.log("[api/stash]", { page, limit });
-
       const pagination = validatePagination({
-        take: limit ? parseInt(limit, 10) : undefined,
-        skip: page === "1" ? 0 : (parseInt(page, 10) - 1) * parseInt(limit, 10),
+        page: parseInt(page, 10),
+        limit: parseInt(limit, 10),
       });
 
+      console.log("[api/stash]", { pagination });
+
       const stashes = await getAllStashes({
-        take: pagination.take,
-        skip: pagination.skip,
+        page: pagination.page,
+        limit: pagination.limit,
       });
 
       return res.status(200).json(stashes);

@@ -19,12 +19,13 @@ export type NewStash = Prisma.PromiseReturnType<typeof createStash>;
 [ ] - Add pagination - https://www.prisma.io/docs/concepts/components/prisma-client/pagination
       https://stackoverflow.com/questions/73044452/how-to-create-a-paginated-table-using-nextjs-prisma-and-swr
 */
-export const getAllStashes = async ({ take = 5, skip = 0 } = {}) => {
-  console.log("[lib/stash] getAllStashes", { take, skip });
+// export const getAllStashes = async ({ take = 5, skip = 0 } = {}) => {
+export const getAllStashes = async ({ page = 1, limit = 5 } = {}) => {
+  console.log("[lib/stash] getAllStashes", { page, limit });
 
   const stashes = await prisma.stash.findMany({
-    take,
-    skip,
+    take: limit,
+    skip: (page - 1) * limit,
     orderBy: {
       createdAt: "desc",
     },
@@ -57,8 +58,7 @@ export const getAllStashes = async ({ take = 5, skip = 0 } = {}) => {
   return {
     stashes: serializedStashes,
     total: totalStashes,
-    // derive `page` from `skip` and `take`
-    page: skip / take + 1,
+    page,
   };
 };
 
