@@ -60,7 +60,7 @@ const StashPage: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
       section: "",
       parent: "search-stashes",
       perform: () => {
-        return router.push(`/${stash.id}`);
+        return router.push(`/stash/${stash.slug}`);
       },
     });
   });
