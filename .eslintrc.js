@@ -30,6 +30,7 @@ module.exports = {
     // "react/no-unstable-nested-components": ["error", { allowAsProps: true }],
     "arrow-body-style": ["error", "always"],
     "react/react-in-jsx-scope": "off",
+    "react/no-unknown-property": [1, { ignore: ["as"] }],
     "no-console": ["warn", { allow: ["warn", "error"] }],
     "no-underscore-dangle": "off",
     "import/prefer-default-export": "off",
