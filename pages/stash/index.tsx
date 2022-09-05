@@ -90,17 +90,65 @@ const StashPage: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   return (
     <Page
       description="Bookmarks, articles, tweets, notes and other miscellaneous tidbits I feel the need to enumerate. Maybe I can remember where I saved it this time."
-      stackGap="$4"
+      stackGap="$9"
       title="Stash"
     >
-      <Stack css={{ stackGap: "$2" }}>
+      <StashList
+        deleteHandler={deleteHandler}
+        fallbackData={pageIndex === 1 ? fallbackData : undefined}
+        pageIndex={pageIndex}
+        pageLimit={pageLimit}
+      />
+      <div style={{ display: "none" }}>
+        <StashList
+          deleteHandler={deleteHandler}
+          pageIndex={pageIndex + 1}
+          pageLimit={pageLimit}
+        />
+      </div>
+      <Stack
+        css={{
+          stackGap: "$2",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+        direction="row"
+      >
+        <Stack
+          css={{
+            stackGap: "$2",
+            justifyContent: "flex-end",
+            alignItems: "baseline",
+          }}
+          direction="row"
+        >
+          <Button
+            disabled={pageIndex === 1}
+            onClick={() => {
+              setPageIndex(pageIndex - 1);
+              return window.scrollTo(0, 0);
+            }}
+          >
+            Previous
+          </Button>
+          <Text size="0">{`${data?.page} / ${totalPages}`}</Text>
+          <Button
+            disabled={data?.page === totalPages}
+            onClick={() => {
+              setPageIndex(pageIndex + 1);
+              return window.scrollTo(0, 0);
+            }}
+          >
+            Next
+          </Button>
+        </Stack>
         <Stack
           css={{
             stackGap: "$2",
             justifyContent: "flex-end",
             alignItems: "center",
           }}
-          direction="row"
+          direction="row-reverse"
         >
           <Label htmlFor="stash-count">Items per page</Label>
           <Input
@@ -115,46 +163,7 @@ const StashPage: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
             }}
           />
         </Stack>
-        <Stack
-          css={{
-            stackGap: "$2",
-            justifyContent: "flex-end",
-            alignItems: "baseline",
-          }}
-          direction="row"
-        >
-          <Button
-            disabled={pageIndex === 1}
-            onClick={() => {
-              return setPageIndex(pageIndex - 1);
-            }}
-          >
-            Previous
-          </Button>
-          <Text size="0">{`${data?.page} / ${totalPages}`}</Text>
-          <Button
-            disabled={data?.page === totalPages}
-            onClick={() => {
-              return setPageIndex(pageIndex + 1);
-            }}
-          >
-            Next
-          </Button>
-        </Stack>
       </Stack>
-      <StashList
-        deleteHandler={deleteHandler}
-        fallbackData={pageIndex === 1 ? fallbackData : undefined}
-        pageIndex={pageIndex}
-        pageLimit={pageLimit}
-      />
-      <div style={{ display: "none" }}>
-        <StashList
-          deleteHandler={deleteHandler}
-          pageIndex={pageIndex + 1}
-          pageLimit={pageLimit}
-        />
-      </div>
     </Page>
   );
 };

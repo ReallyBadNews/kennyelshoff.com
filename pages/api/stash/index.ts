@@ -25,8 +25,6 @@ const handler: NextApiHandler = async (req, res) => {
         limit: parseInt(limit, 10),
       });
 
-      console.log("[api/stash]", { pagination });
-
       const stashes = await getAllStashes({
         page: pagination.page,
         limit: pagination.limit,
