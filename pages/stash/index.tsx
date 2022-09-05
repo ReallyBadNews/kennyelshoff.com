@@ -2,6 +2,7 @@ import { Button } from "@components/Button";
 import { Input } from "@components/Input";
 import { Label } from "@components/Label";
 import Page from "@components/Page";
+import { Select, SelectItem } from "@components/Select";
 import { Stack } from "@components/Stack";
 import { StashList } from "@components/Stash/StashList";
 import { Text } from "@components/Text";
@@ -150,6 +151,9 @@ const StashPage: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
           }}
           direction="row-reverse"
         >
+          <Select>
+            <SelectItem value="25">25</SelectItem>
+          </Select>
           <Label htmlFor="stash-count">Items per page</Label>
           <Input
             css={{ alignSelf: "flex-end", width: "6ch" }}
