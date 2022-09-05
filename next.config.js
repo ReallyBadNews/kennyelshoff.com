@@ -13,10 +13,6 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 module.exports = withBundleAnalyzer(
   withContentlayer(
     withPlaiceholder({
-      experimental: {
-        legacyBrowsers: false,
-        browsersListForSwc: true,
-      },
       images: {
         domains: [
           "images.unsplash.com",

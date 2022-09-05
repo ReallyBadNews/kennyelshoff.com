@@ -91,11 +91,14 @@ const StashEditPage = ({
         return post.id !== id;
       }) as Stash[];
 
-      return { stashes: filteredStashes, total: filteredStashes.length };
+      return {
+        stashes: filteredStashes,
+        total: filteredStashes.length,
+        page: prevData?.page || 1,
+      };
     });
 
     router.replace(`/stash/${newStash.slug}`);
-    console.log("[STASH EDIT COMPLETE]");
     setIsLoading(false);
   });
 
@@ -159,7 +162,7 @@ const StashEditPage = ({
             >
               Cancel
             </Button>
-            <Button size="2" type="submit">
+            <Button disabled={isLoading} size="2" type="submit">
               {isLoading ? "Saving..." : "Save"}
             </Button>
           </Stack>

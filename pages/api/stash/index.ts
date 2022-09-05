@@ -1,11 +1,34 @@
 import { getAllStashes } from "@lib/stash";
 import { Prisma } from "@prisma/client";
 import type { NextApiHandler } from "next";
+import { z } from "zod";
+
+const PaginationSchema = z.object({
+  page: z.number().min(0).optional(),
+  limit: z.number().min(1).max(100).optional(),
+});
+
+const validatePagination = (values: unknown) => {
+  const parsedData = PaginationSchema.parse(values);
+
+  return parsedData;
+};
 
 const handler: NextApiHandler = async (req, res) => {
   try {
     if (req.method === "GET") {
-      const stashes = await getAllStashes();
+      const page = (req.query.page as string) || "1";
+      const limit = (req.query.limit as string) || "5";
+
+      const pagination = validatePagination({
+        page: parseInt(page, 10),
+        limit: parseInt(limit, 10),
+      });
+
+      const stashes = await getAllStashes({
+        page: pagination.page,
+        limit: pagination.limit,
+      });
 
       return res.status(200).json(stashes);
     }

@@ -6,10 +6,6 @@ import { getHostname, slugify } from "./utils";
 import { generateMDX } from "./mdx";
 
 // TODO: https://www.prisma.io/docs/concepts/components/prisma-client/advanced-type-safety/operating-against-partial-structures-of-model-types#problem-getting-access-to-the-return-type-of-a-function
-// export type Stashes = Awaited<ReturnType<typeof getAllStashes>>["stashes"];
-// export type Stash = Stashes[number];
-// type ThenArg<T> = T extends Promise<infer U> ? U : T;
-// export type TagsWithPosts = ThenArg<ReturnType<typeof getStashesByTag>>;
 export type Stashes = Prisma.PromiseReturnType<
   typeof getStashesByTag
 >["stashes"];
@@ -21,12 +17,13 @@ export type NewStash = Prisma.PromiseReturnType<typeof createStash>;
 /**
  * TODO:
 [ ] - Add pagination - https://www.prisma.io/docs/concepts/components/prisma-client/pagination
-[x] - Abstract fetch and tranform into function
-[x] - Convert `createdAt` and `updatedAt` with `.toISOString()`
-[x] - Transform `body` to mdxBody
+      https://stackoverflow.com/questions/73044452/how-to-create-a-paginated-table-using-nextjs-prisma-and-swr
 */
-export const getAllStashes = async () => {
+// export const getAllStashes = async ({ take = 5, skip = 0 } = {}) => {
+export const getAllStashes = async ({ page = 1, limit = 5 } = {}) => {
   const stashes = await prisma.stash.findMany({
+    take: limit,
+    skip: (page - 1) * limit,
     orderBy: {
       createdAt: "desc",
     },
@@ -35,6 +32,8 @@ export const getAllStashes = async () => {
       author: true,
     },
   });
+
+  const totalStashes = await prisma.stash.count();
 
   const serializedStashes = stashes.map((stash) => {
     return {
@@ -56,7 +55,8 @@ export const getAllStashes = async () => {
 
   return {
     stashes: serializedStashes,
-    total: serializedStashes.length,
+    total: totalStashes,
+    page,
   };
 };
 

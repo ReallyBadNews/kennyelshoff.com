@@ -3,7 +3,7 @@ import { Heading } from "@components/Heading";
 import Page from "@components/Page";
 import { Separator } from "@components/Separator";
 import { Stack } from "@components/Stack";
-import { StashPost } from "@components/StashPost";
+import { StashPost } from "@components/Stash/StashPost";
 import { getAllStashes, getStashesByTag } from "@lib/stash";
 import { GetStaticPaths, InferGetStaticPropsType } from "next";
 import { FC, Fragment } from "react";

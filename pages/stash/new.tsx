@@ -44,6 +44,7 @@ const NewStashPage: NextPage = () => {
           ? [...prevData.stashes, newStash]
           : [newStash],
         total: (prevData?.total && prevData.total + 1) || 1,
+        page: prevData?.page || 1,
       };
     });
 
@@ -116,7 +117,7 @@ const NewStashPage: NextPage = () => {
               >
                 Cancel
               </Button>
-              <Button size="2" type="submit">
+              <Button disabled={isLoading} size="2" type="submit">
                 {isLoading ? "Saving..." : "Create stash"}
               </Button>
             </Stack>

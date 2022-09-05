@@ -4,12 +4,12 @@ import { getMDXComponent } from "mdx-bundler/client";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useMemo } from "react";
-import { Button, LinkButton } from "./Button";
-import { Heading } from "./Heading";
-import { MDXComponents } from "./MDXComponents";
-import NextLink from "./NextLink";
-import { Paragraph } from "./Paragraph";
-import { Stack } from "./Stack";
+import { Button, LinkButton } from "../Button";
+import { Heading } from "../Heading";
+import { MDXComponents } from "../MDXComponents";
+import NextLink from "../NextLink";
+import { Paragraph } from "../Paragraph";
+import { Stack } from "../Stack";
 
 interface StashProps extends Omit<Stash, "image"> {
   deleteHandler?: (id: string) => void | Promise<void>;
