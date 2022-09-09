@@ -22,7 +22,7 @@
     "@plaiceholder/next": "^2.5.0",
     "@prisma/client": "^4.3.1",
     "@radix-ui/colors": "^0.1.8",
-    "@radix-ui/react-aspect-ratio": "^0.1.4",
+    "@radix-ui/react-aspect-ratio": "^1.0.0",
     "@radix-ui/react-collapsible": "^0.1.6",
     "@radix-ui/react-dialog": "^0.1.7",
     "@radix-ui/react-dropdown-menu": "^0.1.6",
