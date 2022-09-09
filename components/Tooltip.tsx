@@ -4,7 +4,8 @@ import { styled, keyframes } from "stitches.config";
 import { Box } from "./Box";
 import { Text } from "./Text";
 
-type TooltipProps = ComponentProps<typeof TooltipPrimitive.Root> &
+type TooltipPrimitiveProps = ComponentProps<typeof TooltipPrimitive.Root>;
+type TooltipProps = TooltipPrimitiveProps &
   ComponentProps<typeof TooltipPrimitive.Content> & {
     children: ReactElement;
     content: ReactNode;
@@ -56,46 +57,52 @@ export function Tooltip({
   open,
   defaultOpen,
   onOpenChange,
-  multiline = false,
   delayDuration,
+  disableHoverableContent,
+  multiline,
   ...props
 }: TooltipProps) {
+  const rootProps = {
+    open,
+    defaultOpen,
+    onOpenChange,
+    delayDuration,
+    disableHoverableContent,
+  };
+
   return (
-    <TooltipPrimitive.Root
-      defaultOpen={defaultOpen}
-      delayDuration={delayDuration}
-      open={open}
-      onOpenChange={onOpenChange}
-    >
+    <TooltipPrimitive.Root {...rootProps}>
       <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
-      <TooltipContent
-        align="center"
-        side="top"
-        sideOffset={4}
-        {...props}
-        multiline={multiline}
-      >
-        <Text
-          as="p"
-          css={{
-            color: "$loContrast",
-            lineHeight: multiline ? "20px" : undefined,
-          }}
-          size="0"
+      <TooltipPrimitive.Portal>
+        <TooltipContent
+          align="center"
+          side="top"
+          sideOffset={4}
+          {...props}
+          multiline={multiline}
         >
-          {content}
-        </Text>
-        <Box css={{ color: "$transparentExtreme" }}>
-          <TooltipPrimitive.Arrow
-            height={5}
-            offset={5}
-            style={{
-              fill: "currentColor",
+          <Text
+            as="p"
+            css={{
+              color: "$loContrast",
+              lineHeight: multiline ? "20px" : undefined,
             }}
-            width={11}
-          />
-        </Box>
-      </TooltipContent>
+            size="0"
+          >
+            {content}
+          </Text>
+          <Box css={{ color: "$transparentExtreme" }}>
+            <TooltipPrimitive.Arrow
+              height={5}
+              offset={5}
+              style={{
+                fill: "currentColor",
+              }}
+              width={11}
+            />
+          </Box>
+        </TooltipContent>
+      </TooltipPrimitive.Portal>
     </TooltipPrimitive.Root>
   );
 }
