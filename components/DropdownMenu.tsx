@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { CheckIcon } from "@radix-ui/react-icons";
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
 import { styled, css, CSS } from "../stitches.config";
@@ -58,11 +58,42 @@ export const separatorCss = css({
 
 export const DropdownMenu = DropdownMenuPrimitive.Root;
 export const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
-export const DropdownMenuContent = styled(
+export const StyledContent = styled(
   DropdownMenuPrimitive.Content,
   menuCss,
   panelStyles
 );
+
+type DropdownMenuContentPrimitiveProps = React.ComponentProps<
+  typeof DropdownMenuPrimitive.Content
+>;
+
+type DropdownMenuContentProps = DropdownMenuContentPrimitiveProps & {
+  css?: CSS;
+};
+
+export const DropdownMenuContent = forwardRef<
+  React.ElementRef<typeof StyledContent>,
+  DropdownMenuContentProps
+>((props, forwardedRef) => {
+  return (
+    <DropdownMenuPrimitive.Portal>
+      <StyledContent {...props} ref={forwardedRef} />
+    </DropdownMenuPrimitive.Portal>
+  );
+});
+
+DropdownMenuContent.displayName = "DropdownMenuContent";
+
+export const DropdownMenuLabel = styled(DropdownMenuPrimitive.Label, labelCss);
+export const DropdownMenuItem = styled(DropdownMenuPrimitive.Item, itemCss);
+export const DropdownMenuRadioGroup = styled(
+  DropdownMenuPrimitive.RadioGroup,
+  {}
+);
+export const DropdownMenuGroup = styled(DropdownMenuPrimitive.Group, {
+  py: "$1",
+});
 
 export const DropdownMenuSeparator = styled(
   DropdownMenuPrimitive.Separator,
@@ -72,8 +103,6 @@ export const DropdownMenuSeparator = styled(
 export const DropdownMenuArrow = styled(DropdownMenuPrimitive.Arrow, {
   fill: "$panel",
 });
-
-export const DropdownMenuItem = styled(DropdownMenuPrimitive.Item, itemCss);
 
 const StyledDropdownMenuRadioItem = styled(
   DropdownMenuPrimitive.RadioItem,
@@ -151,12 +180,3 @@ export const DropdownMenuCheckboxItem = React.forwardRef<
 });
 
 DropdownMenuCheckboxItem.displayName = "DropdownMenuCheckboxItem";
-
-export const DropdownMenuLabel = styled(DropdownMenuPrimitive.Label, labelCss);
-export const DropdownMenuRadioGroup = styled(
-  DropdownMenuPrimitive.RadioGroup,
-  {}
-);
-export const DropdownMenuGroup = styled(DropdownMenuPrimitive.Group, {
-  py: "$1",
-});

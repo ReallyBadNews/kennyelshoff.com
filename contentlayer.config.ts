@@ -74,58 +74,6 @@ export const Post = defineDocumentType(() => {
   };
 });
 
-export const Stash = defineDocumentType(() => {
-  return {
-    name: "Stash",
-    filePathPattern: "stash/**/*.mdx",
-    contentType: "mdx",
-    fields: {
-      title: {
-        type: "string",
-        description: "The title of the stash",
-        required: true,
-      },
-      description: {
-        type: "string",
-        description: "The description of the stash",
-        required: false,
-      },
-      url: {
-        type: "string",
-        description: "The url of the stash",
-        required: false,
-      },
-      date: {
-        type: "date",
-        description: "The date of the stash",
-        required: true,
-      },
-      tags: {
-        type: "list",
-        of: { type: "string" },
-        description: "The tags of the stash",
-        required: false,
-      },
-    },
-    computedFields: {
-      path: {
-        type: "string",
-        resolve: (stash) => {
-          return stash._raw.sourceFileName.split(".")[0];
-        },
-      },
-      slug: {
-        type: "string",
-        description:
-          'The URL path of this page absolute to site root. For example "/posts/helo-wold"',
-        resolve: (stash) => {
-          return `/${stash._raw.flattenedPath}`;
-        },
-      },
-    },
-  };
-});
-
 export const Work = defineDocumentType(() => {
   return {
     name: "Work",
@@ -169,7 +117,7 @@ export const Work = defineDocumentType(() => {
 
 export default makeSource({
   contentDirPath: "content",
-  documentTypes: [Post, Stash, Work],
+  documentTypes: [Post, Work],
   mdx: {
     rehypePlugins: [
       rehypeSlug,
