@@ -54,7 +54,7 @@ export const Header = () => {
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-        alignItems: "flex-start",
+        alignItems: "flex-end",
         "@bp1": { alignItems: "center" },
       }}
     >
@@ -87,13 +87,27 @@ export const Header = () => {
             priority
           />
         </NextLink>
-        <nav>
+        <Box
+          as="nav"
+          css={{
+            position: "fixed",
+            zIndex: 1,
+            bottom: "$4",
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            "@bp1": { position: "initial" },
+          }}
+        >
           <Stack
             as={motion.ul}
             css={{
               stackGap: "$3",
-              p: "0",
+              p: "$2",
               m: "0",
+              backgroundColor: "$orangeA4",
+              border: "1px solid $orangeA6",
+              borderRadius: "$lg",
               li: { listStyle: "none" },
               "@bp1": { stackGap: "$5" },
             }}
@@ -116,10 +130,9 @@ export const Header = () => {
                   <NextLink
                     css={{
                       position: "relative",
-                      px: "$2",
-                      py: "$2",
+                      p: "$2",
                       "&:focus span": {
-                        outline: "2px solid $slate7",
+                        outline: "2px solid $orange7",
                       },
                     }}
                     href={item.path}
@@ -144,7 +157,7 @@ export const Header = () => {
                           position: "absolute",
                           inset: "0",
                           zIndex: -1,
-                          bg: "$slateA4",
+                          bg: "$orangeA4",
                           borderRadius: "$md",
                         }}
                         exit={{ opacity: 0 }}
@@ -159,7 +172,7 @@ export const Header = () => {
               );
             })}
           </Stack>
-        </nav>
+        </Box>
       </Stack>
       <AccountMenu />
     </Box>
