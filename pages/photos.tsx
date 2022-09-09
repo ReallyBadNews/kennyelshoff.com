@@ -52,7 +52,7 @@ export const Photos: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   return (
     <Page>
       <UnsplashStats />
-      <Dialog allowPinchZoom>
+      <Dialog>
         <DialogContent
           css={{
             maxHeight: "96vh",

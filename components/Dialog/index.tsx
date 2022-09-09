@@ -55,6 +55,7 @@ const StyledCloseButton = styled(DialogPrimitive.Close, {
 type DialogContentPrimitiveProps = React.ComponentProps<
   typeof DialogPrimitive.Content
 >;
+
 type DialogContentProps = DialogContentPrimitiveProps & { css?: CSS };
 
 export const DialogContent = React.forwardRef<
