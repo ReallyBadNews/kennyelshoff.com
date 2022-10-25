@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { ImageProps } from "next/image";
+import type { ImageProps } from "next/legacy/image";
 import { CSS, VariantProps } from "stitches.config";
 import { ComponentMap, MDXImages } from "types";
 import { Badge } from "./Badge";

@@ -1,4 +1,4 @@
-import NextImage from "next/image";
+import NextImage from "next/legacy/image";
 import { styled } from "stitches.config";
 
 export const Image = styled(NextImage, {
