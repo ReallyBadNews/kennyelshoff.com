@@ -13,6 +13,8 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 module.exports = withBundleAnalyzer(
   withContentlayer(
     withPlaiceholder({
+      experimental: { appDir: true },
+      swcMinify: true,
       images: {
         domains: [
           "images.unsplash.com",
