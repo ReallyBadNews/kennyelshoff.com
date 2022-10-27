@@ -1,5 +1,5 @@
 import { Box } from "@components/Box";
-import { Image } from "@components/Image";
+import Image from "next/image";
 import NextLink from "@components/NextLink";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
@@ -72,6 +72,7 @@ export const Header = () => {
             height: "$12",
             borderRadius: "$rg",
             overflow: "hidden",
+            display: "block",
           }}
           href="/"
           title="Home"
@@ -80,7 +81,6 @@ export const Header = () => {
             alt="Kenny Elshoff doing a method on a snowboard"
             blurDataURL="data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAEAAQDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAdEAABBAIDAAAAAAAAAAAAAAABAAIFEQMEByJB/8QAFQEBAQAAAAAAAAAAAAAAAAAABQf/xAAbEQACAQUAAAAAAAAAAAAAAAAAAQIDBBIhcf/aAAwDAQACEQMRAD8AqOEZTNIwE3tbTWuy5JrbceziBZaaFk0B4ERFMrzVeXR+DeKP/9k="
             height={48}
-            layout="fixed"
             placeholder="blur"
             src="/images/kenny-2.jpg"
             width={48}

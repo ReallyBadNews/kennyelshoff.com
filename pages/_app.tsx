@@ -66,6 +66,7 @@ const globalStyles = globalCss({
   "img, picture, video, canvas, svg": {
     display: "block",
     maxWidth: "100%",
+    height: "auto",
   },
 
   "input, button, textarea, select": {

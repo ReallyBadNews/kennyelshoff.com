@@ -1,6 +1,6 @@
 import { Gallery } from "@components/Gallery";
 import { Heading } from "@components/Heading";
-import { Image } from "@components/Image";
+import Image from "next/image";
 import { Link } from "@components/Link";
 import { List } from "@components/List";
 import Page from "@components/Page";
@@ -115,17 +115,19 @@ export default function Local4Work({
           css={{ mt: "$3", mb: "-$4", "@bp1": { my: "$5" } }}
           size="2"
         />
-        <Gallery aspectRatio="16 / 9">
+        <Gallery aspectRatio="16 / 9" css={{ position: "relative" }}>
           {images.map((image) => {
             return (
               <Image
                 key={image.src}
-                layout="fill"
-                objectFit="contain"
+                alt="WDIV-TV / Local 4"
+                style={{ objectFit: "contain" }}
                 {...image}
                 height={undefined}
                 placeholder="blur"
+                sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 768px) calc(100vw - 6rem), (max-width: 800px) 702px"
                 width={undefined}
+                fill
               />
             );
           })}

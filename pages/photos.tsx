@@ -1,8 +1,7 @@
-import { Box } from "@components/Box";
 import { Button } from "@components/Button";
 import { Dialog, DialogContent, DialogTrigger } from "@components/Dialog";
 import { Grid } from "@components/Grid";
-import { Image } from "@components/Image";
+import Image from "next/image";
 import UnsplashStats from "@components/metrics/Unsplash";
 import Page from "@components/Page";
 import { Paragraph } from "@components/Paragraph";
@@ -59,23 +58,30 @@ export const Photos: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
             maxWidth: "96vw",
             width: "$full",
             height: "$full",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            overflow: "hidden",
+            "& img": {
+              width: "$full",
+              height: "$full",
+              objectFit: "contain",
+            },
           }}
           onCloseAutoFocus={(e) => {
             return e.preventDefault();
           }}
         >
-          <Box css={{ position: "relative", height: "$full", width: "$full" }}>
-            <Image
-              {...images[zoomedPhoto as number]}
-              css={{ borderRadius: "$sm" }}
-              height={undefined}
-              layout="fill"
-              objectFit="contain"
-              placeholder="blur"
-              src={fallback[zoomedPhoto as number]?.urls.full}
-              width={undefined}
-            />
-          </Box>
+          <Image
+            {...images[zoomedPhoto as number]}
+            alt={pictures[zoomedPhoto as number]?.description || ""}
+            height={undefined}
+            placeholder="blur"
+            sizes="96vw"
+            src={fallback[zoomedPhoto as number]?.urls.regular}
+            width={undefined}
+            fill
+          />
         </DialogContent>
         <Grid
           css={{
@@ -86,10 +92,10 @@ export const Photos: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
             marginLeft: "-50vw",
             "@bp1": {
               minColumnWidth: "440px",
-              px: "$2",
+              px: "$3",
             },
           }}
-          gap="2"
+          gap="3"
         >
           {pictures.map((photo, index) => {
             return (
@@ -100,6 +106,7 @@ export const Photos: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                     position: "relative",
                     height: "700px",
                     overflow: "hidden",
+                    borderRadius: "$none",
                     "@bp1": {
                       borderRadius: "$md",
                     },
@@ -111,17 +118,19 @@ export const Photos: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                   {images.length === pictures.length ? (
                     <Image
                       {...images[index]}
+                      alt={photo.description}
                       height={undefined}
-                      layout="fill"
-                      objectFit="cover"
                       placeholder="blur"
+                      sizes="(max-width: 640px) 100vw, (max-width: 927px) calc(100vw - 2rem), (max-width: 1383px) calc(50vw - 3rem), calc(33vw - 4rem)"
+                      style={{ objectFit: "cover" }}
                       width={undefined}
+                      fill
                     />
                   ) : (
                     <Image
+                      alt={photo.description}
                       height={photo.height}
-                      layout="fill"
-                      objectFit="cover"
+                      sizes="(max-width: 640px) 100vw, (max-width: 927px) calc(100vw - 2rem), (max-width: 1383px) calc(50vw - 3rem), calc(33vw - 4rem)"
                       src={photo.urls.regular}
                       width={photo.width}
                     />

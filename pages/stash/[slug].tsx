@@ -127,6 +127,7 @@ const StashDetailPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
             css={{ borderRadius: "$md", overflow: "hidden" }}
             height={stash.image.height}
             placeholder="blur"
+            sizes="(max-width: 639px) calc(100vw - 2rem), (max-width: 799px) calc(100vw - 6rem), 704px"
             src={stash.image.src}
             width={stash.image.width}
           />
