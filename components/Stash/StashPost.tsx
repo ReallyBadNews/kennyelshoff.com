@@ -2,7 +2,6 @@ import type { Stash } from "@lib/stash";
 import { formatDate } from "@lib/utils";
 import { getMDXComponent } from "mdx-bundler/client";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 import { useMemo } from "react";
 import { Button, LinkButton } from "../Button";
 import { Heading } from "../Heading";
@@ -54,9 +53,9 @@ export function StashPost({
         {session?.user.role === "ADMIN" &&
         typeof deleteHandler === "function" ? (
           <Stack css={{ stackGap: "$2" }} direction="row">
-            <Link href={`/stash/edit/${id}`}>
-              <LinkButton variant="green">Edit</LinkButton>
-            </Link>
+            <LinkButton href={`/stash/edit/${id}`} variant="green">
+              Edit
+            </LinkButton>
             <Button
               variant="red"
               onClick={() => {

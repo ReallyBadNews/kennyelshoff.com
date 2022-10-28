@@ -15,7 +15,7 @@ import { formatDate } from "@lib/utils";
 import { getMDXComponent } from "mdx-bundler/client";
 import { GetStaticPaths, InferGetStaticPropsType } from "next";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
+// import Link from "next/link";
 import { useRouter } from "next/router";
 import { FC, useMemo } from "react";
 
@@ -162,11 +162,11 @@ const StashDetailPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
               </Text>
               {stash.tags.map((tag) => {
                 return (
-                  <Link key={tag.id} href={`/stash/tags/${tag.slug}`} passHref>
-                    <Badge as="a" size="1" variant="gray">
+                  <Badge key={tag.id} size="1" variant="gray">
+                    <NextLink href={`/stash/tags/${tag.slug}`}>
                       {tag.name}
-                    </Badge>
-                  </Link>
+                    </NextLink>
+                  </Badge>
                 );
               })}
             </Stack>
@@ -174,9 +174,9 @@ const StashDetailPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
         </Stack>
         {session?.user.role === "ADMIN" ? (
           <Stack css={{ stackGap: "$2" }} direction="row">
-            <Link href={`/stash/edit/${stash.id}`}>
-              <LinkButton variant="green">Edit</LinkButton>
-            </Link>
+            <LinkButton href={`/stash/edit/${stash.id}`} variant="green">
+              Edit
+            </LinkButton>
             <Button
               variant="red"
               onClick={() => {

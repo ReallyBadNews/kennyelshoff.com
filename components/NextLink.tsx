@@ -1,6 +1,6 @@
-import Link, { LinkProps } from "next/link";
+import { LinkProps } from "next/link";
 import { FC } from "react";
-import { Link as DSLink, LinkProps as DSLinkProps } from "@components/Link";
+import { NextLink as DSLink, LinkProps as DSLinkProps } from "@components/Link";
 import { getHostname, isExternalLink } from "@lib/utils";
 import { Stack } from "./Stack";
 import { Text } from "./Text";
@@ -20,7 +20,7 @@ const NextLink: FC<NextLinkProps> = ({
   shallow,
   prefetch,
   locale,
-  passHref = true,
+  // passHref = true,
   showCitation = false,
   ...styleProps
 }) => {
@@ -53,11 +53,12 @@ const NextLink: FC<NextLinkProps> = ({
 
   return (
     // These props are lifted up to the `Link` element. All others are passed to the `<a>`
-    <Link
-      {...{ passHref, href, as, replace, scroll, shallow, prefetch, locale }}
+    <DSLink
+      {...{ href, as, replace, scroll, shallow, prefetch, locale }}
+      {...styleProps}
     >
-      <DSLink {...styleProps}>{children}</DSLink>
-    </Link>
+      {children}
+    </DSLink>
   );
 };
 

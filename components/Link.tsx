@@ -1,10 +1,11 @@
+import NxLink from "next/link";
 import { styled, VariantProps } from "stitches.config";
 import { Text } from "./Text";
 
 export type LinkProps = React.ComponentProps<typeof Link> &
   VariantProps<typeof Link>;
 
-export const Link = styled("a", {
+const linkStyles = {
   alignItems: "center",
   gap: "$1",
   flexShrink: 0,
@@ -131,4 +132,7 @@ export const Link = styled("a", {
     variant: "contrast",
     outline: undefined,
   },
-});
+};
+
+export const Link = styled("a", linkStyles);
+export const NextLink = styled(NxLink, linkStyles);
