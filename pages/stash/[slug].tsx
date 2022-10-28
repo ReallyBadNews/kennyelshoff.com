@@ -2,7 +2,6 @@ import { Badge } from "@components/Badge";
 import { Box } from "@components/Box";
 import { Button, LinkButton } from "@components/Button";
 import { Heading } from "@components/Heading";
-import { Image } from "@components/Image";
 import { MDXComponents } from "@components/MDXComponents";
 import NextLink from "@components/NextLink";
 import Page from "@components/Page";
@@ -15,7 +14,7 @@ import { formatDate } from "@lib/utils";
 import { getMDXComponent } from "mdx-bundler/client";
 import { GetStaticPaths, InferGetStaticPropsType } from "next";
 import { useSession } from "next-auth/react";
-// import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { FC, useMemo } from "react";
 
@@ -120,11 +119,10 @@ const StashDetailPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
         </Heading>
       )}
       {stash?.image ? (
-        <Box css={{ my: "$5" }}>
+        <Box css={{ my: "$5", borderRadius: "$md", overflow: "hidden" }}>
           <Image
             alt={stash.image.alt}
             blurDataURL={stash.image.blurDataURL}
-            css={{ borderRadius: "$md", overflow: "hidden" }}
             height={stash.image.height}
             placeholder="blur"
             sizes="(max-width: 639px) calc(100vw - 2rem), (max-width: 799px) calc(100vw - 6rem), 704px"
