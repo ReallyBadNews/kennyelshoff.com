@@ -1,4 +1,5 @@
 import { styled } from "stitches.config";
+import NextLink from "./NextLink";
 
 const sharedStyles = {
   // Reset
@@ -338,4 +339,4 @@ const sharedStyles = {
 };
 
 export const Button = styled("button", sharedStyles);
-export const LinkButton = styled("a", sharedStyles);
+export const LinkButton = styled(NextLink, sharedStyles);

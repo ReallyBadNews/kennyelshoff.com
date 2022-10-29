@@ -9,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@components/DropdownMenu";
-import { Image } from "@components/Image";
+import Image from "next/image";
 import { DoubleArrowDownIcon } from "@radix-ui/react-icons";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
@@ -18,6 +18,7 @@ import { Button } from "./Button";
 import { IconButton } from "./IconButton";
 import { Stack } from "./Stack";
 import { Text } from "./Text";
+import { Box } from "./Box";
 
 export const AccountMenu = () => {
   const router = useRouter();
@@ -43,13 +44,20 @@ export const AccountMenu = () => {
               direction="row"
             >
               {session.user.image ? (
-                <Image
-                  css={{ borderRadius: "$round", bg: "$slate5" }}
-                  height={34}
-                  layout="fixed"
-                  src={session?.user.image}
-                  width={34}
-                />
+                <Box
+                  css={{
+                    bg: "$slate5",
+                    borderRadius: "$round",
+                    overflow: "hidden",
+                  }}
+                >
+                  <Image
+                    alt={session.user.name || "Profile picture"}
+                    height={34}
+                    src={session.user.image}
+                    width={34}
+                  />
+                </Box>
               ) : null}
               <Stack css={{ stackGap: "$1" }}>
                 <Text size="0">Signed in as:</Text>

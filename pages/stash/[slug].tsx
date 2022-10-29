@@ -2,7 +2,6 @@ import { Badge } from "@components/Badge";
 import { Box } from "@components/Box";
 import { Button, LinkButton } from "@components/Button";
 import { Heading } from "@components/Heading";
-import { Image } from "@components/Image";
 import { MDXComponents } from "@components/MDXComponents";
 import NextLink from "@components/NextLink";
 import Page from "@components/Page";
@@ -15,7 +14,7 @@ import { formatDate } from "@lib/utils";
 import { getMDXComponent } from "mdx-bundler/client";
 import { GetStaticPaths, InferGetStaticPropsType } from "next";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { FC, useMemo } from "react";
 
@@ -120,13 +119,13 @@ const StashDetailPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
         </Heading>
       )}
       {stash?.image ? (
-        <Box css={{ my: "$5" }}>
+        <Box css={{ my: "$5", borderRadius: "$md", overflow: "hidden" }}>
           <Image
             alt={stash.image.alt}
             blurDataURL={stash.image.blurDataURL}
-            css={{ borderRadius: "$md", overflow: "hidden" }}
             height={stash.image.height}
             placeholder="blur"
+            sizes="(max-width: 639px) calc(100vw - 2rem), (max-width: 799px) calc(100vw - 6rem), 704px"
             src={stash.image.src}
             width={stash.image.width}
           />
@@ -161,11 +160,11 @@ const StashDetailPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
               </Text>
               {stash.tags.map((tag) => {
                 return (
-                  <Link key={tag.id} href={`/stash/tags/${tag.slug}`} passHref>
-                    <Badge as="a" size="1" variant="gray">
+                  <Badge key={tag.id} size="1" variant="gray">
+                    <NextLink href={`/stash/tags/${tag.slug}`}>
                       {tag.name}
-                    </Badge>
-                  </Link>
+                    </NextLink>
+                  </Badge>
                 );
               })}
             </Stack>
@@ -173,9 +172,9 @@ const StashDetailPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
         </Stack>
         {session?.user.role === "ADMIN" ? (
           <Stack css={{ stackGap: "$2" }} direction="row">
-            <Link href={`/stash/edit/${stash.id}`}>
-              <LinkButton variant="green">Edit</LinkButton>
-            </Link>
+            <LinkButton href={`/stash/edit/${stash.id}`} variant="green">
+              Edit
+            </LinkButton>
             <Button
               variant="red"
               onClick={() => {

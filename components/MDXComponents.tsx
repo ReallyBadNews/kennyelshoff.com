@@ -1,14 +1,14 @@
 import dynamic from "next/dynamic";
-import { ImageProps } from "next/image";
+import type { ImageProps } from "next/image";
 import { CSS, VariantProps } from "stitches.config";
 import { ComponentMap, MDXImages } from "types";
+import Image from "next/image";
 import { Badge } from "./Badge";
 import { Blockquote } from "./Blockquote";
 import { Box } from "./Box";
 import { Code, CodeProps } from "./Code";
 import type { GalleryProps } from "./Gallery";
 import { Heading } from "./Heading";
-import { Image } from "./Image";
 import { Kbd } from "./Kbd";
 import { List } from "./List";
 import NextLink from "./NextLink";
@@ -97,13 +97,17 @@ export const MDXComponents = (mdxImages?: MDXImages): ComponentMap => {
         return (
           <Box
             className="mdxImage"
-            css={{ borderRadius: "$md", overflow: "hidden" }}
+            css={{
+              borderRadius: "$md",
+              overflow: "hidden",
+              position: "relative",
+            }}
           >
             <Image
               {...props}
-              alt={alt}
-              layout="responsive"
+              alt={alt || "image"}
               placeholder="blur"
+              sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 768px) calc(100vw - 6rem), (max-width: 800px) 704px"
               {...mdxImages[src]}
             />
           </Box>
@@ -114,13 +118,14 @@ export const MDXComponents = (mdxImages?: MDXImages): ComponentMap => {
     Image: ({ src, ...props }: ImageProps) => {
       if (mdxImages && src) {
         return (
-          <Image
-            css={{ borderRadius: "$lg" }}
-            layout="responsive"
-            placeholder="blur"
-            {...mdxImages[src as string]}
-            {...props}
-          />
+          <Box css={{ borderRadius: "$lg", overflow: "hidden" }}>
+            <Image
+              placeholder="blur"
+              sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 768px) calc(100vw - 6rem), (max-width: 800px) 704px"
+              {...mdxImages[src as string]}
+              {...props}
+            />
+          </Box>
         );
       }
       throw new Error(`Image not found: ${src}`);
