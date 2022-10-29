@@ -1,6 +1,8 @@
 import { Container } from "@components/Container";
 import { Header } from "@components/Header";
 import { useAnalytics } from "@lib/analytics";
+import { Inter, JetBrains_Mono } from "@next/font/google";
+import localFont from "@next/font/local";
 import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
@@ -104,6 +106,21 @@ const globalStyles = globalCss({
   },
 });
 
+const inter = Inter({
+  variable: "--fonts-inter",
+  subsets: ["latin"],
+});
+
+const jetBrainsMono = JetBrains_Mono({
+  variable: "--fonts-jet",
+  subsets: ["latin"],
+});
+
+const iaWritterQuattro = localFont({
+  variable: "--fonts-mono",
+  src: "../public/fonts/iAWriterQuattroV.woff2",
+});
+
 function BabaBooey({
   Component,
   pageProps: { session, ...pageProps },
@@ -121,6 +138,7 @@ function BabaBooey({
         <DynamicTooltip>
           <DynamicCommandPalette>
             <Container
+              className={`${inter.variable} ${jetBrainsMono.variable} ${iaWritterQuattro.variable}`}
               css={{
                 display: "flex",
                 flexDirection: "column",
