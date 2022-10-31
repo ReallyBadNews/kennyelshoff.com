@@ -36,7 +36,7 @@
     "@stitches/react": "^1.2.8",
     "contentlayer": "^0.2.8",
     "fathom-client": "^3.5.0",
-    "framer-motion": "^7.6.1",
+    "framer-motion": "^7.6.2",
     "just-merge": "^3.1.1",
     "kbar": "^0.1.0-beta.36",
     "mdx-bundler": "^9.0.1",
@@ -56,7 +56,7 @@
   "devDependencies": {
     "@next/bundle-analyzer": "^13.0.0",
     "@types/glob": "^8.0.0",
-    "@types/react": "18.0.23",
+    "@types/react": "18.0.24",
     "@types/unsplash-js": "6.3.1",
     "@typescript-eslint/eslint-plugin": "^5.41.0",
     "@typescript-eslint/parser": "^5.41.0",
