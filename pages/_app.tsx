@@ -38,7 +38,7 @@ const DynamicCommandPalette = dynamic<{ children?: ReactNode }>(
     const { CommandPalette } = await import("../components/CommandPalette");
     return CommandPalette;
   },
-  { ssr: false }
+  { ssr: true }
 );
 
 const globalStyles = globalCss({
