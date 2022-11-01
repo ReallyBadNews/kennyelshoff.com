@@ -14,7 +14,7 @@ export const Helmet: React.FC<HelmetProps> = ({
   // TODO: Update description
   description = "Detail oriented user interface engineer currently interested in CSS architecture, React, TypeScript, design systems, and state machines.",
   image,
-  url = "https://www.badnews.dev",
+  url = "https://kennyelshoff.com",
   pathname,
 }) => {
   const { pathname: routerPathName } = useRouter();
@@ -35,6 +35,8 @@ export const Helmet: React.FC<HelmetProps> = ({
       <meta content={`${url}${path}`} property="og:url" />
 
       <meta content="en" httpEquiv="Content-Language" />
+      <meta content="website" property="og:type" />
+
       <meta content="@kennyelshoff" name="twitter:site" />
       <meta content="summary_large_image" name="twitter:card" />
       <meta content="Kenny Elshoff" name="author" />
