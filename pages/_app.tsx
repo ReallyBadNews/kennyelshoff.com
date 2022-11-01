@@ -125,15 +125,15 @@ const inter = Inter({
 const jetBrainsMono = JetBrains_Mono({
   variable: "--fonts-jet",
   weight: "400",
-  // fallback: [
-  //   "SFMono-Regular",
-  //   "Menlo",
-  //   "Monaco",
-  //   "Consolas",
-  //   "Liberation Mono",
-  //   "Courier New",
-  //   "monospace",
-  // ],
+  fallback: [
+    "SFMono-Regular",
+    "Menlo",
+    "Monaco",
+    "Consolas",
+    "Liberation Mono",
+    "Courier New",
+    "monospace",
+  ],
   subsets: ["latin"],
 });
 
