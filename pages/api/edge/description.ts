@@ -1,5 +1,5 @@
 import type { NextRequest } from "next/server";
-import { getDescriptionFromUrl } from "@lib/utils";
+import { getDescriptionFromUrl } from "@lib/metadata";
 
 export const config = {
   runtime: "experimental-edge",
