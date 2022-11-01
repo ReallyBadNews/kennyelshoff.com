@@ -17,15 +17,44 @@ const NewStashPage: NextPage = () => {
   const { data: session } = useSession();
   const { mutate } = useStashes({});
   const [isLoading, setIsLoading] = useState(false);
+  const [generatingTitle, setGeneratingTitle] = useState(false);
+  const [generatingDescription, setGeneratingDescription] = useState(false);
 
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     reset,
     formState: { errors },
   } = useForm<CreateOrUpdateStashInput>();
 
+  const url = watch("url");
+
+  const generateTitleFromUrl = async () => {
+    setGeneratingTitle(true);
+    fetch(`/api/edge/title?url=${url}`).then(async (res) => {
+      if (res.status === 200) {
+        const results = await res.json();
+        setValue("title", results);
+        setGeneratingTitle(false);
+      }
+    });
+  };
+
+  const generateDescriptionFromUrl = async () => {
+    setGeneratingDescription(true);
+    fetch(`/api/edge/description?url=${url}`).then(async (res) => {
+      if (res.status === 200) {
+        const results = await res.json();
+        setValue("description", results);
+        setGeneratingDescription(false);
+      }
+    });
+  };
+
   const onSubmit = handleSubmit(async (data) => {
+    if (session?.user.role !== "ADMIN") throw new Error("Not authorized");
     setIsLoading(true);
     await mutate(async (prevData) => {
       const newStash = await fetch(`/api/stash/new`, {
@@ -58,72 +87,114 @@ const NewStashPage: NextPage = () => {
       title="Create new stash"
     >
       {/* <LoginButton /> */}
-      {session?.user.role === "ADMIN" ? (
-        <form onSubmit={onSubmit}>
-          <Stack css={{ stackGap: "$4" }}>
-            <Stack css={{ stackGap: "$2" }}>
+      <form onSubmit={onSubmit}>
+        <Stack css={{ stackGap: "$4" }}>
+          <Stack css={{ stackGap: "$2" }}>
+            <Label htmlFor="url">URL:</Label>
+            <Input id="url" placeholder="URL" {...register("url")} />
+            {errors.url?.type === "required" && "URL is required"}
+          </Stack>
+          <Stack css={{ stackGap: "$2" }}>
+            <Stack
+              css={{
+                stackGap: "$1",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+              direction="row"
+            >
               <Label htmlFor="title">Title:</Label>
-              <Input id="title" placeholder="Title" {...register("title")} />
-              {errors.title?.type === "required" && "Title is required"}
-            </Stack>
-            <Stack css={{ stackGap: "$2" }}>
-              <Label htmlFor="url">URL:</Label>
-              <Input id="url" placeholder="URL" {...register("url")} />
-              {errors.url?.type === "required" && "URL is required"}
-            </Stack>
-            <Stack css={{ stackGap: "$2" }}>
-              <Label htmlFor="description">Description:</Label>
-              <Input
-                id="description"
-                placeholder="Description"
-                {...register("description")}
-              />
-            </Stack>
-            <Stack css={{ stackGap: "$2" }}>
-              <Label htmlFor="tags">Tags:</Label>
-              <Input id="tags" placeholder="Tags" {...register("tags")} />
-            </Stack>
-            <Stack css={{ stackGap: "$2" }}>
-              <Label htmlFor="image">Image:</Label>
-              <Input id="image" placeholder="Image" {...register("image")} />
-            </Stack>
-            <Stack css={{ stackGap: "$2" }}>
-              <Label htmlFor="image-alt">Image Alt Text:</Label>
-              <Input
-                id="image-alt"
-                placeholder="Image Alt Text"
-                {...register("imageAlt")}
-              />
-            </Stack>
-            <Stack css={{ stackGap: "$2" }}>
-              <Label htmlFor="body">Body:</Label>
-              <Input
-                as="textarea"
-                id="body"
-                placeholder="Body"
-                rows={5}
-                {...register("body")}
-              />
-            </Stack>
-            <Stack css={{ stackGap: "$2" }} direction="row">
               <Button
-                size="2"
+                disabled={!url || url?.length === 0 || generatingTitle}
                 type="button"
-                variant="red"
                 onClick={() => {
-                  router.back();
-                  reset();
+                  return generateTitleFromUrl();
                 }}
               >
-                Cancel
-              </Button>
-              <Button disabled={isLoading} size="2" type="submit">
-                {isLoading ? "Saving..." : "Create stash"}
+                {generatingTitle && "Loading..."}
+                <p>{generatingTitle ? "Generating" : "Generate from URL"}</p>
               </Button>
             </Stack>
+            <Input id="title" placeholder="Title" {...register("title")} />
+            {errors.title?.type === "required" && "Title is required"}
           </Stack>
-        </form>
-      ) : null}
+          <Stack css={{ stackGap: "$2" }}>
+            <Stack
+              css={{
+                stackGap: "$1",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+              direction="row"
+            >
+              <Label htmlFor="description">Description:</Label>
+              <Button
+                disabled={!url || url?.length === 0 || generatingDescription}
+                type="button"
+                onClick={() => {
+                  return generateDescriptionFromUrl();
+                }}
+              >
+                {generatingDescription && "Loading..."}
+                <p>
+                  {generatingDescription ? "Generating" : "Generate from URL"}
+                </p>
+              </Button>
+            </Stack>
+            <Input
+              id="description"
+              placeholder="Description"
+              {...register("description")}
+            />
+          </Stack>
+          <Stack css={{ stackGap: "$2" }}>
+            <Label htmlFor="tags">Tags:</Label>
+            <Input id="tags" placeholder="Tags" {...register("tags")} />
+          </Stack>
+          <Stack css={{ stackGap: "$2" }}>
+            <Label htmlFor="image">Image:</Label>
+            <Input id="image" placeholder="Image" {...register("image")} />
+          </Stack>
+          <Stack css={{ stackGap: "$2" }}>
+            <Label htmlFor="image-alt">Image Alt Text:</Label>
+            <Input
+              id="image-alt"
+              placeholder="Image Alt Text"
+              {...register("imageAlt")}
+            />
+          </Stack>
+          <Stack css={{ stackGap: "$2" }}>
+            <Label htmlFor="body">Body:</Label>
+            <Input
+              as="textarea"
+              id="body"
+              placeholder="Body"
+              rows={5}
+              {...register("body")}
+            />
+          </Stack>
+          <Stack css={{ stackGap: "$2" }} direction="row">
+            <Button
+              size="2"
+              type="button"
+              variant="red"
+              onClick={() => {
+                router.back();
+                reset();
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              disabled={isLoading || session?.user.role !== "ADMIN"}
+              size="2"
+              type="submit"
+            >
+              {isLoading ? "Saving..." : "Create stash"}
+            </Button>
+          </Stack>
+        </Stack>
+      </form>
     </Page>
   );
 };
