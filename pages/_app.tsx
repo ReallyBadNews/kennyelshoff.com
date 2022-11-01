@@ -16,12 +16,6 @@ type AppProps<P = any> = {
   pageProps: P;
 } & Omit<NextAppProps<P>, "pageProps">;
 
-// const loadMotionFeatures = dynamic(async () => {
-//   const { domMax } = await import("../lib/motion-features");
-
-//   return domMax;
-// });
-
 const loadMotionFeatures = () => {
   return import("../lib/motion-features").then((res) => {
     return res.default;
@@ -117,17 +111,45 @@ const globalStyles = globalCss({
 
 const inter = Inter({
   variable: "--fonts-inter",
+  weight: "variable",
+  fallback: [
+    "-apple-system",
+    "'Seegoee UI'",
+    "'Helvetica Neue'",
+    "Arial",
+    "sans-serif",
+  ],
   subsets: ["latin"],
 });
 
 const jetBrainsMono = JetBrains_Mono({
   variable: "--fonts-jet",
+  weight: "400",
+  // fallback: [
+  //   "SFMono-Regular",
+  //   "Menlo",
+  //   "Monaco",
+  //   "Consolas",
+  //   "Liberation Mono",
+  //   "Courier New",
+  //   "monospace",
+  // ],
   subsets: ["latin"],
 });
 
 const iaWritterQuattro = localFont({
   variable: "--fonts-mono",
   src: "../public/fonts/iAWriterQuattroV.woff2",
+  fallback: [
+    "SFMono-Regular",
+    "Menlo",
+    "Monaco",
+    "Consolas",
+    "Liberation Mono",
+    "Courier New",
+    "monospace",
+  ],
+  weight: "200 900",
 });
 
 function BabaBooey({
