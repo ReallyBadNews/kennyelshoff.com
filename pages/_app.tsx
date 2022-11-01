@@ -7,6 +7,7 @@ import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
 import type { AppProps as NextAppProps } from "next/app";
+import { LazyMotion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { darkTheme, globalCss } from "../stitches.config";
 
@@ -14,6 +15,18 @@ import { darkTheme, globalCss } from "../stitches.config";
 type AppProps<P = any> = {
   pageProps: P;
 } & Omit<NextAppProps<P>, "pageProps">;
+
+// const loadMotionFeatures = dynamic(async () => {
+//   const { domMax } = await import("../lib/motion-features");
+
+//   return domMax;
+// });
+
+const loadMotionFeatures = () => {
+  return import("../lib/motion-features").then((res) => {
+    return res.default;
+  });
+};
 
 const DynamicFooter = dynamic(
   async () => {
@@ -131,24 +144,26 @@ function BabaBooey({
       disableTransitionOnChange
     >
       <SessionProvider session={session}>
-        <DynamicTooltip>
-          <DynamicCommandPalette>
-            <Container
-              className={`${inter.variable} ${jetBrainsMono.variable} ${iaWritterQuattro.variable}`}
-              css={{
-                display: "flex",
-                flexDirection: "column",
-                minHeight: "100vh",
-                py: "$6",
-              }}
-              size="2"
-            >
-              <Header />
-              <Component {...pageProps} />
-              <DynamicFooter />
-            </Container>
-          </DynamicCommandPalette>
-        </DynamicTooltip>
+        <LazyMotion features={loadMotionFeatures} strict>
+          <DynamicTooltip>
+            <DynamicCommandPalette>
+              <Container
+                className={`${inter.variable} ${jetBrainsMono.variable} ${iaWritterQuattro.variable}`}
+                css={{
+                  display: "flex",
+                  flexDirection: "column",
+                  minHeight: "100vh",
+                  py: "$6",
+                }}
+                size="2"
+              >
+                <Header />
+                <Component {...pageProps} />
+                <DynamicFooter />
+              </Container>
+            </DynamicCommandPalette>
+          </DynamicTooltip>
+        </LazyMotion>
       </SessionProvider>
     </ThemeProvider>
   );

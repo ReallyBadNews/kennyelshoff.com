@@ -1,7 +1,7 @@
 import { Box } from "@components/Box";
 import Image from "next/image";
 import NextLink from "@components/NextLink";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -89,7 +89,7 @@ export const Header = () => {
         </NextLink>
         <nav>
           <Stack
-            as={motion.ul}
+            as={m.ul}
             css={{
               stackGap: "$3",
               p: "0",
@@ -107,7 +107,7 @@ export const Header = () => {
               const activeIndex = activeItem !== -1 && activeItem === index;
 
               return (
-                <motion.li
+                <m.li
                   key={item.title}
                   onHoverStart={() => {
                     return setActiveItem(index);
@@ -138,7 +138,7 @@ export const Header = () => {
                     {activeIndex && (
                       <Box
                         animate={{ opacity: 1 }}
-                        as={motion.span}
+                        as={m.span}
                         className="shadow"
                         css={{
                           position: "absolute",
@@ -155,7 +155,7 @@ export const Header = () => {
                     )}
                     {item.title}
                   </NextLink>
-                </motion.li>
+                </m.li>
               );
             })}
           </Stack>

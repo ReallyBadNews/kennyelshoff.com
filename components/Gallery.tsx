@@ -5,12 +5,7 @@
 
 import { wrap } from "@lib/utils";
 import { TriangleLeftIcon, TriangleRightIcon } from "@radix-ui/react-icons";
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-  Variants,
-} from "framer-motion";
+import { AnimatePresence, m, useReducedMotion, Variants } from "framer-motion";
 import { ImageProps } from "next/image";
 import {
   Children,
@@ -115,7 +110,7 @@ export const Gallery = ({ aspectRatio, children, css }: GalleryProps) => {
         }}
       >
         <AnimatePresence custom={direction} initial={false}>
-          <motion.div
+          <m.div
             key={page}
             animate="center"
             className="imageWrap"
@@ -142,7 +137,7 @@ export const Gallery = ({ aspectRatio, children, css }: GalleryProps) => {
             }}
           >
             {images?.[imageIndex]}
-          </motion.div>
+          </m.div>
         </AnimatePresence>
         <Tooltip align="center" content="Next Photo" side="bottom">
           <IconButton
