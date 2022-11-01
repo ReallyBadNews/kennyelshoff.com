@@ -38,7 +38,7 @@ export default async function handler(
         }),
       ];
 
-      await fetch(
+      fetch(
         `${baseUrl}/api/revalidate?secret=${encodeURIComponent(
           process.env.NEXT_REVALIDATE_SECRET as string
         )}&paths=${encodeURIComponent(JSON.stringify(pathsToRevalidate))}`

@@ -27,14 +27,13 @@ export const Helmet: React.FC<HelmetProps> = ({
     <Head>
       <title>{metaTitle}</title>
       <meta content={metaTitle} property="og:title" />
+      <meta content="en" httpEquiv="Content-Language" />
 
       <meta content={description} name="description" />
-      <meta content={description} name="og:description" />
 
+      <meta content={description} property="og:description" />
       <meta content={imageUrl} property="og:image" />
       <meta content={`${url}${path}`} property="og:url" />
-
-      <meta content="en" httpEquiv="Content-Language" />
       <meta content="website" property="og:type" />
 
       <meta content="@kennyelshoff" name="twitter:site" />
