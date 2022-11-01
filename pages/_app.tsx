@@ -8,7 +8,6 @@ import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
 import type { AppProps as NextAppProps } from "next/app";
 import dynamic from "next/dynamic";
-import { ReactNode } from "react";
 import { darkTheme, globalCss } from "../stitches.config";
 
 // modified version - allows for custom pageProps type, falling back to 'any'
@@ -33,13 +32,10 @@ const DynamicTooltip = dynamic(async () => {
   return TooltipProvider;
 });
 
-const DynamicCommandPalette = dynamic<{ children?: ReactNode }>(
-  async () => {
-    const { CommandPalette } = await import("../components/CommandPalette");
-    return CommandPalette;
-  },
-  { ssr: true }
-);
+const DynamicCommandPalette = dynamic(async () => {
+  const { CommandPalette } = await import("../components/CommandPalette");
+  return CommandPalette;
+});
 
 const globalStyles = globalCss({
   /**
