@@ -4,7 +4,7 @@ import { AllStashes, Stash } from "@lib/stash";
 import useSWR, { SWRConfiguration } from "swr";
 
 interface UseStashProps extends SWRConfiguration {
-  id?: string;
+  id?: string | null;
 }
 
 interface UseStashesProps extends SWRConfiguration {

@@ -34,6 +34,7 @@
     "@radix-ui/react-tooltip": "^1.0.2",
     "@sindresorhus/slugify": "^2.1.1",
     "@stitches/react": "^1.2.8",
+    "cloudinary": "^1.32.0",
     "contentlayer": "^0.2.8",
     "fathom-client": "^3.5.0",
     "framer-motion": "^7.6.4",

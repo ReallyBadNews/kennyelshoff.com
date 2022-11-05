@@ -11,6 +11,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { v2 } from "cloudinary";
 
 const NewStashPage: NextPage = () => {
   const router = useRouter();
@@ -19,6 +20,7 @@ const NewStashPage: NextPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [generatingTitle, setGeneratingTitle] = useState(false);
   const [generatingDescription, setGeneratingDescription] = useState(false);
+  const [generatingImage, setGeneratingImage] = useState(false);
 
   const {
     register,
@@ -35,7 +37,7 @@ const NewStashPage: NextPage = () => {
     setGeneratingTitle(true);
     fetch(`/api/edge/title?url=${url}`).then(async (res) => {
       if (res.status === 200) {
-        const results = await res.json();
+        const results: string = await res.json();
         setValue("title", results);
         setGeneratingTitle(false);
       }
@@ -46,9 +48,20 @@ const NewStashPage: NextPage = () => {
     setGeneratingDescription(true);
     fetch(`/api/edge/description?url=${url}`).then(async (res) => {
       if (res.status === 200) {
-        const results = await res.json();
+        const results: string = await res.json();
         setValue("description", results);
         setGeneratingDescription(false);
+      }
+    });
+  };
+
+  const generateImageFromUrl = async () => {
+    setGeneratingImage(true);
+    fetch(`/api/edge/image?url=${url}`).then(async (res) => {
+      if (res.status === 200) {
+        const results: string = await res.json();
+        setValue("image", results);
+        setGeneratingImage(false);
       }
     });
   };
@@ -57,6 +70,8 @@ const NewStashPage: NextPage = () => {
     if (session?.user.role !== "ADMIN") throw new Error("Not authorized");
     setIsLoading(true);
     await mutate(async (prevData) => {
+      console.log("[NewStashPage] prevData", prevData);
+
       const newStash = await fetch(`/api/stash/new`, {
         method: "POST",
         body: JSON.stringify(data),
@@ -152,7 +167,26 @@ const NewStashPage: NextPage = () => {
             <Input id="tags" placeholder="Tags" {...register("tags")} />
           </Stack>
           <Stack css={{ stackGap: "$2" }}>
-            <Label htmlFor="image">Image:</Label>
+            <Stack
+              css={{
+                stackGap: "$1",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+              direction="row"
+            >
+              <Label htmlFor="image">Image:</Label>
+              <Button
+                disabled={!url || url?.length === 0 || generatingImage}
+                type="button"
+                onClick={() => {
+                  return generateImageFromUrl();
+                }}
+              >
+                {generatingImage && "Loading..."}
+                <p>{generatingImage ? "Generating" : "Generate from URL"}</p>
+              </Button>
+            </Stack>
             <Input id="image" placeholder="Image" {...register("image")} />
           </Stack>
           <Stack css={{ stackGap: "$2" }}>
