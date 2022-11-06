@@ -1,3 +1,4 @@
+import { Tourney } from "@next/font/google";
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
 import { styled, VariantProps } from "stitches.config";
 
@@ -45,6 +46,15 @@ export const Separator = styled(SeparatorPrimitive.Root, {
           width: "1px",
           height: "$full",
         },
+      },
+    },
+    tone: {
+      light: {
+        backgroundColor: "$slate3",
+      },
+      gradient: {
+        background:
+          "linear-gradient(90deg, $slate1 0%, $slate6 50%, $slate1 100%)",
       },
     },
   },

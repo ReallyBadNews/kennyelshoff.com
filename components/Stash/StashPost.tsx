@@ -44,7 +44,15 @@ export function StashPost({
         )}
       </Heading>
       {MDXContent ? <MDXContent components={MDXComponents()} /> : null}
-      <Stack css={{ stackGap: "$4", alignItems: "baseline" }} direction="row">
+      <Stack
+        css={{
+          stackGap: "$4",
+          alignItems: "baseline",
+          justifyContent: "space-between",
+          height: "$6",
+        }}
+        direction="row"
+      >
         <Paragraph size="0">
           <NextLink href={`/stash/${slug}`} variant="subtle">
             <time dateTime={date}>{`— ${formatDate(date, "full")}`}</time>

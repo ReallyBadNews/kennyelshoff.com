@@ -4,9 +4,9 @@ generator client {
 }
 
 datasource db {
-  provider             = "mysql"
-  url                  = env("PLANETSCALE_PRISMA_DATABASE_URL")
-  referentialIntegrity = "prisma"
+  provider     = "mysql"
+  url          = env("PLANETSCALE_PRISMA_DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model Views {
@@ -37,15 +37,15 @@ model Image {
   id          String   @id @default(cuid())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  height      Int      @db.Int
-  width       Int      @db.Int
+  height      Int
+  width       Int
+  url         String?  @unique @db.VarChar(512)
   type        String?  @db.VarChar(128)
-  src         String   @db.VarChar(512)
+  src         String   @unique @db.VarChar(512)
   alt         String   @db.VarChar(512)
   blurDataURL String   @db.VarChar(512)
   stash       Stash    @relation(fields: [id], references: [id], onDelete: Cascade)
 
-  @@unique([src])
   @@index([src])
 }
 
@@ -111,15 +111,6 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
-}
-
-model StashToTag {
-  A String
-  B String
-
-  @@unique([A, B], map: "_StashToTag_AB_unique")
-  @@index([B], map: "_StashToTag_B_index")
-  @@map("_StashToTag")
 }
 
 enum Role {

@@ -163,10 +163,6 @@ const NewStashPage: NextPage = () => {
             />
           </Stack>
           <Stack css={{ stackGap: "$2" }}>
-            <Label htmlFor="tags">Tags:</Label>
-            <Input id="tags" placeholder="Tags" {...register("tags")} />
-          </Stack>
-          <Stack css={{ stackGap: "$2" }}>
             <Stack
               css={{
                 stackGap: "$1",
@@ -196,6 +192,10 @@ const NewStashPage: NextPage = () => {
               placeholder="Image Alt Text"
               {...register("imageAlt")}
             />
+          </Stack>
+          <Stack css={{ stackGap: "$2" }}>
+            <Label htmlFor="tags">Tags:</Label>
+            <Input id="tags" placeholder="Tags" {...register("tags")} />
           </Stack>
           <Stack css={{ stackGap: "$2" }}>
             <Label htmlFor="body">Body:</Label>
