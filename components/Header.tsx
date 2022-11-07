@@ -82,7 +82,7 @@ export const Header = () => {
             blurDataURL="data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAEAAQDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAdEAABBAIDAAAAAAAAAAAAAAABAAIFEQMEByJB/8QAFQEBAQAAAAAAAAAAAAAAAAAABQf/xAAbEQACAQUAAAAAAAAAAAAAAAAAAQIDBBIhcf/aAAwDAQACEQMRAD8AqOEZTNIwE3tbTWuy5JrbceziBZaaFk0B4ERFMrzVeXR+DeKP/9k="
             height={48}
             placeholder="blur"
-            src="/images/kenny-2.jpg"
+            src="kenny/profile"
             width={48}
             priority
           />

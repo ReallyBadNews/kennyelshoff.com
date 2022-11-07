@@ -118,7 +118,7 @@ const StashDetailPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
           {stash.title}
         </Heading>
       )}
-      {stash?.image ? (
+      {/* {stash?.image ? (
         <Box css={{ my: "$5", borderRadius: "$md", overflow: "hidden" }}>
           <Image
             alt={stash.image.alt}
@@ -130,7 +130,7 @@ const StashDetailPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
             width={stash.image.width}
           />
         </Box>
-      ) : null}
+      ) : null} */}
       <Stack
         css={{
           stackGap: "$3",

@@ -11,7 +11,6 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { v2 } from "cloudinary";
 
 const NewStashPage: NextPage = () => {
   const router = useRouter();

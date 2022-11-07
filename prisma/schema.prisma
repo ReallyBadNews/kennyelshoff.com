@@ -39,7 +39,7 @@ model Image {
   updatedAt   DateTime @updatedAt
   height      Int
   width       Int
-  url         String?  @unique @db.VarChar(512)
+  publicId    String?  @unique @db.VarChar(512)
   type        String?  @db.VarChar(128)
   src         String   @unique @db.VarChar(512)
   alt         String   @db.VarChar(512)
