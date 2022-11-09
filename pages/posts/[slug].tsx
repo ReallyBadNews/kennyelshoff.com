@@ -1,6 +1,6 @@
 import { MDXComponents } from "@components/MDXComponents";
 import Page from "@components/Page";
-import { getAllImagePathsFromDir } from "@lib/images";
+import { ResourceApiResponse, v2 as cloudinary } from "cloudinary";
 import { allPosts, Post } from "contentlayer/generated";
 import { GetStaticPaths, InferGetStaticPropsType } from "next";
 import { useMDXComponent } from "next-contentlayer/hooks";
@@ -26,22 +26,41 @@ export const getStaticProps = async ({ params: { slug = "" } = {} }) => {
     return p.path === slug;
   }) as Post;
 
-  const imagePaths = getAllImagePathsFromDir(`posts/${slug}`);
+  const imagePaths = await cloudinary.api
+    .resources({
+      type: "upload",
+      prefix: `kenny/posts/${slug}`,
+    })
+    .then((res: ResourceApiResponse) => {
+      return res.resources.map((resource) => {
+        return {
+          public_id: resource.public_id,
+          src: resource.secure_url,
+        };
+      });
+    });
 
   const images = await Promise.all(
-    imagePaths.map(async (src) => {
-      const { base64, img } = await getPlaiceholder(src);
+    imagePaths.map(async (image) => {
+      const { base64, img } = await getPlaiceholder(image.src);
 
       return {
         ...img,
         blurDataURL: base64,
+        publicId: image.public_id,
       };
     })
   ).then((values) => {
     const result = values.reduce<MDXImages>((acc, curr) => {
       return {
         ...acc,
-        [curr.src]: curr,
+        [curr.publicId]: {
+          src: curr.publicId,
+          width: curr.width,
+          height: curr.height,
+          blurDataURL: curr.blurDataURL,
+          type: curr.type,
+        },
       };
     }, {});
 

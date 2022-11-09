@@ -44,7 +44,7 @@ model Image {
   src         String   @unique @db.VarChar(512)
   alt         String   @db.VarChar(512)
   blurDataURL String   @db.VarChar(512)
-  stash       Stash    @relation(fields: [id], references: [id], onDelete: Cascade)
+  stash       Stash?   @relation(fields: [id], references: [id], onDelete: Cascade)
 
   @@index([src])
 }

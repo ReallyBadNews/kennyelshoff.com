@@ -104,11 +104,11 @@ export const MDXComponents = (mdxImages?: MDXImages): ComponentMap => {
             }}
           >
             <Image
-              {...props}
               alt={alt || "image"}
+              {...props}
               placeholder="blur"
-              sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 768px) calc(100vw - 6rem), (max-width: 800px) 704px"
               {...mdxImages[src]}
+              sizes="(max-width: 640px) calc(100vw - 32px), (max-width: 768px) calc(100vw - 96px), 704px"
             />
           </Box>
         );
@@ -121,9 +121,9 @@ export const MDXComponents = (mdxImages?: MDXImages): ComponentMap => {
           <Box css={{ borderRadius: "$lg", overflow: "hidden" }}>
             <Image
               placeholder="blur"
-              sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 768px) calc(100vw - 6rem), (max-width: 800px) 704px"
               {...mdxImages[src as string]}
               {...props}
+              sizes="(max-width: 640px) calc(100vw - 32px), (max-width: 768px) calc(100vw - 96px), 704px"
             />
           </Box>
         );

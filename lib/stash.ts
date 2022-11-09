@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { prisma } from "@lib/prisma";
 import { getPlaiceholder } from "plaiceholder";
-import { v2 } from "cloudinary";
+import { v2 as cloudinary } from "cloudinary";
 import { CreateOrUpdateStashInput } from "./types";
 import { getHostname, slugify } from "./utils";
 import { generateMDX } from "./mdx";
@@ -177,13 +177,10 @@ export const createStash = async (payload: CreateOrUpdateStashInput) => {
     };
   }
 
-  // Configure Cloudinary
-  // v2.config({});
-
   // Get plaiceholder data for the image
   if (updatePayload.image) {
     const { secure_url: secureURL, public_id: publicId } =
-      await v2.uploader.upload(updatePayload.image, {
+      await cloudinary.uploader.upload(updatePayload.image, {
         public_id: updatePayload.slug,
         folder: "kenny/stash",
         overwrite: true,
