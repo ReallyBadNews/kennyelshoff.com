@@ -56,6 +56,7 @@ export const AccountMenu = () => {
                     height={34}
                     src={session.user.image}
                     width={34}
+                    unoptimized
                   />
                 </Box>
               ) : null}
