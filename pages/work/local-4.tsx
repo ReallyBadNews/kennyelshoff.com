@@ -10,26 +10,6 @@ import { ResourceApiResponse, v2 as cloudinary } from "cloudinary";
 import { InferGetStaticPropsType } from "next";
 import Image from "next/image";
 import { getPlaiceholder } from "plaiceholder";
-import { MDXImages } from "types";
-
-// export const getStaticProps = async () => {
-//   const imagePaths = getAllImagePathsFromDir("work/wdiv");
-
-//   const images = await Promise.all(
-//     imagePaths.map(async (src) => {
-//       const { base64, img } = await getPlaiceholder(src);
-
-//       return {
-//         ...img,
-//         blurDataURL: base64,
-//       };
-//     })
-//   ).then((values) => {
-//     return values;
-//   });
-
-//   return { props: { images } };
-// };
 
 export const getStaticProps = async () => {
   const imagePaths = await cloudinary.api
