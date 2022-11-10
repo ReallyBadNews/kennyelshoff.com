@@ -10,11 +10,12 @@
     "db:migrate": "prisma db migrate",
     "db:seed": "prisma db seed",
     "db:reset": "prisma migrate reset",
-    "generate": "prisma generate",
     "lint": "next lint",
     "typecheck": "npx tsc --noEmit",
     "lint:fix": "next lint --fix",
     "lint:staged": "lint-staged",
+    "prebuild": "prisma generate",
+    "predev": "prisma generate",
     "prepare": "node prepare.js"
   },
   "dependencies": {
@@ -34,6 +35,7 @@
     "@radix-ui/react-tooltip": "^1.0.2",
     "@sindresorhus/slugify": "^2.1.1",
     "@stitches/react": "^1.2.8",
+    "cloudinary": "^1.32.0",
     "contentlayer": "^0.2.8",
     "fathom-client": "^3.5.0",
     "framer-motion": "^7.6.4",

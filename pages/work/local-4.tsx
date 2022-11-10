@@ -1,31 +1,42 @@
 import { Gallery } from "@components/Gallery";
 import { Heading } from "@components/Heading";
-import Image from "next/image";
 import { Link } from "@components/Link";
 import { List } from "@components/List";
 import Page from "@components/Page";
 import { Separator } from "@components/Separator";
 import { Stack } from "@components/Stack";
 import { Text } from "@components/Text";
-import { getAllImagePathsFromDir } from "@lib/images";
-import { getPlaiceholder } from "plaiceholder";
+import { ResourceApiResponse, v2 as cloudinary } from "cloudinary";
 import { InferGetStaticPropsType } from "next";
+import Image from "next/image";
+import { getPlaiceholder } from "plaiceholder";
 
 export const getStaticProps = async () => {
-  const imagePaths = getAllImagePathsFromDir("work/wdiv");
+  const imagePaths = await cloudinary.api
+    .resources({
+      type: "upload",
+      prefix: "kenny/work/wdiv",
+    })
+    .then((res: ResourceApiResponse) => {
+      return res.resources.map((resource) => {
+        return {
+          public_id: resource.public_id,
+          src: resource.secure_url,
+        };
+      });
+    });
 
   const images = await Promise.all(
-    imagePaths.map(async (src) => {
-      const { base64, img } = await getPlaiceholder(src);
+    imagePaths.map(async (image) => {
+      const { base64, img } = await getPlaiceholder(image.src);
 
       return {
         ...img,
         blurDataURL: base64,
+        publicId: image.public_id,
       };
     })
-  ).then((values) => {
-    return values;
-  });
+  );
 
   return { props: { images } };
 };
@@ -121,11 +132,12 @@ export default function Local4Work({
               <Image
                 key={image.src}
                 alt="WDIV-TV / Local 4"
-                style={{ objectFit: "contain" }}
-                {...image}
+                blurDataURL={image.blurDataURL}
                 height={undefined}
                 placeholder="blur"
                 sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 768px) calc(100vw - 6rem), (max-width: 800px) 702px"
+                src={image.publicId}
+                style={{ objectFit: "contain" }}
                 width={undefined}
                 fill
               />

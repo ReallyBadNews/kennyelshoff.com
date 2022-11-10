@@ -18,7 +18,6 @@ export const Separator = styled(SeparatorPrimitive.Root, {
           height: "1px",
           width: "$3",
         },
-
         '&[data-orientation="vertical"]': {
           width: "1px",
           height: "$3",
@@ -45,6 +44,15 @@ export const Separator = styled(SeparatorPrimitive.Root, {
           width: "1px",
           height: "$full",
         },
+      },
+    },
+    tone: {
+      light: {
+        backgroundColor: "$slate3",
+      },
+      gradient: {
+        background:
+          "linear-gradient(90deg, $slate1 0%, $slate6 50%, $slate1 100%)",
       },
     },
   },

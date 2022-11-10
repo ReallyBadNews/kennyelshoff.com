@@ -118,7 +118,8 @@ const StashDetailPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
           {stash.title}
         </Heading>
       )}
-      {stash?.image ? (
+      {/* TODO: make `publicId` required */}
+      {stash?.image?.publicId ? (
         <Box css={{ my: "$5", borderRadius: "$md", overflow: "hidden" }}>
           <Image
             alt={stash.image.alt}
@@ -126,7 +127,7 @@ const StashDetailPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
             height={stash.image.height}
             placeholder="blur"
             sizes="(max-width: 639px) calc(100vw - 2rem), (max-width: 799px) calc(100vw - 6rem), 704px"
-            src={stash.image.src}
+            src={stash.image.publicId}
             width={stash.image.width}
           />
         </Box>
