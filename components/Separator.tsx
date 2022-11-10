@@ -1,4 +1,3 @@
-import { Tourney } from "@next/font/google";
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
 import { styled, VariantProps } from "stitches.config";
 
