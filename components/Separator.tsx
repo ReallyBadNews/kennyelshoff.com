@@ -18,7 +18,6 @@ export const Separator = styled(SeparatorPrimitive.Root, {
           height: "1px",
           width: "$3",
         },
-
         '&[data-orientation="vertical"]': {
           width: "1px",
           height: "$3",

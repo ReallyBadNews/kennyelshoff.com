@@ -10,11 +10,12 @@
     "db:migrate": "prisma db migrate",
     "db:seed": "prisma db seed",
     "db:reset": "prisma migrate reset",
-    "generate": "prisma generate",
     "lint": "next lint",
     "typecheck": "npx tsc --noEmit",
     "lint:fix": "next lint --fix",
     "lint:staged": "lint-staged",
+    "prebuild": "prisma generate",
+    "predev": "prisma generate",
     "prepare": "node prepare.js"
   },
   "dependencies": {
