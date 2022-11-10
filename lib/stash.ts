@@ -185,6 +185,7 @@ export const createStash = async (payload: CreateOrUpdateStashInput) => {
         folder: "kenny/stash",
         overwrite: true,
         invalidate: true,
+        unique_filename: false,
       });
 
     const { base64, img } = await getPlaiceholder(updatePayload.image);
