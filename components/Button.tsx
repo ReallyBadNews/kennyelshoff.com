@@ -7,6 +7,7 @@ const sharedStyles = {
   alignItems: "center",
   boxSizing: "border-box",
   userSelect: "none",
+  cursor: "default",
   "&::before": {
     boxSizing: "border-box",
   },
@@ -339,4 +340,9 @@ const sharedStyles = {
 };
 
 export const Button = styled("button", sharedStyles);
-export const LinkButton = styled(NextLink, sharedStyles);
+export const LinkButton = styled(NextLink, {
+  "&:hover": {
+    textDecoration: "none",
+  },
+  ...sharedStyles,
+});
