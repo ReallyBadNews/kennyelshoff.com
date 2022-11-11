@@ -31,7 +31,14 @@ export const StashList: FC<StashListProps> = ({
           <Fragment key={stash.slug}>
             <StashPost deleteHandler={deleteHandler} {...stash} />
             {index !== data.stashes.length - 1 && (
-              <Separator size="full" tone="gradient" />
+              <Separator
+                css={{
+                  width: "calc($sizes$full + $space$5) !important",
+                  mx: "-$3",
+                }}
+                size="full"
+                tone="gradient"
+              />
             )}
           </Fragment>
         );
