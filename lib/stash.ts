@@ -22,7 +22,6 @@ export type NewStash = Prisma.PromiseReturnType<typeof createStash>;
 */
 // export const getAllStashes = async ({ take = 5, skip = 0 } = {}) => {
 export const getAllStashes = async ({ page = 1, limit = 5 } = {}) => {
-  console.log("[env]", process.env.NODE_ENV);
   const stashes = await prisma.stash.findMany({
     take: limit,
     skip: (page - 1) * limit,
@@ -184,7 +183,7 @@ export const createStash = async (payload: CreateOrUpdateStashInput) => {
       await cloudinary.uploader.upload(updatePayload.image, {
         // set public_id to the slug
         public_id: updatePayload.slug,
-        folder: "kenny/stash",
+        folder: process.env.CLOUDINARY_BASE_PUBLIC_ID || "kenny/stash",
         overwrite: true,
         invalidate: true,
         unique_filename: false,
@@ -300,7 +299,7 @@ export const updateStashById = async (
     const { secure_url: secureURL, public_id: publicId } =
       await cloudinary.uploader.upload(updatePayload.image, {
         public_id: updatePayload.slug,
-        folder: "kenny/stash",
+        folder: process.env.CLOUDINARY_BASE_PUBLIC_ID || "kenny/stash",
         overwrite: true,
         invalidate: true,
         unique_filename: false,
