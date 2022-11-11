@@ -181,8 +181,9 @@ export const createStash = async (payload: CreateOrUpdateStashInput) => {
   if (updatePayload.image) {
     const { secure_url: secureURL, public_id: publicId } =
       await cloudinary.uploader.upload(updatePayload.image, {
+        // set public_id to the slug
         public_id: updatePayload.slug,
-        folder: "kenny/stash",
+        folder: process.env.CLOUDINARY_BASE_PUBLIC_ID || "kenny/stash",
         overwrite: true,
         invalidate: true,
         unique_filename: false,
@@ -196,8 +197,9 @@ export const createStash = async (payload: CreateOrUpdateStashInput) => {
           src: img.src,
         },
         create: {
-          src: secureURL,
           publicId,
+          src: secureURL,
+          url: updatePayload.image,
           height: img.height,
           width: img.width,
           blurDataURL: base64,
@@ -297,7 +299,7 @@ export const updateStashById = async (
     const { secure_url: secureURL, public_id: publicId } =
       await cloudinary.uploader.upload(updatePayload.image, {
         public_id: updatePayload.slug,
-        folder: "kenny/stash",
+        folder: process.env.CLOUDINARY_BASE_PUBLIC_ID || "kenny/stash",
         overwrite: true,
         invalidate: true,
         unique_filename: false,
