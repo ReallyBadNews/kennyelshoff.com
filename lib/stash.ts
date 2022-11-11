@@ -292,7 +292,7 @@ export const updateStashById = async (
   // Get plaiceholder data for the image
   if (
     updatePayload.image &&
-    !updatePayload.image.startsWith("https://res.cloudinary.com")
+    !updatePayload.image.startsWith("https://res.cloudinary.com/elshoff")
   ) {
     const { secure_url: secureURL, public_id: publicId } =
       await cloudinary.uploader.upload(updatePayload.image, {
@@ -325,7 +325,7 @@ export const updateStashById = async (
   // Update image alt text when the image is already in cloudinary
   if (
     imageAlt &&
-    updatePayload?.image?.startsWith("https://res.cloudinary.com")
+    updatePayload?.image?.startsWith("https://res.cloudinary.com/elshoff")
   ) {
     requestBody.image = {
       update: {
