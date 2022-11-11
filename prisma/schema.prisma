@@ -39,9 +39,13 @@ model Image {
   updatedAt   DateTime @updatedAt
   height      Int
   width       Int
-  publicId    String?  @unique @db.VarChar(512)
   type        String?  @db.VarChar(128)
+  // public_id value from Cloudinary
+  publicId    String?  @unique @db.VarChar(512)
+  // secure_url value from Cloudinary
   src         String   @unique @db.VarChar(512)
+  // original source of the image
+  url         String?  @unique @db.VarChar(512)
   alt         String   @db.VarChar(512)
   blurDataURL String   @db.VarChar(512)
   stash       Stash?   @relation(fields: [id], references: [id], onDelete: Cascade)

@@ -105,7 +105,11 @@ const NewStashPage: NextPage = () => {
         <Stack css={{ stackGap: "$4" }}>
           <Stack css={{ stackGap: "$2" }}>
             <Label htmlFor="url">URL:</Label>
-            <Input id="url" placeholder="URL" {...register("url")} />
+            <Input
+              id="url"
+              placeholder="URL"
+              {...register("url", { required: true })}
+            />
             {errors.url?.type === "required" && "URL is required"}
           </Stack>
           <Stack css={{ stackGap: "$2" }}>

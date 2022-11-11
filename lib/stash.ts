@@ -250,6 +250,8 @@ export const updateStashById = async (
     queryId = id;
   }
 
+  console.log("[lib/updateStashById] payload", payload);
+
   const { imageAlt, ...updatePayload } = payload;
 
   const requestBody: Prisma.StashUpdateInput = {
@@ -288,20 +290,46 @@ export const updateStashById = async (
   }
 
   // Get plaiceholder data for the image
-  if (updatePayload.image) {
+  if (
+    updatePayload.image &&
+    !updatePayload.image.startsWith("https://res.cloudinary.com")
+  ) {
+    const { secure_url: secureURL, public_id: publicId } =
+      await cloudinary.uploader.upload(updatePayload.image, {
+        public_id: updatePayload.slug,
+        folder: "kenny/stash",
+        overwrite: true,
+        invalidate: true,
+        unique_filename: false,
+      });
+
     const { base64, img } = await getPlaiceholder(updatePayload.image);
+
     requestBody.image = {
       connectOrCreate: {
         where: {
           src: img.src,
         },
         create: {
-          src: img.src,
+          src: secureURL,
+          publicId,
           height: img.height,
           width: img.width,
           blurDataURL: base64,
           alt: imageAlt || "Header image",
         },
+      },
+    };
+  }
+
+  // Update image alt text when the image is already in cloudinary
+  if (
+    imageAlt &&
+    updatePayload?.image?.startsWith("https://res.cloudinary.com")
+  ) {
+    requestBody.image = {
+      update: {
+        alt: imageAlt,
       },
     };
   }
@@ -354,6 +382,11 @@ export const deleteStashById = async (id: string | number) => {
       image: true,
     },
   });
+
+  // Delete image in Cloudinary
+  if (stash.image?.publicId) {
+    await cloudinary.uploader.destroy(stash.image.publicId);
+  }
 
   return stash;
 };
