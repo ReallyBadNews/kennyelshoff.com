@@ -33,8 +33,10 @@ export const StashList: FC<StashListProps> = ({
             {index !== data.stashes.length - 1 && (
               <Separator
                 css={{
-                  width: "calc($sizes$full + $space$5) !important",
-                  mx: "-$3",
+                  "@bp2": {
+                    width: "calc($sizes$full + $space$8) !important",
+                    mx: "-$5",
+                  },
                 }}
                 size="full"
                 tone="gradient"

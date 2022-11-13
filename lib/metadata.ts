@@ -2,7 +2,7 @@ export const getTitleFromUrl = async (url: string) => {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => {
     return controller.abort();
-  }, 2000); // timeout if it takes longer than 2 seconds
+  }, 5000); // timeout if it takes longer than 2 seconds
 
   const title = await fetch(url, { signal: controller.signal })
     .then((res) => {
@@ -27,7 +27,7 @@ export const getDescriptionFromUrl = async (url: string) => {
 
   const timeoutId = setTimeout(() => {
     return controller.abort();
-  }, 2000); // timeout if it takes longer than 2 seconds
+  }, 5000); // timeout if it takes longer than 2 seconds
 
   const description = await fetch(url, { signal: controller.signal })
     .then((res) => {
@@ -55,7 +55,7 @@ export const getOGImageFromUrl = async (url: string) => {
 
   const timeoutId = setTimeout(() => {
     return controller.abort();
-  }, 2000); // timeout if it takes longer than 2 seconds
+  }, 5000); // timeout if it takes longer than 2 seconds
 
   const ogImage = await fetch(url, { signal: controller.signal })
     .then((res) => {

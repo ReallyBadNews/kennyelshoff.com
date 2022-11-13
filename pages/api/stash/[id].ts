@@ -59,7 +59,7 @@ export default async function handler(
     }
 
     if (req.method === "DELETE") {
-      const id = req.query.id as string;
+      const { id } = req.query as { id: string };
 
       if (!id) {
         return res.status(400).send({ message: "Missing id" });
@@ -91,17 +91,52 @@ export default async function handler(
 
     res.setHeader("Allow", "GET, PATCH, DELETE");
     return res.status(405).json({ message: "Method not allowed" });
-  } catch (e: any) {
+  } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      console.error("[api/stash/[id] Prisma error", e);
       // The .code property can be accessed in a type-safe manner
       if (e.code === "P2002") {
         return res.status(400).json({
           message:
             "There is a unique constraint violation, a new stash cannot be created with this url",
+          code: e.code,
+          meta: e.meta,
+          cause: e.cause,
         });
       }
+
+      return res.status(400).json({
+        message: e.message,
+        meta: e.meta,
+        cause: e.cause,
+        name: e.name,
+        code: e.code,
+      });
     }
+
+    if (e instanceof Prisma.PrismaClientValidationError) {
+      return res.status(400).json({
+        message: e.message,
+        name: e.name,
+        cause: e.cause,
+      });
+    }
+
+    if (e instanceof Prisma.PrismaClientUnknownRequestError) {
+      return res.status(400).json({
+        message: e.message,
+        name: e.name,
+        cause: e.cause,
+      });
+    }
+
+    if (e instanceof Error) {
+      console.error("[api/stash[id]] error", e);
+      return res.status(500).json({ message: e.message });
+    }
+
+    // should never happen
     console.error("[api/stash[id]] error", e);
-    return res.status(500).send({ message: e.message });
+    return res.status(500).json({ message: "Unknown internal server error" });
   }
 }

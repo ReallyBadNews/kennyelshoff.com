@@ -181,7 +181,6 @@ export const createStash = async (payload: CreateOrUpdateStashInput) => {
   if (updatePayload.image) {
     const { secure_url: secureURL, public_id: publicId } =
       await cloudinary.uploader.upload(updatePayload.image, {
-        // set public_id to the slug
         public_id: updatePayload.slug,
         folder: process.env.CLOUDINARY_BASE_PUBLIC_ID || "kenny/stash",
         overwrite: true,
@@ -313,8 +312,9 @@ export const updateStashById = async (
           src: img.src,
         },
         create: {
-          src: secureURL,
           publicId,
+          src: secureURL,
+          url: updatePayload.image,
           height: img.height,
           width: img.width,
           blurDataURL: base64,
@@ -368,6 +368,11 @@ export const updateStashById = async (
 };
 
 export const deleteStashById = async (id: string | number) => {
+  console.log("[lib/deleteStashById] id", { id, idType: typeof id });
+  if (!id) {
+    throw new Error("No stash id provided");
+  }
+
   let queryId: string;
   if (typeof id === "number") {
     queryId = id.toString();
