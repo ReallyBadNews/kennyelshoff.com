@@ -368,6 +368,11 @@ export const updateStashById = async (
 };
 
 export const deleteStashById = async (id: string | number) => {
+  console.log("[lib/deleteStashById] id", { id, idType: typeof id });
+  if (!id) {
+    throw new Error("No stash id provided");
+  }
+
   let queryId: string;
   if (typeof id === "number") {
     queryId = id.toString();

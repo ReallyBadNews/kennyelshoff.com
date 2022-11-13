@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<{ downloads: number; views: number }>
+  res: NextApiResponse<{ downloads: number; views: number } | Error>
 ) {
   try {
     const stats = await getUnsplashStats().then((response) => {
@@ -18,7 +18,9 @@ export default async function handler(
       "public, s-maxage=1200, stale-while-revalidate=600"
     );
     res.status(200).json(stats);
-  } catch (error: any) {
-    res.status(500).json(error);
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json(error);
+    }
   }
 }

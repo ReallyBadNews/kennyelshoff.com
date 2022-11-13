@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<UnsplashPhotosAPIResp>
+  res: NextApiResponse<UnsplashPhotosAPIResp | Error>
 ) {
   try {
     const photos = await getUnsplashPhotos().then((response) => {
@@ -13,7 +13,9 @@ export default async function handler(
 
     res.setHeader("Cache-Control", "s-maxage=10, stale-while-revalidate=59");
     res.status(200).json(photos);
-  } catch (error: any) {
-    res.status(500).json(error);
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json(error);
+    }
   }
 }

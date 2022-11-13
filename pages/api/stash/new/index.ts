@@ -49,17 +49,52 @@ export default async function handler(
 
     res.setHeader("Allow", "POST");
     return res.status(405).send({ message: "Method not allowed" });
-  } catch (e: any) {
+  } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      console.error("[api/stash/new Prisma error", e);
       // The .code property can be accessed in a type-safe manner
       if (e.code === "P2002") {
         return res.status(400).json({
           message:
             "There is a unique constraint violation, a new stash cannot be created with this url",
+          code: e.code,
+          meta: e.meta,
+          cause: e.cause,
         });
       }
+
+      return res.status(400).json({
+        message: e.message,
+        meta: e.meta,
+        cause: e.cause,
+        name: e.name,
+        code: e.code,
+      });
     }
-    console.error("[api/stash/new] error", e);
-    return res.status(500).send({ message: e.message });
+
+    if (e instanceof Prisma.PrismaClientValidationError) {
+      return res.status(400).json({
+        message: e.message,
+        name: e.name,
+        cause: e.cause,
+      });
+    }
+
+    if (e instanceof Prisma.PrismaClientUnknownRequestError) {
+      return res.status(400).json({
+        message: e.message,
+        name: e.name,
+        cause: e.cause,
+      });
+    }
+
+    if (e instanceof Error) {
+      console.error("[api/stash[id]] error", e);
+      return res.status(500).json({ message: e.message });
+    }
+
+    // should never happen
+    console.error("[api/stash/new error", e);
+    return res.status(500).json({ message: "Unknown internal server error" });
   }
 }
