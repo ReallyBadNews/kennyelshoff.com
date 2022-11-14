@@ -1,5 +1,6 @@
 import { Gallery } from "@components/Gallery";
 import { Heading } from "@components/Heading";
+import Image from "@components/Image";
 import { Link } from "@components/Link";
 import { List } from "@components/List";
 import Page from "@components/Page";
@@ -8,7 +9,6 @@ import { Stack } from "@components/Stack";
 import { Text } from "@components/Text";
 import { ResourceApiResponse, v2 as cloudinary } from "cloudinary";
 import { InferGetStaticPropsType } from "next";
-import Image from "next/image";
 import { getPlaiceholder } from "plaiceholder";
 
 export const getStaticProps = async () => {

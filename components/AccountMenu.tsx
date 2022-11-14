@@ -9,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@components/DropdownMenu";
-import Image from "next/image";
+import Image from "@components/Image";
 import { DoubleArrowDownIcon } from "@radix-ui/react-icons";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
@@ -54,9 +54,9 @@ export const AccountMenu = () => {
                   <Image
                     alt={session.user.name || "Profile picture"}
                     height={34}
+                    loader={null}
                     src={session.user.image}
                     width={34}
-                    unoptimized
                   />
                 </Box>
               ) : null}

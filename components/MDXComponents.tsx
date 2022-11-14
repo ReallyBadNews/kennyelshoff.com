@@ -1,8 +1,8 @@
+import Image from "@components/Image";
 import dynamic from "next/dynamic";
 import type { ImageProps } from "next/image";
 import { CSS, VariantProps } from "stitches.config";
 import { ComponentMap, MDXImages } from "types";
-import Image from "next/image";
 import { Badge } from "./Badge";
 import { Blockquote } from "./Blockquote";
 import { Box } from "./Box";
