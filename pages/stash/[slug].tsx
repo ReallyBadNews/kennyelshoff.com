@@ -2,6 +2,7 @@ import { Badge } from "@components/Badge";
 import { Box } from "@components/Box";
 import { Button, LinkButton } from "@components/Button";
 import { Heading } from "@components/Heading";
+import Image from "@components/Image";
 import { MDXComponents } from "@components/MDXComponents";
 import NextLink from "@components/NextLink";
 import Page from "@components/Page";
@@ -14,7 +15,6 @@ import { formatDate } from "@lib/utils";
 import { getMDXComponent } from "mdx-bundler/client";
 import { GetStaticPaths, InferGetStaticPropsType } from "next";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { FC, useMemo } from "react";
 

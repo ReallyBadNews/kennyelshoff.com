@@ -1,5 +1,5 @@
 import { Box } from "@components/Box";
-import Image from "next/image";
+import Image from "@components/Image";
 import NextLink from "@components/NextLink";
 import { m } from "framer-motion";
 import dynamic from "next/dynamic";

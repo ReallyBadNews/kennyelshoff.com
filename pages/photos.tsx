@@ -1,7 +1,7 @@
 import { Button } from "@components/Button";
 import { Dialog, DialogContent, DialogTrigger } from "@components/Dialog";
 import { Grid } from "@components/Grid";
-import Image from "next/image";
+import Image from "@components/Image";
 import UnsplashStats from "@components/metrics/Unsplash";
 import Page from "@components/Page";
 import { Paragraph } from "@components/Paragraph";
@@ -76,6 +76,7 @@ export const Photos: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
             {...images[zoomedPhoto as number]}
             alt={pictures[zoomedPhoto as number]?.description || ""}
             height={undefined}
+            loader={null}
             placeholder="blur"
             sizes="96vw"
             src={fallback[zoomedPhoto as number]?.urls.regular}
@@ -120,6 +121,7 @@ export const Photos: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                       {...images[index]}
                       alt={photo.description}
                       height={undefined}
+                      loader={null}
                       placeholder="blur"
                       sizes="(max-width: 640px) 100vw, (max-width: 927px) calc(100vw - 2rem), (max-width: 1383px) calc(50vw - 3rem), calc(33vw - 4rem)"
                       style={{ objectFit: "cover" }}
@@ -130,6 +132,7 @@ export const Photos: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                     <Image
                       alt={photo.description}
                       height={photo.height}
+                      loader={null}
                       sizes="(max-width: 640px) 100vw, (max-width: 927px) calc(100vw - 2rem), (max-width: 1383px) calc(50vw - 3rem), calc(33vw - 4rem)"
                       src={photo.urls.regular}
                       width={photo.width}

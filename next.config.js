@@ -14,9 +14,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 const config = {
   swcMinify: true,
   images: {
-    // loader: "cloudinary",
-    loaderFile: "./lib/cloudinary.ts",
-    // path: "https://res.cloudinary.com/ddibad3k7/image/upload/",
+    // loaderFile: "./lib/cloudinary.ts",
     domains: [
       "images.unsplash.com",
       "avatars.githubusercontent.com",
