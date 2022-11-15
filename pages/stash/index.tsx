@@ -30,14 +30,12 @@ const StashPage: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   const [pageIndex, setPageIndex] = useState(1);
   const [pageLimit, setPageLimit] = useState(5);
 
-  const { data, mutate, isLoading, isValidating } = useStashes({
+  const { data, mutate } = useStashes({
     page: pageIndex,
     limit: pageLimit,
     fallbackData: pageIndex === 1 ? fallbackData : undefined,
     revalidateIfStale: true,
   });
-
-  console.log("[stash swr]", { isLoading, isValidating, data });
 
   const totalPages = data?.total ? Math.ceil(data.total / pageLimit) : 0;
 
