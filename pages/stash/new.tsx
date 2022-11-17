@@ -66,33 +66,36 @@ const NewStashPage: NextPage = () => {
   };
 
   const onSubmit = handleSubmit(async (data) => {
-    if (session?.user.role !== "ADMIN") throw new Error("Not authorized");
     setIsLoading(true);
-    await mutate(async (prevData) => {
-      console.log("[NewStashPage] prevData", prevData);
+    await mutate(
+      async (prevData) => {
+        console.log("[NewStashPage] prevData", prevData);
 
-      const newStash = await fetch(`/api/stash/new`, {
-        method: "POST",
-        body: JSON.stringify(data),
-      }).then(async (res) => {
-        const json: NewStash = await res.json();
+        const newStash = await fetch(`/api/stash/new`, {
+          method: "POST",
+          body: JSON.stringify(data),
+        }).then(async (res) => {
+          const json: NewStash = await res.json();
 
-        return json;
-      });
+          return json;
+        });
 
-      console.log("[new stash]", { newStash });
+        console.log("[new stash]", { newStash });
 
-      return {
-        stashes: prevData?.stashes
-          ? [...prevData.stashes, newStash]
-          : [newStash],
-        total: (prevData?.total && prevData.total + 1) || 1,
-        page: prevData?.page || 1,
-      };
-    });
+        return {
+          stashes: prevData?.stashes
+            ? [...prevData.stashes, newStash]
+            : [newStash],
+          total: (prevData?.total && prevData.total + 1) || 1,
+          page: prevData?.page || 1,
+        };
+      },
+      { revalidate: false }
+    );
+
+    console.log("[NewStashPage] stash created");
 
     router.replace("/stash");
-    setIsLoading(false);
   });
 
   return (

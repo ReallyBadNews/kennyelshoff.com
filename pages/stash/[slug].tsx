@@ -53,13 +53,8 @@ const StashDetailPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 }) => {
   const { data: session } = useSession();
   const router = useRouter();
-  const { data: allStashes, mutate: mutateAllStashes } = useStashes({
-    revalidateOnFocus: false,
-    revalidateOnMount: false,
-    revalidateOnReconnect: false,
-    revalidateIfStale: false,
-  });
-  const { stash, mutate } = useStash({
+  const { mutate } = useStashes({});
+  const { stash } = useStash({
     id: fallbackData?.id,
     fallbackData,
     revalidateOnMount: false,
@@ -72,29 +67,26 @@ const StashDetailPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     return null;
   }, [stash?.mdxBody]);
 
-  const deleteHandler = async (id: string) => {
-    await mutate(async () => {
-      return undefined;
-    });
+  const deleteHandler = (id: string) => {
+    mutate(
+      async (prevData) => {
+        fetch(`/api/stash/${id}`, {
+          method: "DELETE",
+        });
 
-    // TODO: Return `page`
-    await mutateAllStashes(async (prevData) => {
-      // this API returns the updated data
-      await fetch(`/api/stash/${id}`, {
-        method: "DELETE",
-      });
+        // filter the list, and return it with the updated item
+        const filteredStashes = prevData?.stashes.filter((post) => {
+          return post.id !== id;
+        }) as Stash[];
 
-      // filter the list, and return it with the updated item
-      const filteredStashes = allStashes?.stashes.filter((post) => {
-        return post.id !== id;
-      }) as Stash[];
-
-      return {
-        stashes: filteredStashes,
-        total: filteredStashes?.length || 0,
-        page: prevData?.page || 1,
-      };
-    });
+        return {
+          stashes: filteredStashes,
+          total: filteredStashes?.length || 0,
+          page: prevData?.page || 1,
+        };
+      },
+      { revalidate: false }
+    );
 
     router.replace("/stash");
   };

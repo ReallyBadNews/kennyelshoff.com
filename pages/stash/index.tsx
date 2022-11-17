@@ -66,23 +66,26 @@ const StashPage: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 
   useRegisterActions(actions);
 
-  const deleteHandler = async (id: string) => {
-    await mutate(async (prevData) => {
-      await fetch(`/api/stash/${id}`, {
-        method: "DELETE",
-      });
+  const deleteHandler = (id: string) => {
+    mutate(
+      async (prevData) => {
+        fetch(`/api/stash/${id}`, {
+          method: "DELETE",
+        });
 
-      // filter the list, and return it with the updated item
-      const filteredStashes = prevData?.stashes.filter((stash) => {
-        return stash.id !== id;
-      }) as Stash[];
+        // filter the list, and return it with the updated item
+        const filteredStashes = prevData?.stashes.filter((stash) => {
+          return stash.id !== id;
+        }) as Stash[];
 
-      return {
-        stashes: filteredStashes,
-        total: filteredStashes.length,
-        page: prevData?.page || 1,
-      };
-    });
+        return {
+          stashes: filteredStashes,
+          total: filteredStashes.length,
+          page: prevData?.page || 1,
+        };
+      },
+      { revalidate: false }
+    );
   };
 
   return (
