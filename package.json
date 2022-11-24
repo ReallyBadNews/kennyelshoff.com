@@ -39,6 +39,7 @@
     "contentlayer": "^0.2.9",
     "fathom-client": "^3.5.0",
     "framer-motion": "^7.6.7",
+    "html-escaper": "^3.0.3",
     "just-merge": "^3.1.1",
     "kbar": "^0.1.0-beta.38",
     "mdx-bundler": "^9.0.1",
@@ -58,6 +59,7 @@
   "devDependencies": {
     "@next/bundle-analyzer": "^13.0.4",
     "@types/glob": "^8.0.0",
+    "@types/html-escaper": "^3.0.0",
     "@types/react": "18.0.25",
     "@types/unsplash-js": "6.3.1",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
