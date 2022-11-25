@@ -1,8 +1,6 @@
 import { unescape } from "html-escaper";
-import type { NextFetchEvent } from "next/server";
-// import { recordMetatags } from "@/lib/upstash";
 
-export const getMetadataFromUrl = async (url: string, ev: NextFetchEvent) => {
+export const getMetadataFromUrl = async (url: string) => {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => {
     return controller.abort();
@@ -68,8 +66,6 @@ export const getMetadataFromUrl = async (url: string, ev: NextFetchEvent) => {
         image = new URL(url).origin + image;
       }
 
-      // ev.waitUntil(recordMetatags(url, !(title && description && image)));
-
       return {
         title,
         description,
@@ -77,7 +73,7 @@ export const getMetadataFromUrl = async (url: string, ev: NextFetchEvent) => {
       };
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
       return null; // if there's an error, return null
     });
   return metatags;

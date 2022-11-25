@@ -18,9 +18,7 @@ const NewStashPage: NextPage = () => {
   const { data: session } = useSession();
   const { mutate } = useStashes({});
   const [isLoading, setIsLoading] = useState(false);
-  const [generatingTitle, setGeneratingTitle] = useState(false);
-  const [generatingDescription, setGeneratingDescription] = useState(false);
-  const [generatingImage, setGeneratingImage] = useState(false);
+  const [generatingMetadata, setGeneratingMetadata] = useState(false);
 
   const {
     register,
@@ -34,7 +32,7 @@ const NewStashPage: NextPage = () => {
   const url = watch("url");
 
   const getMetadata = async () => {
-    setGeneratingTitle(true);
+    setGeneratingMetadata(true);
     fetch(`/api/edge/metatags?url=${url}`).then(async (res) => {
       if (res.status === 200) {
         const results: Awaited<ReturnType<typeof getMetadataFromUrl>> =
@@ -48,7 +46,7 @@ const NewStashPage: NextPage = () => {
           setValue("image", results.image);
         }
 
-        setGeneratingTitle(false);
+        setGeneratingMetadata(false);
       }
     });
   };
@@ -105,12 +103,12 @@ const NewStashPage: NextPage = () => {
             >
               <Label htmlFor="url">URL:</Label>
               <Button
-                disabled={!url || url?.length === 0 || generatingTitle}
+                disabled={!url || url?.length === 0 || generatingMetadata}
                 type="button"
                 onClick={getMetadata}
               >
-                {generatingTitle && "Loading..."}
-                <p>{generatingTitle ? "Generating" : "Generate from URL"}</p>
+                {generatingMetadata && "Loading..."}
+                <p>{generatingMetadata ? "Generating" : "Generate from URL"}</p>
               </Button>
             </Stack>
             <Input
