@@ -1,5 +1,3 @@
-/* eslint-disable react/no-danger */
-
 import { Html, Head, Main, NextScript } from "next/document";
 import { getCssText, reset } from "stitches.config";
 
@@ -19,6 +17,7 @@ export default function Document() {
     <Html lang="en">
       <Head>
         <style
+          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: getCssAndReset() }}
           id="stitches"
         />
