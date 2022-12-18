@@ -12,6 +12,11 @@ const footerLinks = {
       external: true,
     },
     {
+      title: "Mastodon",
+      url: "https://federated.press/@kenny",
+      external: true,
+    },
+    {
       title: "Twitter",
       url: "https://twitter.com/kennyelshoff",
       external: true,
@@ -26,13 +31,9 @@ const footerLinks = {
       url: "mailto:hello@kennyelshoff.com",
       external: true,
     },
-    {
-      title: "Resume",
-      url: "/kenny_elshoff-resume.pdf",
-      external: true,
-    },
   ],
   right: [
+    { title: "Resume", url: "/kenny_elshoff-resume.pdf", external: false },
     { title: "Colophon", url: "/colophon", external: false },
     { title: "Tools", url: "/tools", external: false },
   ],
@@ -71,6 +72,7 @@ export function Footer() {
               key={title}
               css={{ display: "flex", gap: "$1", "@bp1": { gap: "$2" } }}
               href={url}
+              rel={title === "Mastodon" ? "me" : undefined}
               target={external ? "_blank" : undefined}
               title={title}
               variant="subtle"
