@@ -16,10 +16,9 @@ type AppProps<P = any> = {
   pageProps: P;
 } & Omit<NextAppProps<P>, "pageProps">;
 
-const loadMotionFeatures = () => {
-  return import("../lib/motion-features").then((res) => {
-    return res.default;
-  });
+const loadMotionFeatures = async () => {
+  const res = await import("../lib/motion-features");
+  return res.default;
 };
 
 const DynamicFooter = dynamic(
