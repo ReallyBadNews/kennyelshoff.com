@@ -1,8 +1,9 @@
 import Image from "@components/Image";
+import { MDXContentProps } from "mdx-bundler/client";
 import dynamic from "next/dynamic";
 import type { ImageProps } from "next/image";
 import { CSS, VariantProps } from "stitches.config";
-import { ComponentMap, MDXImages } from "types";
+import { MDXImages } from "types";
 import { Badge } from "./Badge";
 import { Blockquote } from "./Blockquote";
 import { Box } from "./Box";
@@ -22,7 +23,9 @@ const DynamicGallery = dynamic(async () => {
   return Gallery;
 });
 
-export const MDXComponents = (mdxImages?: MDXImages): ComponentMap => {
+export const MDXComponents = (
+  mdxImages?: MDXImages
+): MDXContentProps["components"] => {
   return {
     h1: ({ children }) => {
       return (
