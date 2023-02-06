@@ -2,11 +2,12 @@
   "name": "kennyelshoff.com",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "pnpm db:generate && next dev",
+    "build": "pnpm db:generate && next build",
     "start": "next start",
     "db": "prisma studio",
     "db:push": "prisma db push",
+    "db:generate": "prisma generate",
     "db:migrate": "prisma db migrate",
     "db:seed": "prisma db seed",
     "db:reset": "prisma migrate reset",
@@ -14,8 +15,6 @@
     "typecheck": "npx tsc --noEmit",
     "lint:fix": "next lint --fix",
     "lint:staged": "lint-staged",
-    "prebuild": "prisma generate",
-    "predev": "prisma generate",
     "prepare": "node prepare.js"
   },
   "dependencies": {
