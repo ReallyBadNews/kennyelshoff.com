@@ -38,7 +38,6 @@
     "cloudinary": "^1.33.0",
     "contentlayer": "^0.3.0",
     "esbuild": "^0.17.5",
-    "fathom-client": "^3.5.0",
     "framer-motion": "^9.0.1",
     "html-escaper": "^3.0.3",
     "just-merge": "^3.2.0",
