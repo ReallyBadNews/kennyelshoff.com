@@ -3,11 +3,12 @@ import { Header } from "@components/Header";
 import { useAnalytics } from "@lib/analytics";
 import { Inter, JetBrains_Mono } from "@next/font/google";
 import localFont from "@next/font/local";
+import { Analytics } from "@vercel/analytics/react";
+import { LazyMotion } from "framer-motion";
 import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
 import type { AppProps as NextAppProps } from "next/app";
-import { LazyMotion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { darkTheme, globalCss } from "../stitches.config";
 
@@ -180,6 +181,7 @@ function BabaBooey({
               >
                 <Header />
                 <Component {...pageProps} />
+                <Analytics />
                 <DynamicFooter />
               </Container>
             </DynamicCommandPalette>

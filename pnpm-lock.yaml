@@ -25,6 +25,7 @@ specifiers:
   '@types/unsplash-js': 6.3.1
   '@typescript-eslint/eslint-plugin': ^5.50.0
   '@typescript-eslint/parser': ^5.50.0
+  '@vercel/analytics': ^0.1.8
   cloudinary: ^1.33.0
   contentlayer: ^0.3.0
   esbuild: ^0.17.5
@@ -88,6 +89,7 @@ dependencies:
   '@radix-ui/react-tooltip': 1.0.3_5ndqzdd6t4rivxsukjv3i3ak2q
   '@sindresorhus/slugify': 2.2.0
   '@stitches/react': 1.2.8_react@18.2.0
+  '@vercel/analytics': 0.1.8_react@18.2.0
   cloudinary: 1.33.0
   contentlayer: 0.3.0_esbuild@0.17.5
   esbuild: 0.17.5
@@ -1929,6 +1931,14 @@ packages:
       '@typescript-eslint/types': 5.50.0
       eslint-visitor-keys: 3.3.0
     dev: true
+
+  /@vercel/analytics/0.1.8_react@18.2.0:
+    resolution: {integrity: sha512-PQrOI8BJ9qUiVJuQfnKiJd15eDjDJH9TBKsNeMrtelT4NAk7d9mBVz1CoZkvoFnHQ0OW7Xnqmr1F2nScfAnznQ==}
+    peerDependencies:
+      react: ^16.8||^17||^18
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /acorn-jsx/5.3.2_acorn@8.8.2:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
