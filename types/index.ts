@@ -9,5 +9,3 @@ export type MDXImages = {
 };
 
 export type MDXImage = MDXImages[string];
-
-export type ComponentMap = import("mdx/types").MDXComponents;
