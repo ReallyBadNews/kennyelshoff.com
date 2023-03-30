@@ -1,0 +1,143 @@
+title: Everything but the Kitchen Sink
+description: Typesafe fetching with Zod
+date: "2023-03-30T18:42:10.594Z"
+
+---
+
+## Kenny Elshoff: write a function in typescript for fetching data from a pokemon endpoint
+
+Raycast AI: Here's a TypeScript function that fetches data from the Pokémon API (https://pokeapi.co/). This function uses the `fetch` API to make an HTTP request to the Pokémon endpoint and returns the JSON data.
+
+```typescript
+// Import the necessary types
+import { Pokemon, PokemonResponse } from "./pokemonTypes";
+
+// Define the function to fetch data from the Pokémon API
+async function fetchPokemonData(pokemonName: string): Promise<Pokemon> {
+  // Define the Pokémon API endpoint
+  const apiUrl = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
+
+  // Send an HTTP request to the Pokémon API
+  const response = await fetch(apiUrl);
+
+  // Check if the response is successful
+  if (!response.ok) {
+    throw new Error(
+      `Error fetching data for ${pokemonName}: ${response.statusText}`
+    );
+  }
+
+  // Parse the JSON data from the response
+  const data: PokemonResponse = await response.json();
+
+  // Extract the relevant information from the JSON data
+  const pokemon: Pokemon = {
+    id: data.id,
+    name: data.name,
+    types: data.types.map((typeInfo) => typeInfo.type.name),
+    abilities: data.abilities.map((abilityInfo) => abilityInfo.ability.name),
+    spriteUrl: data.sprites.front_default,
+  };
+
+  // Return the Pokémon data
+  return pokemon;
+}
+```
+
+Before using this function, you'll need to define the `Pokemon` and `PokemonResponse` types. Here's how you can define them in a separate file called `pokemonTypes.ts`:
+
+````typescript
+// Define the Pokémon type
+export interface Pokemon {
+
+---
+Kenny Elshoff: use zod to validate the response and create the types
+---
+Raycast AI: To use Zod for validating the response and creating the types, you'll first need to install the `zod` package:
+
+```bash
+npm install zod
+````
+
+Now, let's create a Zod schema for the Pokémon API response and use it to validate the response and create the types. Update the `pokemonTypes.ts` file with the following code:
+
+```typescript
+import { z } from "zod";
+
+// Define the Zod schema for a Pokémon type
+const PokemonTypeSchema = z.object({
+  slot: z.number(),
+  type: z.object({
+    name: z.string(),
+    url: z.string(),
+  }),
+});
+
+// Define the Zod schema for a Pokémon ability
+const PokemonAbilitySchema = z.object({
+  ability: z.object({
+    name: z.string(),
+    url: z.string(),
+  }),
+  is_hidden: z.boolean(),
+  slot: z.number(),
+});
+
+// Define the Zod schema for a Pokémon sprite
+const PokemonSpriteSchema = z
+  .object({
+    front_default: z.string().nullable(),
+  })
+  .nonstrict();
+
+// Define the Zod schema for the Pokémon API response
+const PokemonResponseSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  types: z.array(PokemonTypeSchema),
+  abilities: z.array(PokemonAbilitySchema),
+  sprites: PokemonSpriteSchema,
+});
+
+// Define the Pokémon type
+export type Pokemon = z.infer<typeof PokemonResponseSchema>;
+```
+
+Now, update the `fetchPokemonData` function to use the Zod schema for validation:
+
+```typescript
+import { z } from "zod";
+import { Pokemon, PokemonResponseSchema } from "./pokemonTypes";
+
+async function fetchPokemonData(pokemonName: string): Promise<Pokemon> {
+  const apiUrl = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
+
+  const response = await fetch(apiUrl);
+
+  if (!response.ok) {
+    throw new Error(
+      `Error fetching data for ${pokemonName}: ${response.statusText}`
+    );
+  }
+
+  const data = await response.json();
+
+  // Validate the JSON data using the Zod schema
+  const parsedData = PokemonResponseSchema.parse(data);
+
+  // Extract the relevant information from the parsed data
+  const pokemon: Pokemon = {
+    id: parsedData.id,
+    name: parsedData.name,
+    types: parsedData.types.map((typeInfo) => typeInfo.type.name),
+    abilities: parsedData.abilities.map(
+      (abilityInfo) => abilityInfo.ability.name
+    ),
+    sprites: parsedData.sprites,
+  };
+
+  return pokemon;
+}
+```
+
+Now, the `fetchPokemonData` function uses Zod to validate the response and create the types. If the response doesn't match the schema, Zod will throw an error with a helpful message describing the validation issue.
