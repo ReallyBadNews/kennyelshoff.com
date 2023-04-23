@@ -1,15 +1,16 @@
 import { deleteStashById, getStashById, updateStashById } from "@lib/stash";
 import { CreateOrUpdateStashInput } from "@lib/types";
+import { authOptions } from "@pages/api/auth/[...nextauth]";
 import { Prisma } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   try {
-    const session = await getSession({ req });
+    const session = await getServerSession(req, res, authOptions);
 
     const protocol = req.headers["x-forwarded-proto"] || "http";
     const baseUrl = req ? `${protocol}://${req.headers.host}` : "";
