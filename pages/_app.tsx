@@ -1,7 +1,7 @@
 import { Container } from "@components/Container";
 import { Header } from "@components/Header";
-import { Inter, JetBrains_Mono } from "@next/font/google";
-import localFont from "@next/font/local";
+import { Inter, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/react";
 import { LazyMotion } from "framer-motion";
 import { Session } from "next-auth";
