@@ -61,7 +61,6 @@ const globalStyles = globalCss({
   body: {
     lineHeight: "1.5",
     backgroundColor: "$loContrast",
-    fontFamily: "$inter",
     WebkitFontSmoothing: "antialiased",
     MozOsxFontSmoothing: "grayscale",
     WebkitTextSizeAdjust: "100%",
@@ -170,6 +169,7 @@ function BabaBooey({
               <Container
                 className={`${inter.variable} ${jetBrainsMono.variable} ${iaWritterQuattro.variable}`}
                 css={{
+                  fontFamily: "$inter",
                   display: "flex",
                   flexDirection: "column",
                   minHeight: "100vh",
