@@ -1,7 +1,7 @@
 import { Container } from "@components/Container";
 import { Header } from "@components/Header";
-import { Inter, JetBrains_Mono } from "@next/font/google";
-import localFont from "@next/font/local";
+import { Inter, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/react";
 import { LazyMotion } from "framer-motion";
 import { Session } from "next-auth";
@@ -61,7 +61,6 @@ const globalStyles = globalCss({
   body: {
     lineHeight: "1.5",
     backgroundColor: "$loContrast",
-    fontFamily: "$inter",
     WebkitFontSmoothing: "antialiased",
     MozOsxFontSmoothing: "grayscale",
     WebkitTextSizeAdjust: "100%",
@@ -170,6 +169,7 @@ function BabaBooey({
               <Container
                 className={`${inter.variable} ${jetBrainsMono.variable} ${iaWritterQuattro.variable}`}
                 css={{
+                  fontFamily: "$inter",
                   display: "flex",
                   flexDirection: "column",
                   minHeight: "100vh",
