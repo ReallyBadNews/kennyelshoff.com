@@ -60,12 +60,9 @@ export const AccountMenu = () => {
                   />
                 </Box>
               ) : null}
-              <Stack css={{ stackGap: "$1" }}>
-                <Text size="0">Signed in as:</Text>
-                <Text css={{ fontWeight: "$6" }} size="1">
-                  {session?.user.name}
-                </Text>
-              </Stack>
+              <Text css={{ fontWeight: "$6" }} size="1">
+                {session?.user.name}
+              </Text>
             </Stack>
           ) : (
             <Button
