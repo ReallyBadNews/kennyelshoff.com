@@ -35,12 +35,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps = async ({ params: { slug = "" } = {} }) => {
   const stash = await getStashBySlug(slug);
 
-  // if (!stash) {
-  //   return {
-  //     notFound: true,
-  //   };
-  // }
-
   return {
     props: {
       stash,
