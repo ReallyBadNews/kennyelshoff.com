@@ -22,7 +22,7 @@ export const getStaticProps = async () => {
         ...img,
         blurDataURL: base64,
       };
-    })
+    }),
   );
 
   return {

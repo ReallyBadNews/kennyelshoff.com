@@ -16,7 +16,7 @@ export const useStash = ({ id, ...config }: UseStashProps) => {
   const { data, mutate, error, isLoading, isValidating } = useSWR<Stash>(
     id ? `/api/stash/${id}` : null,
     fetcher,
-    config
+    config,
   );
 
   return {
@@ -36,7 +36,7 @@ export const useStashes = ({
   const { data, mutate, error, isLoading, isValidating } = useSWR<AllStashes>(
     `/api/stash?page=${page}&limit=${limit}`,
     fetcher,
-    config
+    config,
   );
 
   return {

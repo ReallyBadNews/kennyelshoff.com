@@ -10,17 +10,17 @@ export default function Home() {
     <Page>
       <Stack css={{ stackGap: "$3" }}>
         <Heading size="4" variant="contrast" weight="9" gradient>
-          Hello! I&apos;m Kenny Elshoff.
+          Hey there.
         </Heading>
         <Stack css={{ stackGap: "$4" }}>
           <Paragraph size="2" variant="gray">
-            A design engineer focused on digital craft, maintainable CSS,
-            motion, React, TypeScript, and of course who can forget about design
-            systems.
+            I&apos;m Kenny, a design engineer focused on digital craft,
+            maintainable CSS, motion, React, TypeScript, and of course who can
+            forget about design systems.
           </Paragraph>
           <Separator size="2" />
           <Paragraph size="1" variant="gray">
-            {`In my free time, I'm usually goofing off with my twin sons (who are now four!!), `}
+            {`In my free time, I'm usually goofing off with my kids, `}
             <NextLink
               href="https://unsplash.com/@reallybadnews/collections"
               variant="contrast"
@@ -42,16 +42,6 @@ export default function Home() {
               Graham Media Group
             </NextLink>
             {` to build Local News better.`}
-          </Paragraph>
-          <Paragraph size="1" variant="gray">
-            I think of this site as a playground and a location free to
-            experiment with new techniques and technologies. Is it overkill?
-            Yeah, of course. Is it fun to build? Hell yeah. Will it ever be
-            finished? Probably not. This site is built with Next.js, Stitches,
-            Radix Primitives & Colors, TypeScript, MDX and hosted on Vercel.
-          </Paragraph>
-          <Paragraph size="1" variant="gray">
-            ¯\_(ツ)_/¯
           </Paragraph>
         </Stack>
       </Stack>

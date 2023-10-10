@@ -24,7 +24,7 @@ const DynamicGallery = dynamic(async () => {
 });
 
 export const MDXComponents = (
-  mdxImages?: MDXImages
+  mdxImages?: MDXImages,
 ): MDXContentProps["components"] => {
   return {
     h1: ({ children }) => {

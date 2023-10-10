@@ -24,6 +24,8 @@ const Writing: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     >
       <Stack css={{ stackGap: "$7" }}>
         {posts.map((post, index) => {
+          if (post.draft) return null;
+
           return (
             <Fragment key={post.slug}>
               <BlogPost

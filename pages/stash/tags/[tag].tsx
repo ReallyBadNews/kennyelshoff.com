@@ -18,8 +18,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
         return tags.map(({ slug }) => {
           return slug;
         });
-      })
-    )
+      }),
+    ),
   )
     .filter(Boolean)
     .flat()

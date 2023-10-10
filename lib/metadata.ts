@@ -23,7 +23,7 @@ export const getMetadataFromUrl = async (url: string) => {
         // @ts-expect-error - ignore
         (_, key, value) => {
           obj[key] = unescape(value).replaceAll("&#x27;", "'");
-        }
+        },
       );
       // get all meta tags (reversed order for content & name/property)
       body.replace(
@@ -31,7 +31,7 @@ export const getMetadataFromUrl = async (url: string) => {
         // @ts-expect-error - ignore
         (_, value, key) => {
           obj[key] = unescape(value).replaceAll("&#x27;", "'");
-        }
+        },
       );
       // get all title tags
       body.replace(
@@ -39,7 +39,7 @@ export const getMetadataFromUrl = async (url: string) => {
         // @ts-expect-error - ignore
         (_, value) => {
           obj.title = unescape(value).replaceAll("&#x27;", "'");
-        }
+        },
       );
       // get all link tags
       body.replace(
@@ -47,7 +47,7 @@ export const getMetadataFromUrl = async (url: string) => {
         // @ts-expect-error - ignore
         (_, key, value) => {
           obj[key] = unescape(value).replaceAll("&#x27;", "'");
-        }
+        },
       );
 
       console.log("[metatags]", obj);
