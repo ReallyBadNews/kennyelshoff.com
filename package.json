@@ -2,9 +2,9 @@
   "name": "kennyelshoff.com",
   "private": true,
   "scripts": {
-    "dev": "pnpm db:generate && next dev",
-    "build": "pnpm db:generate && next build",
-    "prebuild": "contentlayer build",
+    "dev": "pnpm prebuild && next dev",
+    "build": "pnpm prebuild && next build",
+    "prebuild": "pnpm db:generate && contentlayer build",
     "start": "next start",
     "db": "prisma studio",
     "db:push": "prisma db push",
