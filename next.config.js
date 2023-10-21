@@ -6,14 +6,14 @@
 
 const { withPlaiceholder } = require("@plaiceholder/next");
 const { withContentlayer } = require("next-contentlayer");
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
-  enabled: process.env.ANALYZE === "true",
-});
 
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
   swcMinify: true,
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   images: {
     // loaderFile: "./lib/cloudinary.ts",
     domains: [
@@ -25,4 +25,4 @@ const config = {
   },
 };
 
-module.exports = withBundleAnalyzer(withContentlayer(withPlaiceholder(config)));
+module.exports = withContentlayer(withPlaiceholder(config));

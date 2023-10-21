@@ -12,12 +12,30 @@ export function BlogPost({
   description,
   date,
   slug,
-}: Pick<Post, "title" | "description" | "date" | "slug">) {
+  draft,
+}: Pick<Post, "title" | "description" | "date" | "slug" | "draft">) {
   const { views, isLoading } = useViews({ slug });
 
   return (
-    <Stack as="article" css={{ position: "relative", stackGap: "$1" }}>
-      <NextLink href={slug} outline="hover" variant="transparent">
+    <Stack
+      as="article"
+      css={{
+        position: "relative",
+        stackGap: "$1",
+        ...(draft
+          ? {
+              outline: "1px dashed $yellow9",
+              outlineOffset: "16px",
+              borderRadius: "$sm",
+            }
+          : undefined),
+      }}
+    >
+      <NextLink
+        href={slug}
+        outline={draft ? undefined : "hover"}
+        variant="transparent"
+      >
         <Heading as="h2" size="2">
           {title}
         </Heading>

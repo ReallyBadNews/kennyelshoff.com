@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "pnpm db:generate && next dev",
     "build": "pnpm db:generate && next build",
+    "prebuild": "contentlayer build",
     "start": "next start",
     "db": "prisma studio",
     "db:push": "prisma db push",
