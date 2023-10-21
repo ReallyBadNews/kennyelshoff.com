@@ -49,7 +49,7 @@ export const getStaticProps = async ({ params: { slug = "" } = {} }) => {
         blurDataURL: base64,
         publicId: image.public_id,
       };
-    })
+    }),
   ).then((values) => {
     const result = values.reduce<MDXImages>((acc, curr) => {
       return {

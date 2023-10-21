@@ -35,7 +35,7 @@ export const getStaticProps = async () => {
         blurDataURL: base64,
         publicId: image.public_id,
       };
-    })
+    }),
   );
 
   return { props: { images } };

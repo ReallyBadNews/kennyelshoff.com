@@ -76,7 +76,7 @@ const NewStashPage: NextPage = () => {
           page: prevData?.page || 1,
         };
       },
-      { revalidate: false }
+      { revalidate: false },
     );
 
     console.log("[NewStashPage] stash created");

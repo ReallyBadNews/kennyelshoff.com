@@ -17,7 +17,7 @@ type HeadingProps = ComponentProps<typeof DEFAULT_TAG> &
 export const Heading = forwardRef<ElementRef<typeof DEFAULT_TAG>, HeadingProps>(
   (
     { size = "1", variant = "contrast", weight = "7", css, ...textProps },
-    forwardedRef
+    forwardedRef,
   ) => {
     // This is the mapping of Heading Variants to Text variants
     const textSize: Record<HeadingSizeVariants, TextSizeVariants["size"]> = {
@@ -51,7 +51,7 @@ export const Heading = forwardRef<ElementRef<typeof DEFAULT_TAG>, HeadingProps>(
         size={textSize[size]}
       />
     );
-  }
+  },
 );
 
 Heading.displayName = "Heading";

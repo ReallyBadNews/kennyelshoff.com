@@ -1,6 +1,6 @@
 export default async function fetcher<JSON>(
   input: RequestInfo,
-  init?: RequestInit
+  init?: RequestInit,
 ): Promise<JSON> {
   const res = await fetch(input, init);
   return res.json();
@@ -8,7 +8,7 @@ export default async function fetcher<JSON>(
 
 export async function sendRequest<T>(
   url: RequestInfo | URL,
-  { arg }: { arg: any }
+  { arg }: { arg: any },
 ): Promise<T> {
   const response = await fetch(url, {
     method: "POST",

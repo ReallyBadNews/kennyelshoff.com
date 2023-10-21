@@ -4,7 +4,7 @@ import { Prisma } from "@prisma/client";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<{ total: number } | { message: string }>
+  res: NextApiResponse<{ total: number } | { message: string }>,
 ) {
   try {
     const { slug } = req.query;

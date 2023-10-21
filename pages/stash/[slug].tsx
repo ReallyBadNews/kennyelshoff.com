@@ -79,7 +79,7 @@ const StashDetailPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
           page: prevData?.page || 1,
         };
       },
-      { revalidate: false }
+      { revalidate: false },
     );
 
     router.replace("/stash");

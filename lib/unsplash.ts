@@ -14,7 +14,7 @@ const requestOptions: RequestInit = {
 export const getUnsplashStats = async () => {
   const stats = await fetcher<UnsplashStatsAPIResp>(
     `${UNSPLASH_URL}${USER_STATS_ENDPOINT}`,
-    requestOptions
+    requestOptions,
   );
 
   return stats;
@@ -23,7 +23,7 @@ export const getUnsplashStats = async () => {
 export const getUnsplashPhotos = async () => {
   const photos = await fetcher<UnsplashPhotosAPIResp>(
     `${UNSPLASH_URL}${USER_PHOTOS_ENDPOINT}?per_page=50`,
-    requestOptions
+    requestOptions,
   );
 
   return photos;

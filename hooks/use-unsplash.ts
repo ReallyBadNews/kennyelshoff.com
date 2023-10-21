@@ -6,7 +6,7 @@ export const useUnsplashStats = (config?: SWRConfiguration) => {
   const { data, error, isLoading } = useSWR<UnsplashStats>(
     `/api/unsplash/stats`,
     fetcher,
-    config
+    config,
   );
 
   return {
@@ -20,7 +20,7 @@ export const useUnsplashPhotos = (config?: SWRConfiguration) => {
   const { data, error, isLoading } = useSWR<UnsplashPhotosAPIResp>(
     `/api/unsplash/photos`,
     fetcher,
-    config
+    config,
   );
 
   return {

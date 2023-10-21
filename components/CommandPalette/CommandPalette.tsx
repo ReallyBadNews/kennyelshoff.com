@@ -96,7 +96,7 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
       perform: () => {
         return window.open(
           "https://github.com/ReallyBadNews/kennyelshoff.com",
-          "_blank"
+          "_blank",
         );
       },
     },
@@ -182,7 +182,7 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
       perform: () => {
         return window.open(
           "https://www.linkedin.com/in/kennyelshoff/",
-          "_blank"
+          "_blank",
         );
       },
     },

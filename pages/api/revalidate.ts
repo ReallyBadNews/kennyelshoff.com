@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   console.log("[api/revalidate] req.query", req.query);
   // Check for secret to confirm this is a valid request
@@ -22,7 +22,7 @@ export default async function handler(
       paths.map(async (path) => {
         console.log("[api/revalidate] revalidated", path);
         await res.revalidate(path);
-      })
+      }),
     );
 
     return res.json({ message: "ok" });

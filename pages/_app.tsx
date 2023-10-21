@@ -30,7 +30,7 @@ const DynamicFooter = dynamic(
     loading: () => {
       return <footer />;
     },
-  }
+  },
 );
 
 const DynamicTooltip = dynamic(async () => {

@@ -61,7 +61,7 @@ export const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
 export const StyledContent = styled(
   DropdownMenuPrimitive.Content,
   menuCss,
-  panelStyles
+  panelStyles,
 );
 
 type DropdownMenuContentPrimitiveProps = React.ComponentProps<
@@ -89,7 +89,7 @@ export const DropdownMenuLabel = styled(DropdownMenuPrimitive.Label, labelCss);
 export const DropdownMenuItem = styled(DropdownMenuPrimitive.Item, itemCss);
 export const DropdownMenuRadioGroup = styled(
   DropdownMenuPrimitive.RadioGroup,
-  {}
+  {},
 );
 export const DropdownMenuGroup = styled(DropdownMenuPrimitive.Group, {
   py: "$1",
@@ -97,7 +97,7 @@ export const DropdownMenuGroup = styled(DropdownMenuPrimitive.Group, {
 
 export const DropdownMenuSeparator = styled(
   DropdownMenuPrimitive.Separator,
-  separatorCss
+  separatorCss,
 );
 
 export const DropdownMenuArrow = styled(DropdownMenuPrimitive.Arrow, {
@@ -106,7 +106,7 @@ export const DropdownMenuArrow = styled(DropdownMenuPrimitive.Arrow, {
 
 const StyledDropdownMenuRadioItem = styled(
   DropdownMenuPrimitive.RadioItem,
-  itemCss
+  itemCss,
 );
 
 type DialogMenuRadioItemPrimitiveProps = React.ComponentProps<
@@ -152,7 +152,7 @@ DropdownMenuRadioItem.displayName = "DropdownMenuRadioItem";
 
 const StyledDropdownMenuCheckboxItem = styled(
   DropdownMenuPrimitive.CheckboxItem,
-  itemCss
+  itemCss,
 );
 
 type DialogMenuCheckboxItemPrimitiveProps = React.ComponentProps<

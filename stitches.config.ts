@@ -333,14 +333,16 @@ export const {
       };
     },
     p: (
-      value: Stitches.ScaleValue<"space"> | Stitches.PropertyValue<"padding">
+      value: Stitches.ScaleValue<"space"> | Stitches.PropertyValue<"padding">,
     ) => {
       return {
         padding: value,
       };
     },
     pt: (
-      value: Stitches.ScaleValue<"space"> | Stitches.PropertyValue<"paddingTop">
+      value:
+        | Stitches.ScaleValue<"space">
+        | Stitches.PropertyValue<"paddingTop">,
     ) => {
       return {
         paddingTop: value,
@@ -349,7 +351,7 @@ export const {
     pr: (
       value:
         | Stitches.ScaleValue<"space">
-        | Stitches.PropertyValue<"paddingRight">
+        | Stitches.PropertyValue<"paddingRight">,
     ) => {
       return {
         paddingRight: value,
@@ -358,7 +360,7 @@ export const {
     pb: (
       value:
         | Stitches.ScaleValue<"space">
-        | Stitches.PropertyValue<"paddingBottom">
+        | Stitches.PropertyValue<"paddingBottom">,
     ) => {
       return {
         paddingBottom: value,
@@ -367,7 +369,7 @@ export const {
     pl: (
       value:
         | Stitches.ScaleValue<"space">
-        | Stitches.PropertyValue<"paddingLeft">
+        | Stitches.PropertyValue<"paddingLeft">,
     ) => {
       return {
         paddingLeft: value,
@@ -376,7 +378,7 @@ export const {
     px: (
       value:
         | Stitches.ScaleValue<"space">
-        | Stitches.PropertyValue<"paddingLeft">
+        | Stitches.PropertyValue<"paddingLeft">,
     ) => {
       return {
         paddingLeft: value,
@@ -384,7 +386,9 @@ export const {
       };
     },
     py: (
-      value: Stitches.ScaleValue<"space"> | Stitches.PropertyValue<"paddingTop">
+      value:
+        | Stitches.ScaleValue<"space">
+        | Stitches.PropertyValue<"paddingTop">,
     ) => {
       return {
         paddingTop: value,
@@ -392,14 +396,14 @@ export const {
       };
     },
     m: (
-      value: Stitches.ScaleValue<"space"> | Stitches.PropertyValue<"margin">
+      value: Stitches.ScaleValue<"space"> | Stitches.PropertyValue<"margin">,
     ) => {
       return {
         margin: value,
       };
     },
     mt: (
-      value: Stitches.ScaleValue<"space"> | Stitches.PropertyValue<"marginTop">
+      value: Stitches.ScaleValue<"space"> | Stitches.PropertyValue<"marginTop">,
     ) => {
       return {
         marginTop: value,
@@ -408,7 +412,7 @@ export const {
     mr: (
       value:
         | Stitches.ScaleValue<"space">
-        | Stitches.PropertyValue<"marginRight">
+        | Stitches.PropertyValue<"marginRight">,
     ) => {
       return {
         marginRight: value,
@@ -417,21 +421,25 @@ export const {
     mb: (
       value:
         | Stitches.ScaleValue<"space">
-        | Stitches.PropertyValue<"marginBottom">
+        | Stitches.PropertyValue<"marginBottom">,
     ) => {
       return {
         marginBottom: value,
       };
     },
     ml: (
-      value: Stitches.ScaleValue<"space"> | Stitches.PropertyValue<"marginLeft">
+      value:
+        | Stitches.ScaleValue<"space">
+        | Stitches.PropertyValue<"marginLeft">,
     ) => {
       return {
         marginLeft: value,
       };
     },
     mx: (
-      value: Stitches.ScaleValue<"space"> | Stitches.PropertyValue<"marginLeft">
+      value:
+        | Stitches.ScaleValue<"space">
+        | Stitches.PropertyValue<"marginLeft">,
     ) => {
       return {
         marginLeft: value,
@@ -439,7 +447,7 @@ export const {
       };
     },
     my: (
-      value: Stitches.ScaleValue<"space"> | Stitches.PropertyValue<"marginTop">
+      value: Stitches.ScaleValue<"space"> | Stitches.PropertyValue<"marginTop">,
     ) => {
       return {
         marginTop: value,
@@ -449,7 +457,7 @@ export const {
     br: (
       value:
         | Stitches.ScaleValue<"radii">
-        | Stitches.PropertyValue<"borderRadius">
+        | Stitches.PropertyValue<"borderRadius">,
     ) => {
       return {
         borderRadius: value,
@@ -458,7 +466,7 @@ export const {
     btrr: (
       value:
         | Stitches.ScaleValue<"radii">
-        | Stitches.PropertyValue<"borderTopRightRadius">
+        | Stitches.PropertyValue<"borderTopRightRadius">,
     ) => {
       return {
         borderTopRightRadius: value,
@@ -467,7 +475,7 @@ export const {
     bbrr: (
       value:
         | Stitches.ScaleValue<"radii">
-        | Stitches.PropertyValue<"borderBottomRightRadius">
+        | Stitches.PropertyValue<"borderBottomRightRadius">,
     ) => {
       return {
         borderBottomRightRadius: value,
@@ -476,7 +484,7 @@ export const {
     bblr: (
       value:
         | Stitches.ScaleValue<"radii">
-        | Stitches.PropertyValue<"borderBottomLeftRadius">
+        | Stitches.PropertyValue<"borderBottomLeftRadius">,
     ) => {
       return {
         borderBottomLeftRadius: value,
@@ -485,7 +493,7 @@ export const {
     btlr: (
       value:
         | Stitches.ScaleValue<"radii">
-        | Stitches.PropertyValue<"borderTopLeftRadius">
+        | Stitches.PropertyValue<"borderTopLeftRadius">,
     ) => {
       return {
         borderTopLeftRadius: value,
@@ -497,14 +505,14 @@ export const {
     lh: (
       value:
         | Stitches.ScaleValue<"lineHeights">
-        | Stitches.PropertyValue<"lineHeight">
+        | Stitches.PropertyValue<"lineHeight">,
     ) => {
       return {
         lineHeight: value,
       };
     },
     size: (
-      value: Stitches.ScaleValue<"sizes"> | Stitches.PropertyValue<"width">
+      value: Stitches.ScaleValue<"sizes"> | Stitches.PropertyValue<"width">,
     ) => {
       return {
         width: value,
@@ -512,7 +520,7 @@ export const {
       };
     },
     minColumnWidth: (
-      value: Stitches.ScaleValue<"sizes"> | Stitches.PropertyValue<"width">
+      value: Stitches.ScaleValue<"sizes"> | Stitches.PropertyValue<"width">,
     ) => {
       return {
         gridTemplateColumns: `repeat(auto-fit, minmax(${value}, 1fr))`,

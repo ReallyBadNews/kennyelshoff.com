@@ -24,11 +24,15 @@ const Writing: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     >
       <Stack css={{ stackGap: "$7" }}>
         {posts.map((post, index) => {
+          // If the post is a draft, don't render it unless we're in development
+          if (process.env.NODE_ENV !== "development" && post.draft) return null;
+
           return (
             <Fragment key={post.slug}>
               <BlogPost
                 date={post.date}
                 description={post.description}
+                draft={post.draft}
                 slug={post.slug}
                 title={post.title}
               />

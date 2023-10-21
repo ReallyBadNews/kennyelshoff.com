@@ -12,7 +12,7 @@ export const slugify = (text: string, options?: Options): string => {
 
 export const formatDate = (
   date: string | number | Date,
-  format: "xshort" | "short" | "medium" | "long" | "full" = "short"
+  format: "xshort" | "short" | "medium" | "long" | "full" = "short",
 ): string => {
   const dateFormats: Record<typeof format, Intl.DateTimeFormatOptions> = {
     xshort: {
@@ -63,7 +63,7 @@ export const isExternalLink = (url: string) => {
 };
 
 export const sortByDate = <T extends { date: string }>(
-  arr: Array<T>
+  arr: Array<T>,
 ): Array<T> => {
   return arr.sort((a, b) => {
     return Number(new Date(b.date)) - Number(new Date(a.date));
@@ -74,9 +74,9 @@ export type GroupByYear<T> = Record<string, Array<T>>;
 export const groupByYear = <
   T extends {
     date: string;
-  }
+  },
 >(
-  arr: Array<T>
+  arr: Array<T>,
 ) => {
   return arr
     .sort((a, b) => {

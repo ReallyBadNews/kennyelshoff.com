@@ -7,7 +7,7 @@ import { getServerSession } from "next-auth";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   try {
     const session = await getServerSession(req, res, authOptions);
@@ -44,8 +44,8 @@ export default async function handler(
 
       fetch(
         `${baseUrl}/api/revalidate?secret=${encodeURIComponent(
-          process.env.NEXT_REVALIDATE_SECRET as string
-        )}&paths=${encodeURIComponent(JSON.stringify(pathsToRevalidate))}`
+          process.env.NEXT_REVALIDATE_SECRET as string,
+        )}&paths=${encodeURIComponent(JSON.stringify(pathsToRevalidate))}`,
       );
 
       return res.status(201).json(newStash);

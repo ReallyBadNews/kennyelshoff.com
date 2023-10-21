@@ -10,7 +10,7 @@ export const useViews = ({ slug, ...config }: UseViewsProps) => {
   const { data, mutate, error, isLoading, isValidating } = useSWR<Views>(
     `/api/views${slug}`,
     fetcher,
-    config
+    config,
   );
 
   return {

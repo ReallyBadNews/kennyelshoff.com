@@ -242,7 +242,7 @@ export const createStash = async (payload: CreateOrUpdateStashInput) => {
 
 export const updateStashById = async (
   id: string | number,
-  payload: CreateOrUpdateStashInput
+  payload: CreateOrUpdateStashInput,
 ) => {
   let queryId: string;
   if (typeof id === "number") {
@@ -343,7 +343,7 @@ export const updateStashById = async (
 
   console.log(
     "[lib/updateStashById] requestBody",
-    JSON.stringify(requestBody, null, 2)
+    JSON.stringify(requestBody, null, 2),
   );
 
   const stash = await prisma.stash.update({

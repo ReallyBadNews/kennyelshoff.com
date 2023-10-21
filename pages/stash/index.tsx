@@ -84,7 +84,7 @@ const StashPage: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
           page: prevData?.page || 1,
         };
       },
-      { revalidate: false }
+      { revalidate: false },
     );
   };
 
