@@ -16,10 +16,19 @@ export const getStaticProps = async () => {
 
   const images = await Promise.all(
     photos.map(async (photo) => {
-      const { base64, img } = await getPlaiceholder(photo.urls.regular);
+      const buffer = await fetch(photo.urls.regular).then(async (res) => {
+        return Buffer.from(await res.arrayBuffer());
+      });
+
+      const {
+        base64,
+        metadata: { height, width },
+      } = await getPlaiceholder(buffer, { size: 10 });
 
       return {
-        ...img,
+        width,
+        height,
+        src: photo.urls.regular,
         blurDataURL: base64,
       };
     }),

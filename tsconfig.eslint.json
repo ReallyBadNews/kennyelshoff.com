@@ -6,6 +6,6 @@
     "**/*.js",
     "**/*.mjs",
     "**/*.mdx",
-    ".eslintrc.js"
+    ".eslintrc.cjs"
   ]
 }
