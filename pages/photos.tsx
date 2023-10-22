@@ -16,9 +16,9 @@ export const getStaticProps = async () => {
 
   const images = await Promise.all(
     photos.map(async (photo) => {
-      const buffer = await fetch(photo.urls.regular).then(async (res) =>
-        Buffer.from(await res.arrayBuffer()),
-      );
+      const buffer = await fetch(photo.urls.regular).then(async (res) => {
+        return Buffer.from(await res.arrayBuffer());
+      });
 
       const {
         base64,

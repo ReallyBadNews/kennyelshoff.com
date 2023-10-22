@@ -42,9 +42,9 @@ export const getStaticProps = async ({ params: { slug = "" } = {} }) => {
 
   const images = await Promise.all(
     imagePaths.map(async (image) => {
-      const buffer = await fetch(image.src).then(async (res) =>
-        Buffer.from(await res.arrayBuffer()),
-      );
+      const buffer = await fetch(image.src).then(async (res) => {
+        return Buffer.from(await res.arrayBuffer());
+      });
 
       const {
         base64,

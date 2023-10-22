@@ -24,11 +24,13 @@ const config = {
     ],
   },
   /** @see https://github.com/contentlayerdev/contentlayer/issues/272 */
-  webpack: (config) => {
-    config.infrastructureLogging = {
-      level: "error",
+  webpack: (webpackConfig) => {
+    return {
+      ...webpackConfig,
+      infrastructureLogging: {
+        level: "error",
+      },
     };
-    return config;
   },
 };
 

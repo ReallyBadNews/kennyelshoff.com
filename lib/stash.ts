@@ -188,9 +188,9 @@ export const createStash = async (payload: CreateOrUpdateStashInput) => {
         unique_filename: false,
       });
 
-    const buffer = await fetch(updatePayload.image).then(async (res) =>
-      Buffer.from(await res.arrayBuffer()),
-    );
+    const buffer = await fetch(updatePayload.image).then(async (res) => {
+      return Buffer.from(await res.arrayBuffer());
+    });
 
     const { base64, metadata } = await getPlaiceholder(buffer, { size: 10 });
 
@@ -308,9 +308,9 @@ export const updateStashById = async (
         unique_filename: false,
       });
 
-    const buffer = await fetch(updatePayload.image).then(async (res) =>
-      Buffer.from(await res.arrayBuffer()),
-    );
+    const buffer = await fetch(updatePayload.image).then(async (res) => {
+      return Buffer.from(await res.arrayBuffer());
+    });
 
     const {
       base64,
@@ -326,8 +326,8 @@ export const updateStashById = async (
           publicId,
           src: secureURL,
           url: updatePayload.image,
-          height: height,
-          width: width,
+          height,
+          width,
           blurDataURL: base64,
           alt: imageAlt || "Header image",
         },
