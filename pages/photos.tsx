@@ -20,10 +20,14 @@ export const getStaticProps = async () => {
         Buffer.from(await res.arrayBuffer()),
       );
 
-      const { base64, metadata } = await getPlaiceholder(buffer, { size: 10 });
+      const {
+        base64,
+        metadata: { height, width },
+      } = await getPlaiceholder(buffer, { size: 10 });
 
       return {
-        ...metadata,
+        width,
+        height,
         src: photo.urls.regular,
         blurDataURL: base64,
       };

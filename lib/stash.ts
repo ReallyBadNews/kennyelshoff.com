@@ -312,7 +312,10 @@ export const updateStashById = async (
       Buffer.from(await res.arrayBuffer()),
     );
 
-    const { base64, metadata } = await getPlaiceholder(buffer, { size: 10 });
+    const {
+      base64,
+      metadata: { height, width },
+    } = await getPlaiceholder(buffer, { size: 10 });
 
     requestBody.image = {
       connectOrCreate: {
@@ -323,8 +326,8 @@ export const updateStashById = async (
           publicId,
           src: secureURL,
           url: updatePayload.image,
-          height: metadata.height,
-          width: metadata.width,
+          height: height,
+          width: width,
           blurDataURL: base64,
           alt: imageAlt || "Header image",
         },
