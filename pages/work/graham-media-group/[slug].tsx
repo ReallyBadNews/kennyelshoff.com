@@ -42,10 +42,15 @@ export const getStaticProps = async ({ params: { slug = "" } = {} }) => {
 
   const images = await Promise.all(
     imagePaths.map(async (image) => {
-      const { base64, img } = await getPlaiceholder(image.src);
+      const buffer = await fetch(image.src).then(async (res) =>
+        Buffer.from(await res.arrayBuffer()),
+      );
+
+      const { base64, metadata } = await getPlaiceholder(buffer, { size: 10 });
 
       return {
-        ...img,
+        ...metadata,
+        src: image.src,
         blurDataURL: base64,
         publicId: image.public_id,
       };
@@ -59,7 +64,7 @@ export const getStaticProps = async ({ params: { slug = "" } = {} }) => {
           width: curr.width,
           height: curr.height,
           blurDataURL: curr.blurDataURL,
-          type: curr.type,
+          type: curr.format,
         },
       };
     }, {});

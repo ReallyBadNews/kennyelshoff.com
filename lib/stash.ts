@@ -188,19 +188,23 @@ export const createStash = async (payload: CreateOrUpdateStashInput) => {
         unique_filename: false,
       });
 
-    const { base64, img } = await getPlaiceholder(updatePayload.image);
+    const buffer = await fetch(updatePayload.image).then(async (res) =>
+      Buffer.from(await res.arrayBuffer()),
+    );
+
+    const { base64, metadata } = await getPlaiceholder(buffer, { size: 10 });
 
     requestBody.image = {
       connectOrCreate: {
         where: {
-          src: img.src,
+          src: secureURL,
         },
         create: {
           publicId,
           src: secureURL,
           url: updatePayload.image,
-          height: img.height,
-          width: img.width,
+          height: metadata.height,
+          width: metadata.width,
           blurDataURL: base64,
           alt: imageAlt || "Header image",
         },
@@ -304,19 +308,23 @@ export const updateStashById = async (
         unique_filename: false,
       });
 
-    const { base64, img } = await getPlaiceholder(updatePayload.image);
+    const buffer = await fetch(updatePayload.image).then(async (res) =>
+      Buffer.from(await res.arrayBuffer()),
+    );
+
+    const { base64, metadata } = await getPlaiceholder(buffer, { size: 10 });
 
     requestBody.image = {
       connectOrCreate: {
         where: {
-          src: img.src,
+          src: secureURL,
         },
         create: {
           publicId,
           src: secureURL,
           url: updatePayload.image,
-          height: img.height,
-          width: img.width,
+          height: metadata.height,
+          width: metadata.width,
           blurDataURL: base64,
           alt: imageAlt || "Header image",
         },

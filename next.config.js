@@ -2,12 +2,12 @@
 
 /**
  * @type {import('next').NextConfig}
- * */
+ */
 
-const { withPlaiceholder } = require("@plaiceholder/next");
-const { withContentlayer } = require("next-contentlayer");
+import withPlaiceholder from "@plaiceholder/next";
+import { withContentlayer } from "next-contentlayer";
 
-/** @type {import("next").NextConfig} */
+/** @type {import('next').NextConfig} */
 const config = {
   reactStrictMode: true,
   swcMinify: true,
@@ -23,6 +23,13 @@ const config = {
       "elshoff.s3-us-east-2.amazonaws.com",
     ],
   },
+  /** @see https://github.com/contentlayerdev/contentlayer/issues/272 */
+  webpack: (config) => {
+    config.infrastructureLogging = {
+      level: "error",
+    };
+    return config;
+  },
 };
 
-module.exports = withContentlayer(withPlaiceholder(config));
+export default withContentlayer(withPlaiceholder(config));
