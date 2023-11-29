@@ -14,6 +14,11 @@ const config = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
   images: {
     // loaderFile: "./lib/cloudinary.ts",
     domains: [
