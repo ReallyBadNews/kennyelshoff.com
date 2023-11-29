@@ -2,9 +2,9 @@
   "name": "kennyelshoff.com",
   "type": "module",
   "scripts": {
-    "dev": "pnpm prebuild && next dev",
+    "dev": "next dev",
     "build": "pnpm prebuild && next build",
-    "prebuild": "pnpm db:generate && contentlayer build",
+    "prebuild": "pnpm db:generate",
     "start": "next start",
     "db": "prisma studio",
     "db:push": "prisma db push",
