@@ -89,7 +89,7 @@
     "remark-slug": "^7.0.1",
     "remark-unwrap-images": "^3.0.1",
     "ts-node": "^10.9.1",
-    "typescript": "5.2.2"
+    "typescript": "5.3.2"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
