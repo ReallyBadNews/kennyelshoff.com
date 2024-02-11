@@ -3,6 +3,7 @@ import { Header } from "@components/Header";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { LazyMotion } from "framer-motion";
 import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
@@ -180,6 +181,7 @@ function BabaBooey({
                 <Header />
                 <Component {...pageProps} />
                 <Analytics />
+                <SpeedInsights />
                 <DynamicFooter />
               </Container>
             </DynamicCommandPalette>
