@@ -36,6 +36,7 @@
     "@sindresorhus/slugify": "^2.2.1",
     "@stitches/react": "^1.2.8",
     "@vercel/analytics": "^1.1.1",
+    "@vercel/speed-insights": "^1.0.9",
     "cloudinary": "^1.41.1",
     "contentlayer": "^0.3.4",
     "esbuild": "^0.18.20",
