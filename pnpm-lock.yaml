@@ -66,8 +66,8 @@ dependencies:
     specifier: ^0.18.20
     version: 0.18.20
   framer-motion:
-    specifier: ^10.16.16
-    version: 10.18.0(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^11.0.14
+    version: 11.0.14(react-dom@18.2.0)(react@18.2.0)
   html-escaper:
     specifier: ^3.0.3
     version: 3.0.3
@@ -75,8 +75,8 @@ dependencies:
     specifier: ^3.2.0
     version: 3.2.0
   kbar:
-    specifier: 0.1.0-beta.44
-    version: 0.1.0-beta.44(@types/react@18.2.46)(react-dom@18.2.0)(react@18.2.0)
+    specifier: 0.1.0-beta.45
+    version: 0.1.0-beta.45(@types/react@18.2.46)(react-dom@18.2.0)(react@18.2.0)
   mdx-bundler:
     specifier: ^9.2.1
     version: 9.2.1(esbuild@0.18.20)
@@ -420,20 +420,6 @@ packages:
     requiresBuild: true
     dependencies:
       tslib: 2.6.2
-    dev: false
-    optional: true
-
-  /@emotion/is-prop-valid@0.8.8:
-    resolution: {integrity: sha512-u5WtneEAr5IDG2Wv65yhunPSMLIpuKsbuOktRojfrEiEvRyC85LgPMZI63cr7NUqT8ZIGdSVg8ZKGxIug4lXcA==}
-    requiresBuild: true
-    dependencies:
-      '@emotion/memoize': 0.7.4
-    dev: false
-    optional: true
-
-  /@emotion/memoize@0.7.4:
-    resolution: {integrity: sha512-Ja/Vfqe3HpuzRsG1oBtWTHk2PGZ7GR+2Vz5iYGelAw8dx32K0y7PjVuxK6z1nMpZOqAFsRUPCkK1YjJ56qJlgw==}
-    requiresBuild: true
     dev: false
     optional: true
 
@@ -3872,12 +3858,15 @@ packages:
       fetch-blob: 3.2.0
     dev: false
 
-  /framer-motion@10.18.0(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-oGlDh1Q1XqYPksuTD/usb0I70hq95OUzmL9+6Zd+Hs4XV0oaISBa/UUMSjYiq6m8EUF32132mOJ8xVZS+I0S6w==}
+  /framer-motion@11.0.14(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-RFjo2hB1MTW0EWsHQaXgVn0AEUDGxAs0ZL2vVjTTJJu3N7wFiLkmqTn5ysLjL+qKZ9jvfpKXDb9waN9AyLqk8g==}
     peerDependencies:
+      '@emotion/is-prop-valid': '*'
       react: ^18.0.0
       react-dom: ^18.0.0
     peerDependenciesMeta:
+      '@emotion/is-prop-valid':
+        optional: true
       react:
         optional: true
       react-dom:
@@ -3886,8 +3875,6 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       tslib: 2.6.2
-    optionalDependencies:
-      '@emotion/is-prop-valid': 0.8.8
     dev: false
 
   /fs-monkey@1.0.5:
@@ -4652,8 +4639,8 @@ packages:
     resolution: {integrity: sha512-cNh5FWt44hx4SpQS1xZU8Tzr/fQA69pqCdjbwxmaYYIOuRfA8EIg+dn1bGmIW03ZUtR2vkMOCjWKc+jIbpauSw==}
     dev: false
 
-  /kbar@0.1.0-beta.44(@types/react@18.2.46)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-hfstBZn/XYhEEobxA6yhMkgu3yHNqAgHbBM/WavC1GvSEMRAVMZAWZBBrNwJCqknSIwu7nS9jsHORENtlrjU1Q==}
+  /kbar@0.1.0-beta.45(@types/react@18.2.46)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-kXvjthqPLoWZXlxLJPrFKioskNdQv1O3Ukg5mqq2ExK3Ix1qvYT3W/ACDRIv/e/CHxPWZoTriB4oFbQ6UCSX5g==}
     peerDependencies:
       react: ^16.0.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
