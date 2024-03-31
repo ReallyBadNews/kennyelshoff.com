@@ -1,6 +1,5 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -31,6 +30,7 @@ model Stash {
   tags        Tag[]
 
   @@index([host, slug])
+  @@index([authorEmail])
 }
 
 model Image {
@@ -50,6 +50,7 @@ model Image {
   blurDataURL String   @db.VarChar(512)
   stash       Stash?   @relation(fields: [id], references: [id], onDelete: Cascade)
 
+  @@index([id])
   @@index([src])
 }
 
@@ -81,6 +82,7 @@ model Account {
   user                     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
@@ -90,6 +92,8 @@ model Session {
   user         User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String?
   role         Role     @default(USER)
+
+  @@index([userId])
 }
 
 model User {
