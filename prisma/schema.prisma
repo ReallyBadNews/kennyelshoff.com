@@ -1,12 +1,10 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider     = "mysql"
-  url          = env("PLANETSCALE_PRISMA_DATABASE_URL")
-  relationMode = "prisma"
+  provider = "mysql"
+  url      = env("PLANETSCALE_PRISMA_DATABASE_URL")
 }
 
 model Views {
@@ -31,6 +29,7 @@ model Stash {
   tags        Tag[]
 
   @@index([host, slug])
+  @@index([authorEmail])
 }
 
 model Image {
@@ -50,6 +49,7 @@ model Image {
   blurDataURL String   @db.VarChar(512)
   stash       Stash?   @relation(fields: [id], references: [id], onDelete: Cascade)
 
+  @@index([id])
   @@index([src])
 }
 
@@ -81,6 +81,7 @@ model Account {
   user                     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
@@ -90,6 +91,8 @@ model Session {
   user         User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String?
   role         Role     @default(USER)
+
+  @@index([userId])
 }
 
 model User {
