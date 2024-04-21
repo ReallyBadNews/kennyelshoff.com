@@ -2,10 +2,10 @@ import "./globals.css";
 
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
-import { Inter as FontSans } from "next/font/google";
+import { GeistSans as FontSans } from "geist/font/sans";
+import { GeistMono as FontMono } from "geist/font/mono";
+import { Header } from "@/components/header";
 import { cn } from "@/lib/utils";
-
-const fontSans = FontSans({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,7 +21,11 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head />
       <body
-        className={cn("min-h-screen font-sans antialiased", fontSans.variable)}
+        className={cn(
+          "min-h-screen font-sans antialiased",
+          FontSans.variable,
+          FontMono.variable,
+        )}
       >
         {/* TODO(@ReallyBadNews): This is just so the .dark styles are not pruned */}
         <div className="dark hidden" />
@@ -31,7 +35,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <div className="min-h-screen flex flex-col py-8">
+            <Header />
+            {children}
+          </div>
         </ThemeProvider>
       </body>
     </html>

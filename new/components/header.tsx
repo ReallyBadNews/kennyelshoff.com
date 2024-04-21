@@ -19,15 +19,16 @@ export function Header() {
           />
           <div className="flex flex-col space-y-1 text-sm leading-none">
             <span className="text-lg font-bold leading-none">kenny</span>
-            <span>design+code</span>
+            <span>design engineer</span>
+            {/* <span>design+code</span> */}
           </div>
         </Link>
         <div className="flex items-center space-x-2">
           <Button variant="ghost" size="icon">
-            <TwitterLogoIcon className="h-4 w-4" />
+            <TwitterLogoIcon className="size-4" />
           </Button>
           <Button variant="ghost" size="icon">
-            <GitHubLogoIcon className="h-4 w-4" />
+            <GitHubLogoIcon className="size-4" />
           </Button>
           <ModeToggle />
         </div>
