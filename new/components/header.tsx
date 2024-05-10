@@ -8,14 +8,15 @@ import profileImg from "@/public/images/profile.jpg";
 export function Header() {
   return (
     <header className="container">
-      <div className="flex items-center justify-between py-4">
+      <div className="flex items-center justify-between">
         <Link href="/" className="flex items-center space-x-4">
           <Image
             src={profileImg}
             alt="kenny"
             className="size-12 rounded-md"
-            width={40}
-            height={40}
+            width={48}
+            height={48}
+            priority
           />
           <div className="flex flex-col space-y-1 text-sm leading-none">
             <span className="text-lg font-bold leading-none">kenny</span>
