@@ -59,8 +59,20 @@ export default function Blog({ params }: { params: { slug: string } }) {
     notFound();
   }
 
+  {
+    /* <main className="flex-1">
+  <div className="container flex flex-col space-y-2">
+    <article className="pt-6">
+      <div className="space-y-1">
+        <h2 className="font-mono text-lg tracking-tighter">Writing</h2>
+      </div>
+    </article>
+  </div>
+</main>; */
+  }
+
   return (
-    <section className="prose dark:prose-invert">
+    <main className="container flex-1">
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -83,17 +95,15 @@ export default function Blog({ params }: { params: { slug: string } }) {
           }),
         }}
       />
-      <h1 className="title font-semibold text-2xl tracking-tighter">
-        {post.metadata.title}
-      </h1>
-      <div className="flex justify-between items-center mt-2 mb-8 text-sm">
-        <p className="text-sm text-neutral-600 dark:text-neutral-400">
-          {formatDate(post.metadata.publishedAt)}
-        </p>
-      </div>
-      <article className="prose">
-        <CustomMDX source={post.content} />
+      <article className="prose flex flex-col space-y-2 pt-16 dark:prose-invert">
+        <div className="flex flex-col gap-4 mt-2">
+          <h1 className="title m-0 tracking-tighter">{post.metadata.title}</h1>
+          <p className="text-sm m-0">{formatDate(post.metadata.publishedAt)}</p>
+        </div>
+        <article>
+          <CustomMDX source={post.content} />
+        </article>
       </article>
-    </section>
+    </main>
   );
 }

@@ -86,6 +86,14 @@ interface CodeProps extends ComponentProps<"code"> {
   children?: ReactNode;
 }
 
+function Pre({ children }: { children?: ReactNode }) {
+  return (
+    <pre className="bg-primary-foreground text-white rounded-lg">
+      {children}
+    </pre>
+  );
+}
+
 function Code({ children, ...props }: CodeProps) {
   if (!children) return null;
   let codeHTML = highlight(children as string);
@@ -135,8 +143,14 @@ const components: MDXRemoteProps["components"] = {
   h6: createHeading(6),
   Image: RoundedImage,
   a: CustomLink,
+  pre: Pre,
   code: Code,
   Table,
+  Gallery: () => (
+    <div className="bg-destructive text-destructive-foreground p-3 flex justify-center items-center aspect-video rounded-lg">
+      Gallery not implemented
+    </div>
+  ), // not implemented yet
 };
 
 export function CustomMDX(props: MDXRemoteProps) {
