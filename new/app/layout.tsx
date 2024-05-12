@@ -1,9 +1,10 @@
 import "./globals.css";
 
 import type { Metadata } from "next";
-import { ThemeProvider } from "next-themes";
-import { GeistSans as FontSans } from "geist/font/sans";
+
 import { GeistMono as FontMono } from "geist/font/mono";
+import { GeistSans as FontSans } from "geist/font/sans";
+import { ThemeProvider } from "next-themes";
 import { Header } from "@/components/header";
 import { cn } from "@/lib/utils";
 
@@ -35,7 +36,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="min-h-screen flex flex-col py-8">
+          <div className="flex min-h-screen flex-col py-8">
             <Header />
             {children}
           </div>

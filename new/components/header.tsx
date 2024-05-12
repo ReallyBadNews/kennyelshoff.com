@@ -1,9 +1,10 @@
-import Link from "next/link";
-import { ModeToggle } from "@/components/mode-toggle";
-import { GitHubLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
-import { Button } from "./ui/button";
 import Image from "next/image";
+import Link from "next/link";
+
+import { GitHubLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
+import { ModeToggle } from "@/components/mode-toggle";
 import profileImg from "@/public/images/profile.jpg";
+import { Button } from "./ui/button";
 
 export function Header() {
   return (

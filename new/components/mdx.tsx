@@ -1,9 +1,10 @@
-import Link, { LinkProps } from "next/link";
+import { UrlObject } from "url";
+import React, { ComponentProps, ReactNode } from "react";
 import Image, { ImageProps } from "next/image";
+import Link, { LinkProps } from "next/link";
+
 import { MDXRemote, MDXRemoteProps } from "next-mdx-remote/rsc";
 import { highlight } from "sugar-high";
-import React, { ComponentProps, ReactNode } from "react";
-import { UrlObject } from "url";
 
 interface TableProps {
   data?: {
@@ -82,21 +83,21 @@ function RoundedImage(props: ImageProps) {
   return <Image className="rounded-lg" {...props} />;
 }
 
-interface CodeProps extends ComponentProps<"code"> {
-  children?: ReactNode;
-}
-
 function Pre({ children }: { children?: ReactNode }) {
   return (
-    <pre className="bg-primary-foreground text-white rounded-lg">
+    <pre className="rounded-lg bg-primary-foreground text-white">
       {children}
     </pre>
   );
 }
 
+interface CodeProps extends ComponentProps<"code"> {
+  children?: ReactNode;
+}
+
 function Code({ children, ...props }: CodeProps) {
   if (!children) return null;
-  let codeHTML = highlight(children as string);
+  let codeHTML = typeof children === "string" ? highlight(children) : children;
   return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />;
 }
 
@@ -147,7 +148,7 @@ const components: MDXRemoteProps["components"] = {
   code: Code,
   Table,
   Gallery: () => (
-    <div className="bg-destructive text-destructive-foreground p-3 flex justify-center items-center aspect-video rounded-lg">
+    <div className="flex aspect-video items-center justify-center rounded-lg bg-destructive p-3 text-destructive-foreground">
       Gallery not implemented
     </div>
   ), // not implemented yet

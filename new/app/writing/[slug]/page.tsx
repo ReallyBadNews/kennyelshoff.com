@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
+
 import { CustomMDX } from "@/components/mdx";
-import { baseUrl } from "../../sitemap";
 import { formatDate, getPosts } from "@/lib/mdx";
+import { baseUrl } from "../../sitemap";
 
 export async function generateStaticParams() {
   let posts = getPosts();
@@ -96,9 +97,9 @@ export default function Blog({ params }: { params: { slug: string } }) {
         }}
       />
       <article className="prose flex flex-col space-y-2 pt-16 dark:prose-invert">
-        <div className="flex flex-col gap-4 mt-2">
+        <div className="mt-2 flex flex-col gap-4">
           <h1 className="title m-0 tracking-tighter">{post.metadata.title}</h1>
-          <p className="text-sm m-0">{formatDate(post.metadata.publishedAt)}</p>
+          <p className="m-0 text-sm">{formatDate(post.metadata.publishedAt)}</p>
         </div>
         <article>
           <CustomMDX source={post.content} />
