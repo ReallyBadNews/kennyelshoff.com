@@ -20,8 +20,10 @@ export function Header() {
             priority
           />
           <div className="flex flex-col space-y-1 text-sm leading-none">
-            <span className="text-lg font-bold leading-none">kenny</span>
-            <span>design engineer</span>
+            <span className="text-lg font-bold leading-none">
+              Kenny Elshoff
+            </span>
+            <span>Senior Web Engineer</span>
             {/* <span>design+code</span> */}
           </div>
         </Link>

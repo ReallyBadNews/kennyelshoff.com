@@ -28,8 +28,6 @@ export default function RootLayout({
           FontMono.variable,
         )}
       >
-        {/* TODO(@ReallyBadNews): This is just so the .dark styles are not pruned */}
-        <div className="dark hidden" />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

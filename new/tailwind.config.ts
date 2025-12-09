@@ -11,6 +11,7 @@ const config = {
     "./app/**/*.{ts,tsx}",
   ],
   prefix: "",
+  // safelist: ["dark"],
   theme: {
     container: {
       center: true,

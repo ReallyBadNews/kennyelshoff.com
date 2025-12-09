@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { formatDate, getPosts } from "@/lib/mdx";
+import { formatDate, getPosts, Post } from "@/lib/mdx";
 
 export function BlogPosts() {
   let allBlogs = getPosts();
@@ -19,17 +19,35 @@ export function BlogPosts() {
         .map((post) => (
           <Link
             key={post.slug}
-            className="flex w-full flex-col justify-between md:flex-row"
             href={`/writing/${post.slug}`}
+            className="no-underline"
           >
-            <p className="not-prose tabular-nums">
+            <BlogPost post={post} />
+            {/* <p className="not-prose tabular-nums">
               {formatDate(post.metadata.publishedAt, false)}
             </p>
             <p className="not-prose tracking-tight text-neutral-900 dark:text-neutral-100">
               {post.metadata.title}
-            </p>
+            </p> */}
           </Link>
         ))}
     </div>
+  );
+}
+
+/**
+ * v0 by Vercel.
+ * @see https://v0.dev/t/LUoVcW4y8xg
+ * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
+ */
+function BlogPost({ post }: { post: Post }) {
+  return (
+    <li className="flex flex-col items-start sm:flex-row sm:items-baseline sm:justify-between">
+      <span className="font-medium">
+        {formatDate(post.metadata.publishedAt)}
+      </span>
+      <span className="my-2 flex-grow border-t border-dotted border-current sm:my-0" />
+      <span className="font-medium">{post.metadata.title}</span>
+    </li>
   );
 }

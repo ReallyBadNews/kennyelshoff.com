@@ -49,7 +49,13 @@ function getMDXData(dir: string) {
   });
 }
 
-export function getPosts() {
+export type Post = {
+  metadata: Metadata;
+  slug: string;
+  content: string;
+};
+
+export function getPosts(): Post[] {
   return getMDXData(path.join(process.cwd(), "app", "writing", "posts"));
 }
 

@@ -6,9 +6,9 @@ export default function Home() {
   return (
     <main className="flex-1">
       <div className="container flex flex-col space-y-2 py-16">
-        <article className="prose space-y-16 text-sm dark:prose-invert">
-          <div className="space-y-1">
-            <h3 className="mt-0 font-mono">Profile</h3>
+        <article className="space-y-16 text-sm">
+          <div className="space-y-6">
+            <h3 className="mt-0 font-mono text-lg">Profile</h3>
             <dl>
               <dt>Name</dt>
               <dd>Kenny Elshoff</dd>
@@ -45,15 +45,15 @@ export default function Home() {
               </dd>
             </dl>
           </div>
-          <div className="space-y-1">
+          <div className="space-y-6">
             <Link href="/work">
-              <h3 className="font-mono">Projects</h3>
+              <h3 className="font-mono text-lg">Projects</h3>
             </Link>
             <p>Lots of cool stuff</p>
           </div>
-          <div className="space-y-1">
+          <div className="space-y-6">
             <Link href="/writing">
-              <h3 className="font-mono">Writing</h3>
+              <h3 className="font-mono text-lg">Writing</h3>
             </Link>
             <BlogPosts />
           </div>
